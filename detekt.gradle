@@ -1,6 +1,8 @@
 apply plugin: 'io.gitlab.arturbosch.detekt'
 
 detekt {
-    config = files("$rootDir/config/detekt/detekt-deep.yml")
-    filters = ".*build.*,.*/resources/.*,.*/tmp/.*"
+    config = files("$rootDir/config/detekt/detekt.yml")
+}
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
 }

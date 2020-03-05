@@ -19,11 +19,13 @@ plugins {
     id "com.github.ben-manes.versions" version "0.20.0"
 }
 
+
 allprojects {
+    apply from: "$rootDir/detekt.gradle"
+
     repositories {
         google()
         jcenter()
-
     }
 }
 
@@ -32,3 +34,4 @@ task clean(type: Delete) {
 }
 
 task x(type: GradleBuild) { tasks = ["detekt", "ktlint", "lintDebug", "testDebugUnitTest"] }
+
