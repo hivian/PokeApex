@@ -8,11 +8,15 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:${Versions.gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.safeArgs}"
     }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.6.0"
+    id "com.github.ben-manes.versions" version "0.20.0"
 }
 
 allprojects {
@@ -26,3 +30,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task x(type: GradleBuild) { tasks = ["detekt", "ktlint", "lintDebug", "testDebugUnitTest"] }
