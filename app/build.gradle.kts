@@ -2,7 +2,10 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
+
+//apply(rootProject.file("android_commons.gradle.kts"))
 
 android {
     compileSdkVersion(Versions.compileSdk)
