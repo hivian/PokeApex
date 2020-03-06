@@ -25,7 +25,7 @@ object Releases {
 }
 
 object Versions {
-    val kotlin = "1.3.61"
+    val kotlin = "1.3.70"
     val gradle = "3.3.2"
     val detekt = "1.6.0"
     val compileSdk = 29
