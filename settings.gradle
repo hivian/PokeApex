@@ -1,2 +1,2 @@
-include(":app", ":common", ":data:model", ":data:repository")
+include(":app", ":common", ":data:repository", ":data:model", ":data:local")
 rootProject.name='pokedex'
