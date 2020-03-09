@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    api(AndroidLibraries.appCompat)
-    api(AndroidLibraries.navigation)
-    api(AndroidLibraries.navigationFrag)
+    implementation(AndroidLibraries.appCompat)
+    implementation(AndroidLibraries.navigation)
+    implementation(AndroidLibraries.navigationFrag)
 }
