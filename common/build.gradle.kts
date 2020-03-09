@@ -1,11 +1,12 @@
 plugins {
-    kotlin("android")
-    kotlin("android.extensions")
+    id(Plugins.androidLibrary)
+    kotlin(Plugins.kotlinAndroid)
+    kotlin(Plugins.kotlinExtensions)
+    kotlin(Plugins.kapt)
 }
 
 android {
     compileSdkVersion(Versions.compileSdk)
-    buildToolsVersion = "29.0.2"
     defaultConfig {
         minSdkVersion(Versions.minSdk)
         targetSdkVersion(Versions.targetSdk)
@@ -14,12 +15,13 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
         }
     }
 }
 
 dependencies {
-    implementation(KotlinLibraries.kotlin)
+    api(AndroidLibraries.appCompat)
+    api(AndroidLibraries.navigation)
+    api(AndroidLibraries.navigationFrag)
 }

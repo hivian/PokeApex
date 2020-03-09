@@ -1,11 +1,11 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
+    id(Plugins.androidApplication)
+    kotlin(Plugins.kotlinAndroid)
+    kotlin(Plugins.kotlinExtensions)
+    kotlin(Plugins.kapt)
 }
 
-//apply(rootProject.file("android_commons.gradle.kts"))
+//apply(rootProject.file("common-precompiled.gradle.kts"))
 
 android {
     compileSdkVersion(Versions.compileSdk)
@@ -31,10 +31,19 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    // COMMON
+    implementation(project(Modules.common))
+
     implementation(KotlinLibraries.kotlin)
-    implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.coreKtx)
     implementation(AndroidLibraries.constraintLayout)
     androidTestImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.espresso)
+    // KOIN
+    implementation(Libraries.koin)
+    implementation(Libraries.koinViewModel)
+    // ANDROID
+    implementation(AndroidLibraries.appCompat)
+    implementation(AndroidLibraries.navigation)
+    implementation(AndroidLibraries.navigationFrag)
 }

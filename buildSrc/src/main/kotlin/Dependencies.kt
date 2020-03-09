@@ -1,3 +1,13 @@
+object Plugins {
+    const val androidApplication = "com.android.application"
+    const val androidLibrary = "com.android.library"
+    const val kotlinAndroid = "android"
+    const val kotlinExtensions = "android.extensions"
+    const val kapt = "kapt"
+    const val detekt = "io.gitlab.arturbosch.detekt"
+    const val crashlytics = "io.fabric"
+}
+
 object ApplicationId {
     val id = "com.hivian.pokedex"
 }
@@ -82,7 +92,7 @@ object Libraries {
 }
 
 object KotlinLibraries {
-    val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     val kotlinCoroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
 }
 
