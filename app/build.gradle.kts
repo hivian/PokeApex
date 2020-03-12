@@ -33,6 +33,10 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     // COMMON
     implementation(project(Modules.common))
+    // DATA modules
+    implementation(project(Modules.local))
+    implementation(project(Modules.remote))
+    implementation(project(Modules.repository))
 
     implementation(KotlinLibraries.kotlin)
     implementation(AndroidLibraries.coreKtx)

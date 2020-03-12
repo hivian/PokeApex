@@ -17,10 +17,18 @@ android {
             isMinifyEnabled = false
         }
     }
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 dependencies {
-    implementation(AndroidLibraries.appCompat)
-    implementation(AndroidLibraries.navigation)
-    implementation(AndroidLibraries.navigationFrag)
+    implementation(project(Modules.model))
+    implementation(AndroidLibraries.lifecycleExtensions)
+    implementation(TestLibraries.androidTestRunner)
+    implementation(TestLibraries.espresso)
+    implementation(Libraries.koin)
+    implementation(Libraries.koinViewModel)
+    implementation(AndroidLibraries.recyclerView)
+    implementation(TestLibraries.coroutine)
 }
