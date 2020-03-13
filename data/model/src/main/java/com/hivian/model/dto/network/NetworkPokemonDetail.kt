@@ -9,15 +9,28 @@ data class NetworkPokemonDetail(
     @SerializedName("name")
     val name: String,
 
+    @SerializedName("height")
+    val height: Int,
+
+    @SerializedName("weight")
+    val weight: Int,
+
     @SerializedName("abilities")
-    val abilities: List<NetworkPokemonAbilityResult>,
+    val abilities: List<NetworkPokemonAbilityObject>,
 
     @SerializedName("forms")
     val forms: List<NetworkPokemonForm>,
 
+    @SerializedName("moves")
+    val moves: List<NetworkPokemonMoveObject>,
+
     @SerializedName("sprites")
     val sprites: NetworkPokemonSprites,
 
-    @SerializedName("url")
-    var url: String
+    @SerializedName("stats")
+    val stats: List<NetworkPokemonStatObject>,
+
+    @SerializedName("types")
+    val types: List<NetworkPokemonTypeObject>
+
 )

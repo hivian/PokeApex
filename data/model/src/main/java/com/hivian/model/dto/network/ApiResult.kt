@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiResult<T>(
     @SerializedName("count")
-    val name: Int,
+    val count: Int,
 
     @SerializedName("next")
     var next: String,
@@ -13,5 +13,5 @@ data class ApiResult<T>(
     var previous: String,
 
     @SerializedName("results")
-    val forms: List<T>
+    val results: List<T>
 )

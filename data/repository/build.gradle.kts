@@ -22,9 +22,10 @@ android {
 
 dependencies {
     // MODULES
-//    implementation(project(Modules.remote)
-//    implementation project(Modules.local)
+    implementation(project(Modules.remote))
+    implementation(project(Modules.local))
     api(project(Modules.model))
+    api(Libraries.timberKt)
     // ANDROID
     implementation(KotlinLibraries.kotlinCoroutineCore)
     implementation(AndroidLibraries.kotlinCoroutineAndroid)

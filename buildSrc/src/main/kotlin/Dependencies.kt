@@ -55,7 +55,7 @@ object Versions {
     val okHttp = "3.12.1"
     val coroutines = "1.1.1"
     val koin = "1.0.2"
-    val timber = "4.7.1"
+    val timberKt = "1.5.1"
     val lifecycle = "2.1.0-alpha04"
     val nav = "2.0.0"
     val room = "2.1.0-alpha06"
@@ -90,6 +90,9 @@ object Libraries {
 
     // GLIDE
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+
+    // TIMBER
+    val timberKt = "com.github.ajalt:timberkt:${Versions.timberKt}"
 }
 
 object KotlinLibraries {

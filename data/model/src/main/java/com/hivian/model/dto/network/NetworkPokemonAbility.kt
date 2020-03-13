@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName
 class NetworkPokemonAbility (
 
     @SerializedName("name")
-    val name: String,
-
-    @SerializedName("url")
-    var url: String
+    val name: String
 
 )

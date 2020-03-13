@@ -7,8 +7,10 @@ import kotlinx.coroutines.Deferred
 
 class PokemonDatasource(private val pokemonApiService: PokemonApiService) {
 
-    fun fetchTopPokemonsAsync(offset: Int, limit: Int): Deferred<ApiResult<NetworkPokemon>> = pokemonApiService.fetchTopPokemonsAsync(offset, limit)
+    fun fetchTopPokemonsAsync(offset: Int, limit: Int): Deferred<ApiResult<NetworkPokemon>>
+            = pokemonApiService.fetchTopPokemonsAsync(offset, limit)
 
-    fun fetchPokemonDetailAsync(id: Int): Deferred<NetworkPokemonDetail> = pokemonApiService.fetchPokemonDetailAsync(id)
+    fun fetchPokemonDetailAsync(name: String): Deferred<NetworkPokemonDetail>
+            = pokemonApiService.fetchPokemonDetailAsync(name)
 
 }

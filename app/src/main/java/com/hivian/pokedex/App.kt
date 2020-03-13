@@ -3,17 +3,25 @@ package com.hivian.pokedex
 import android.app.Application
 import com.hivian.pokedex.di.appComponent
 import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.android.get
+import timber.log.Timber
 
-open class App: Application() {
+class App: Application() {
     override fun onCreate() {
         super.onCreate()
         configureDi()
+        configureTimber()
     }
 
     // CONFIGURATION
-    open fun configureDi() =
+    private fun configureDi() =
         startKoin(this, provideComponent())
 
-    // PUBLIC AP
-    open fun provideComponent() = appComponent
+    private fun configureTimber() {
+        val tree: Timber.DebugTree = get()
+        Timber.plant(tree)
+    }
+
+    // PUBLIC API
+    private fun provideComponent() = appComponent
 }

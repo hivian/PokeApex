@@ -15,7 +15,7 @@ interface PokemonApiService {
         @Query("offset") offset : Int = 0,
         @Query("limit") limit : Int = 20) : Deferred<ApiResult<NetworkPokemon>>
 
-    @GET("/pokemon/{id}")
-    fun fetchPokemonDetailAsync(@Path("id") id : Int) : Deferred<NetworkPokemonDetail>
+    @GET("/pokemon/{name}")
+    fun fetchPokemonDetailAsync(@Path("name") name : String) : Deferred<NetworkPokemonDetail>
 
 }
