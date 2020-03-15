@@ -2,8 +2,8 @@ package com.hivian.pokedex
 
 import android.app.Application
 import com.hivian.pokedex.di.appComponent
-import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 class App: Application() {
@@ -18,8 +18,7 @@ class App: Application() {
         startKoin(this, provideComponent())
 
     private fun configureTimber() {
-        val tree: Timber.DebugTree = get()
-        Timber.plant(tree)
+        Timber.plant(get<Timber.DebugTree>())
     }
 
     // PUBLIC API

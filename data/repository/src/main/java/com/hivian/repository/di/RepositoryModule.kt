@@ -6,5 +6,5 @@ import org.koin.dsl.module.module
 
 val repositoryModule = module {
     factory { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
-    //factory { UserRepositoryImpl(get(), get()) as UserRepository }
+    //factory { PokedexRepositoryImpl(get(), get()) as PokedexRepository }
 }

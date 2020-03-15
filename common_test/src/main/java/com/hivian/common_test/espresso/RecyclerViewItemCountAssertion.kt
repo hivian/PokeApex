@@ -2,10 +2,10 @@ package com.hivian.common_test.espresso
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import org.hamcrest.Matcher
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 
 class RecyclerViewItemCountAssertion private constructor(private val matcher: Matcher<Int>) : ViewAssertion {

@@ -1,13 +1,5 @@
 package com.hivian.repository
 
-import androidx.lifecycle.LiveData
-import com.hivian.model.dto.network.ApiResult
-import com.hivian.model.dto.network.NetworkPokemon
-import com.hivian.remote.PokemonDatasource
-import com.hivian.repository.utils.NetworkBoundResource
-import com.hivian.repository.utils.Resource
-import kotlinx.coroutines.Deferred
-
 /*interface UserRepository {
     suspend fun getTopPokemonsWithCache(forceRefresh: Boolean = false, , offset: Int = 0, limit: Int = 20): LiveData<Resource<List<User>>>
     suspend fun getPokemonDetailWithCache(forceRefresh: Boolean = false, login: String): LiveData<Resource<User>>

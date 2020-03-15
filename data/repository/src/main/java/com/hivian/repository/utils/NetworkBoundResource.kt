@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.github.ajalt.timberkt.d
 import com.github.ajalt.timberkt.e
 import kotlinx.coroutines.*
-import java.lang.Exception
 import kotlin.coroutines.coroutineContext
 
 abstract class NetworkBoundResource<ResultType, RequestType> {

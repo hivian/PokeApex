@@ -26,6 +26,7 @@ android {
 dependencies {
     // ROOM
     kapt(Libraries.roomCompiler)
+    implementation(project(Modules.common))
     implementation(Libraries.roomRunTime)
     implementation(Libraries.roomKtx)
     implementation(AndroidLibraries.lifecycleExtensions)
