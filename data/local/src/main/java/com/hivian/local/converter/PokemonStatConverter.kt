@@ -16,5 +16,4 @@ class PokemonStatConverter {
     fun jsonToObject(value: String): List<DbPokemonStat> {
         return fromJson<List<DbPokemonStat>>(value)
     }
-
 }

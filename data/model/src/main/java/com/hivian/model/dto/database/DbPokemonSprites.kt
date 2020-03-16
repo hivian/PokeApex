@@ -2,7 +2,6 @@ package com.hivian.model.dto.database
 
 import com.google.gson.annotations.SerializedName
 
-
 data class DbPokemonSprites(
     @SerializedName("back_default")
     val backDefault : String,

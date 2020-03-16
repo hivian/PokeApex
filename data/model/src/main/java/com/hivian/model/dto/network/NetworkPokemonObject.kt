@@ -59,12 +59,12 @@ fun NetworkPokemonObject.mapToDb() : DbPokemon {
         stats = stats.map { DbPokemonStat(
             name = it.stat.name,
             baseStat = it.baseStat,
-            effort =  it.effort
-        )},
+            effort = it.effort
+        ) },
         types = types.map { DbPokemonType(
             slot = it.slot,
             name = it.type.name
-        )}
+        ) }
     )
 }
 

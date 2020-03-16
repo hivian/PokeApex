@@ -15,5 +15,4 @@ class ListStringConverter {
     fun jsonToList(value: String): List<String> {
         return fromJson<List<String>>(value)
     }
-
 }

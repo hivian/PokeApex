@@ -3,8 +3,7 @@ package com.hivian.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.hivian.model.dto.database.DbPokemon
-import java.util.*
-
+import java.util.Date
 
 @Dao
 abstract class PokedexDao : BaseDao<DbPokemon> {
@@ -29,5 +28,4 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     suspend fun save(pokemons: List<DbPokemon>) {
         insert(*pokemons.apply { forEach { it.lastRefreshed = Date() } }.toTypedArray())
     }
-
 }

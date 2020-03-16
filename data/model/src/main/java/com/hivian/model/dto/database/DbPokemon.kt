@@ -6,11 +6,11 @@ import com.hivian.model.domain.Pokemon
 import com.hivian.model.domain.PokemonSprites
 import com.hivian.model.domain.PokemonStat
 import com.hivian.model.domain.PokemonType
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @Entity
-data class DbPokemon (
+data class DbPokemon(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
@@ -30,9 +30,8 @@ data class DbPokemon (
      * We consider that a [DbPokemon] is outdated when the last time
      * we fetched it was more than 10 minutes
      */
-    fun haveToRefreshFromNetwork() : Boolean
-            = TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 10
-
+    fun haveToRefreshFromNetwork() : Boolean =
+            TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 10
 }
 
 fun DbPokemon.mapToDomain(): Pokemon = Pokemon(

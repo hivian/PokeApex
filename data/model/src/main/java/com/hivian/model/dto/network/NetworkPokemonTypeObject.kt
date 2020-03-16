@@ -2,7 +2,7 @@ package com.hivian.model.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-class NetworkPokemonTypeObject (
+class NetworkPokemonTypeObject(
 
     @SerializedName("slot")
     val slot: Int,

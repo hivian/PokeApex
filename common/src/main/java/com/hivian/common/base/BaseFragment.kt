@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.hivian.common.extension.setupSnackbar
 import com.hivian.common.navigation.NavigationCommand
 
-
 abstract class BaseFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

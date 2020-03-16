@@ -7,7 +7,6 @@ import androidx.navigation.NavDirections
 import com.hivian.common.navigation.NavigationCommand
 import com.hivian.common.utils.Event
 
-
 abstract class BaseViewModel: ViewModel() {
 
     // FOR ERROR HANDLER

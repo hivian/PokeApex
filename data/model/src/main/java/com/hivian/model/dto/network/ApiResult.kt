@@ -1,12 +1,9 @@
 package com.hivian.model.dto.network
 
 import com.google.gson.annotations.SerializedName
-import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.database.DbPokemonSprites
-import com.hivian.model.dto.database.DbPokemonStat
-import com.hivian.model.dto.database.DbPokemonType
 
 data class ApiResult<T>(
+
     @SerializedName("count")
     val count: Int,
 
@@ -18,4 +15,5 @@ data class ApiResult<T>(
 
     @SerializedName("results")
     val results: List<T>
+
 )

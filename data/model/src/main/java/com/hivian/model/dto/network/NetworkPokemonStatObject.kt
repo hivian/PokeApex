@@ -2,7 +2,7 @@ package com.hivian.model.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-class NetworkPokemonStatObject (
+class NetworkPokemonStatObject(
 
     @SerializedName("base_stat")
     val baseStat: Int,

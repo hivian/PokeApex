@@ -1,6 +1,6 @@
 package com.hivian.model.domain
 
-class Pokemon (
+class Pokemon(
     val name: String,
     val height: Int,
     val weight: Int,

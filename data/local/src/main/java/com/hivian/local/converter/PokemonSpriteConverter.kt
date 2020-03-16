@@ -16,5 +16,4 @@ class PokemonSpriteConverter {
     fun jsonToObject(value: String): DbPokemonSprites {
         return fromJson<DbPokemonSprites>(value)
     }
-
 }

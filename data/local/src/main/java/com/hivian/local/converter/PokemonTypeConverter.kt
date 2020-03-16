@@ -16,5 +16,4 @@ class PokemonTypeConverter {
     fun jsonToObject(value: String): List<DbPokemonType> {
         return fromJson<List<DbPokemonType>>(value)
     }
-
 }
