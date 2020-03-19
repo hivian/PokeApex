@@ -30,6 +30,8 @@ dependencies {
     implementation(KotlinLibraries.kotlinCoroutineCore)
     implementation(AndroidLibraries.kotlinCoroutineAndroid)
     implementation(AndroidLibraries.lifecycleExtensions)
+    // RETROFIT
+    implementation(Libraries.retrofit)
     // KOIN
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)
@@ -38,5 +40,5 @@ dependencies {
     testImplementation(TestLibraries.mockk)
     testImplementation(TestLibraries.archCoreTest)
     testImplementation(TestLibraries.coroutine)
-    //testImplementation(project(Modules.commonTest))
+    testImplementation(project(Modules.commonTest))
 }

@@ -1,19 +1,32 @@
 package com.hivian.repository.utils
 
-data class Resource<out T>(val status: Status, val data: T?, val error: Throwable?) {
+import java.lang.Exception
+
+data class Resource<out T>(val status: Status, val data: T?, val code: Int? = null, val error: Exception?) {
     companion object {
         fun <T> success(data: T?): Resource<T> {
             return Resource(
                 Status.SUCCESS,
                 data,
+                null,
                 null
             )
         }
 
-        fun <T> error(error: Throwable, data: T?): Resource<T> {
+        fun <T> httpError(code: Int? = null, error: Exception?, data: T?): Resource<T> {
             return Resource(
-                Status.ERROR,
+                Status.HTTP_ERROR,
                 data,
+                code,
+                error
+            )
+        }
+
+        fun <T> networkError(error: Exception?, data: T?): Resource<T> {
+            return Resource(
+                Status.NETWORK_ERROR,
+                data,
+                null,
                 error
             )
         }
@@ -22,6 +35,7 @@ data class Resource<out T>(val status: Status, val data: T?, val error: Throwabl
             return Resource(
                 Status.LOADING,
                 data,
+                null,
                 null
             )
         }
@@ -29,7 +43,8 @@ data class Resource<out T>(val status: Status, val data: T?, val error: Throwabl
 
     enum class Status {
         SUCCESS,
-        ERROR,
+        HTTP_ERROR,
+        NETWORK_ERROR,
         LOADING
     }
 }

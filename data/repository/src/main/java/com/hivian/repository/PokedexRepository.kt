@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.database.mapToDomain
 import com.hivian.model.dto.network.ApiResult
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.dto.network.mapToDb
+import com.hivian.model.mapper.Mapper
+import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
 import com.hivian.remote.PokemonDatasource
 import com.hivian.repository.utils.NetworkBoundResource
 import com.hivian.repository.utils.Resource
@@ -27,7 +28,8 @@ interface PokedexRepository {
 
 class PokedexRepositoryImpl(
     private val datasource: PokemonDatasource,
-    private val dao: PokedexDao
+    private val dao: PokedexDao,
+    private val mapper: MapperPokemonDbToDomainImpl
 ): PokedexRepository {
 
     /**
@@ -51,7 +53,7 @@ class PokedexRepositoryImpl(
                     dao.getTopPokemons()
 
             override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
-                    data.mapToDomain()
+                    mapper.map(data)
 
             override fun createCallAsync(): Deferred<ApiResult<NetworkPokemonObject>> =
                     datasource.fetchTopPokemonsAsync(offset, limit)
@@ -82,7 +84,7 @@ class PokedexRepositoryImpl(
                     dao.getPokemon(name)
 
             override suspend fun processData(data: DbPokemon): Pokemon =
-                    data.mapToDomain()
+                    mapper.map(data)
 
             override fun createCallAsync(): Deferred<NetworkPokemonObject> =
                     datasource.fetchPokemonDetailAsync(name)

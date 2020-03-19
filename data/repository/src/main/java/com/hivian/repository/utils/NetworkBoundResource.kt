@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.github.ajalt.timberkt.d
 import com.github.ajalt.timberkt.e
 import kotlinx.coroutines.*
+import retrofit2.HttpException
+import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
 abstract class NetworkBoundResource<Remote, Local, Domain> {
@@ -24,8 +26,16 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                 try {
                     fetchFromNetwork(dbResult)
                 } catch (e: Exception) {
+                    val value = when (e) {
+                        is IOException -> Resource.networkError(e, processData(loadFromDb()))
+                        is HttpException -> {
+                            val code = e.code()
+                            Resource.httpError(code, e, processData(loadFromDb()))
+                        }
+                        else -> Resource.httpError(null, null, processData(loadFromDb()))
+                    }
                     e { "An error happened: $e" }
-                    setValue(Resource.error(e, processData(loadFromDb())))
+                    setValue(value)
                 }
             } else {
                 d { "Return data from local database" }

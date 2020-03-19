@@ -8,7 +8,7 @@ import com.hivian.model.dto.database.DbPokemonType
 
 data class NetworkPokemonObject(
     @SerializedName("id")
-    val id: Long,
+    val id: Int,
 
     @SerializedName("name")
     val name: String,

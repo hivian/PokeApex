@@ -34,16 +34,3 @@ data class DbPokemon(
             TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 10
 }
 
-fun DbPokemon.mapToDomain(): Pokemon = Pokemon(
-    name = name,
-    height = height,
-    weight = weight,
-    abilities = abilities,
-    forms = forms,
-    moves = moves,
-    sprites = PokemonSprites(sprites.frontDefault, sprites.backDefault),
-    stats = stats.map { PokemonStat(it.name, it.baseStat, it.effort) },
-    types = types.map { PokemonType(it.slot, it.name) }
-)
-
-fun List<DbPokemon>.mapToDomain(): List<Pokemon> = map { it.mapToDomain() }
