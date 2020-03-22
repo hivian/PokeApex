@@ -7,8 +7,9 @@ import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.ApiResult
-import com.hivian.model.dto.network.mapToDb
+import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
+import com.hivian.model.mapper.MapperPokemonRemoteToDbImpl
 import com.hivian.remote.PokemonDatasource
 import com.hivian.repository.utils.FakeData
 import com.hivian.repository.utils.Resource
@@ -38,7 +39,7 @@ class UserRepositoryTest {
     private lateinit var pokedexRepository: PokedexRepository
     private val pokemonService = mockk<PokemonDatasource>()
     private val pokedexDao = mockk<PokedexDao>(relaxed = true)
-    private val mapper = mockk<MapperPokemonDbToDomainImpl>()
+    private val mapper = mockk<MapperPokedexRepository>(relaxed = true)
 
     @Before
     fun setUp() {
@@ -50,9 +51,9 @@ class UserRepositoryTest {
     @Test
     fun `Get top users from server when no internet is available`() {
         val exception = IOException("Internet")
-        every { pokemonService.fetchTopPokemonsAsync() } throws exception
+        coEvery { pokemonService.fetchTopPokemonsAsync() } throws exception
         coEvery { pokedexDao.getTopPokemons() } returns listOf()
-        every { mapper.map(listOf()) } returns listOf()
+        every { mapper.dbToDomainMapper.map(listOf()) } returns listOf()
 
         runBlocking {
             pokedexRepository.getTopPokemonsWithCache().observeForever(observer)
@@ -70,11 +71,12 @@ class UserRepositoryTest {
     @Test
     fun `Get top users from network`() {
         val fakePokemonsNetwork = FakeData.createFakePokemonsNetwork(5)
-        every { pokemonService.fetchTopPokemonsAsync() } returns GlobalScope.async {
-            ApiResult(fakePokemonsNetwork.size, "", "", fakePokemonsNetwork)
-        }
-        val fakePokemonsDb = fakePokemonsNetwork.mapToDb()
-        coEvery { pokedexDao.getTopPokemons() } returns listOf() andThen { fakePokemonsDb }
+        coEvery { pokemonService.fetchTopPokemonsAsync() } returns ApiResult(fakePokemonsNetwork.size, "", "", fakePokemonsNetwork)
+        val fakePokemonsDb = mapper.remoteToDbMapper.map(fakePokemonsNetwork)
+        coEvery { pokedexDao.getTopPokemons() } returns listOf() andThen fakePokemonsDb
+        val fakePokemonsDomain = MapperPokemonDbToDomainImpl().map(fakePokemonsDb)
+        every { mapper.dbToDomainMapper.map(listOf()) } returns listOf()
+        every { mapper.dbToDomainMapper.map(fakePokemonsDb) } returns fakePokemonsDomain
 
         runBlocking {
             pokedexRepository.getTopPokemonsWithCache().observeForever(observer)
@@ -83,12 +85,14 @@ class UserRepositoryTest {
         verifyOrder {
             observer.onChanged(Resource.loading(null)) // Loading from remote source
             observer.onChanged(Resource.loading(listOf())) // Then trying to load from db (fast temp loading) before load from remote source
-            //observer.onChanged(Resource.success(fakePokemonsDb.mapToDomain())) // Success
+            observer.onChanged(Resource.success(fakePokemonsDomain)) // Success
         }
+
 
         coVerify(exactly = 1) {
             pokedexDao.save(fakePokemonsDb)
         }
+
 
         confirmVerified(observer)
     }
@@ -96,11 +100,11 @@ class UserRepositoryTest {
     @Test
     fun `Get top users from db`() {
         val fakePokemonsNetwork = FakeData.createFakePokemonsNetwork(5)
-        every { pokemonService.fetchTopPokemonsAsync() } returns GlobalScope.async {
-            ApiResult(fakePokemonsNetwork.size, "", "", fakePokemonsNetwork)
-        }
-        val fakePokemonsDb = fakePokemonsNetwork.mapToDb()
+        coEvery { pokemonService.fetchTopPokemonsAsync() } returns ApiResult(fakePokemonsNetwork.size, "", "", fakePokemonsNetwork)
+        val fakePokemonsDb = MapperPokemonRemoteToDbImpl().map(fakePokemonsNetwork)
         coEvery { pokedexDao.getTopPokemons() } returns fakePokemonsDb
+        val fakePokemonsDomain = MapperPokemonDbToDomainImpl().map(fakePokemonsDb)
+        every { mapper.dbToDomainMapper.map(fakePokemonsDb) } returns fakePokemonsDomain
 
         runBlocking {
             pokedexRepository.getTopPokemonsWithCache().observeForever(observer)
@@ -108,7 +112,7 @@ class UserRepositoryTest {
 
         verifyOrder {
             observer.onChanged(Resource.loading(null)) // Loading from remote source
-            //observer.onChanged(Resource.success(fakePokemonsDb.mapToDomain()))// Success
+            observer.onChanged(Resource.success(fakePokemonsDomain))// Success
         }
 
         confirmVerified(observer)
@@ -116,10 +120,12 @@ class UserRepositoryTest {
 
     @Test
     fun `Get user's detail from network`() {
-        val fakePokemonNetwork = FakeData.createFakePokemonNetwork("Fake")
-        every { pokemonService.fetchPokemonDetailAsync("fake_login") } returns GlobalScope.async { fakePokemonNetwork }
-        val fakePokemonDb = fakePokemonNetwork.mapToDb()
+        val fakePokemonNetwork = FakeData.createFakePokemonNetwork("fake_login")
+        coEvery { pokemonService.fetchPokemonDetailAsync("fake_login") } returns fakePokemonNetwork
+        val fakePokemonDb = mapper.remoteToDbMapper.map(fakePokemonNetwork)
         coEvery { pokedexDao.getPokemon("fake_login") } returns fakePokemonDb
+        val fakePokemonDomain = MapperPokemonDbToDomainImpl().map(fakePokemonDb)
+        every { mapper.dbToDomainMapper.map(fakePokemonDb) } returns fakePokemonDomain
 
         runBlocking {
             pokedexRepository.getPokemonDetailWithCache(name = "fake_login").observeForever(observerPokemon)
@@ -127,13 +133,15 @@ class UserRepositoryTest {
 
         verify {
             observerPokemon.onChanged(Resource.loading(null)) // Loading from remote source
-           // observerPokemon.onChanged(Resource.loading(fakePokemonDb.mapToDomain())) // Then trying to load from db (fast temp loading) before load from remote source
-            //observerPokemon.onChanged(Resource.success(fakePokemonDb.mapToDomain())) // Success
+            observerPokemon.onChanged(Resource.loading(fakePokemonDomain)) // Then trying to load from db (fast temp loading) before load from remote source
+            observerPokemon.onChanged(Resource.success(fakePokemonDomain)) // Success
         }
+
 
         coVerify(exactly = 1) {
             pokedexDao.save(fakePokemonDb)
         }
+
 
         confirmVerified(observerPokemon)
     }
@@ -141,11 +149,11 @@ class UserRepositoryTest {
     @Test
     fun `Get user's detail from db`() {
         val fakePokemonNetwork = FakeData.createFakePokemonNetwork("fake_login")
-        every { pokemonService.fetchPokemonDetailAsync("fake_login") } returns GlobalScope.async { fakePokemonNetwork }
-        val fakePokemonDb = fakePokemonNetwork.mapToDb()
+        coEvery { pokemonService.fetchPokemonDetailAsync("fake_login") } returns fakePokemonNetwork
+        val fakePokemonDb = MapperPokemonRemoteToDbImpl().map(fakePokemonNetwork)
         coEvery { pokedexDao.getPokemon("fake_login") } returns fakePokemonDb.apply { lastRefreshed = Date() }
         val fakePokemonDomain = MapperPokemonDbToDomainImpl().map(fakePokemonDb)
-        every { mapper.map(fakePokemonDb) } returns fakePokemonDomain
+        every { mapper.dbToDomainMapper.map(fakePokemonDb) } returns fakePokemonDomain
 
         runBlocking {
             pokedexRepository.getPokemonDetailWithCache(name = "fake_login").observeForever(observerPokemon)

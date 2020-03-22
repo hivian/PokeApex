@@ -11,11 +11,11 @@ import retrofit2.http.Query
 interface PokemonApiService {
 
     @GET("/pokemon")
-    fun fetchTopPokemonsAsync(
+    suspend fun fetchTopPokemonsAsync(
         @Query("offset") offset : Int,
-        @Query("limit") limit : Int) : Deferred<ApiResult<NetworkPokemonObject>>
+        @Query("limit") limit : Int) : ApiResult<NetworkPokemonObject>
 
     @GET("/pokemon/{name}")
-    fun fetchPokemonDetailAsync(@Path("name") name : String) : Deferred<NetworkPokemonObject>
+    suspend fun fetchPokemonDetailAsync(@Path("name") name : String) : NetworkPokemonObject
 
 }

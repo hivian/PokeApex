@@ -6,8 +6,8 @@ import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.ApiResult
 import com.hivian.model.dto.network.NetworkPokemonObject
-import com.hivian.model.dto.network.mapToDb
 import com.hivian.model.mapper.Mapper
+import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
 import com.hivian.remote.PokemonDatasource
 import com.hivian.repository.utils.NetworkBoundResource
@@ -29,7 +29,7 @@ interface PokedexRepository {
 class PokedexRepositoryImpl(
     private val datasource: PokemonDatasource,
     private val dao: PokedexDao,
-    private val mapper: MapperPokemonDbToDomainImpl
+    private val mapper: MapperPokedexRepository
 ): PokedexRepository {
 
     /**
@@ -41,7 +41,7 @@ class PokedexRepositoryImpl(
         return object : NetworkBoundResource<ApiResult<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: ApiResult<NetworkPokemonObject>): List<DbPokemon> =
-                    response.results.mapToDb()
+                mapper.remoteToDbMapper.map(response.results)
 
             override suspend fun saveCallResult(result: List<DbPokemon>) =
                     dao.save(result)
@@ -53,9 +53,9 @@ class PokedexRepositoryImpl(
                     dao.getTopPokemons()
 
             override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
-                    mapper.map(data)
+                    mapper.dbToDomainMapper.map(data)
 
-            override fun createCallAsync(): Deferred<ApiResult<NetworkPokemonObject>> =
+            override suspend fun createCallAsync(): ApiResult<NetworkPokemonObject> =
                     datasource.fetchTopPokemonsAsync(offset, limit)
         }.build().asLiveData()
     }
@@ -69,7 +69,7 @@ class PokedexRepositoryImpl(
         return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =
-                    response.mapToDb()
+                    mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: DbPokemon) =
                     dao.save(result)
@@ -84,9 +84,9 @@ class PokedexRepositoryImpl(
                     dao.getPokemon(name)
 
             override suspend fun processData(data: DbPokemon): Pokemon =
-                    mapper.map(data)
+                    mapper.dbToDomainMapper.map(data)
 
-            override fun createCallAsync(): Deferred<NetworkPokemonObject> =
+            override suspend fun createCallAsync(): NetworkPokemonObject =
                     datasource.fetchPokemonDetailAsync(name)
         }.build().asLiveData()
     }

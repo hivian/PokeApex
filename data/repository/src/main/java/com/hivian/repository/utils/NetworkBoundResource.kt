@@ -52,7 +52,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
     private suspend fun fetchFromNetwork(dbResult: Local) {
         d { "Return data from local database" }
         setValue(Resource.loading(processData(dbResult))) // Dispatch latest value quickly (UX purpose)
-        val apiResponse = createCallAsync().await()
+        val apiResponse = createCallAsync()
         d { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
         setValue(Resource.success(processData(loadFromDb())))
@@ -80,5 +80,5 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
     protected abstract suspend fun processData(data: Local) : Domain
 
     @MainThread
-    protected abstract fun createCallAsync(): Deferred<Remote>
+    protected abstract suspend fun createCallAsync(): Remote
 }

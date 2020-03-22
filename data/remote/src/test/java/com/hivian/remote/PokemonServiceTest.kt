@@ -13,7 +13,7 @@ class UserServiceTest: BaseTest() {
     fun `search top pokemons by name`() {
         mockHttpResponse(mockServer, "search_pokemons.json", HttpURLConnection.HTTP_OK)
         runBlocking {
-            val pokemons = pokemonApiService.fetchTopPokemonsAsync().await()
+            val pokemons = pokemonApiService.fetchTopPokemonsAsync(0, 20)
             Assert.assertEquals(964, pokemons.count)
             Assert.assertEquals(20, pokemons.results.size)
             Assert.assertEquals("bulbasaur", pokemons.results.first().name)
@@ -25,7 +25,7 @@ class UserServiceTest: BaseTest() {
     fun `search top pokemons by name and fail`() {
         mockHttpResponse(mockServer,"search_pokemons.json", HttpURLConnection.HTTP_FORBIDDEN)
         runBlocking {
-            pokemonApiService.fetchTopPokemonsAsync().await()
+            pokemonApiService.fetchTopPokemonsAsync(0, 20)
         }
     }
 
@@ -35,7 +35,7 @@ class UserServiceTest: BaseTest() {
     fun `fetch pokemon's detail`() {
         mockHttpResponse(mockServer,"pokemon_detail.json", HttpURLConnection.HTTP_OK)
         runBlocking {
-            val pokemon = pokemonApiService.fetchPokemonDetailAsync("bulbasaur").await()
+            val pokemon = pokemonApiService.fetchPokemonDetailAsync("bulbasaur")
             Assert.assertEquals(1, pokemon.id)
             Assert.assertEquals("razor-wind", pokemon.moves.first().move.name)
             Assert.assertEquals("hp", pokemon.stats.last().stat.name)
@@ -48,7 +48,7 @@ class UserServiceTest: BaseTest() {
     fun `fetch pokemon's detail and fail`() {
         mockHttpResponse(mockServer,"pokemon_detail.json", HttpURLConnection.HTTP_FORBIDDEN)
         runBlocking {
-            pokemonApiService.fetchPokemonDetailAsync("bulbasaur").await()
+            pokemonApiService.fetchPokemonDetailAsync("bulbasaur")
         }
     }
 }
