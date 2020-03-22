@@ -7,6 +7,8 @@ object Plugins {
     const val kapt = "kapt"
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val crashlytics = "io.fabric"
+    // Dsl
+    const val androidLibraryCommon = "commons.android-library"
 }
 
 object ApplicationId {
