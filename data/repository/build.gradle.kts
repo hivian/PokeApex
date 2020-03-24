@@ -1,23 +1,6 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.kotlinAndroid)
-    kotlin(Plugins.kotlinExtensions)
+    id(Plugins.androidLibraryCommon)
     kotlin(Plugins.kapt)
-}
-
-android {
-    compileSdkVersion(Versions.compileSdk)
-    defaultConfig {
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
-        versionCode = Releases.versionCode
-        versionName = Releases.versionName
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
 }
 
 dependencies {

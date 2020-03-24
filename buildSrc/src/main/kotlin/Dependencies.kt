@@ -9,6 +9,7 @@ object Plugins {
     const val crashlytics = "io.fabric"
     // Dsl
     const val androidLibraryCommon = "commons.android-library"
+    const val kotlinLibraryCommon = "commons.kotlin-library"
 }
 
 object ApplicationId {

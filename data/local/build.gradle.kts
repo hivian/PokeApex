@@ -1,7 +1,5 @@
 plugins {
     id(Plugins.androidLibraryCommon)
-    kotlin(Plugins.kotlinAndroid)
-    kotlin(Plugins.kotlinExtensions)
     kotlin(Plugins.kapt)
 }
 
