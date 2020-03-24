@@ -10,6 +10,7 @@ object Plugins {
     // Dsl
     const val androidLibraryCommon = "commons.android-library"
     const val kotlinLibraryCommon = "commons.kotlin-library"
+    const val featureLibraryCommon = "commons.feature-library"
 }
 
 object ApplicationId {
