@@ -18,7 +18,8 @@ class App: Application() {
         startKoin(this, provideComponent())
 
     private fun configureTimber() {
-        Timber.plant(get<Timber.DebugTree>())
+        if (BuildConfig.DEBUG)
+            Timber.plant(get<Timber.DebugTree>())
     }
 
     // PUBLIC API

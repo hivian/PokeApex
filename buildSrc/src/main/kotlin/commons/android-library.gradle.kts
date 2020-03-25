@@ -1,5 +1,7 @@
 package commons
 
+import com.android.builder.model.AndroidLibrary
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -27,4 +29,5 @@ android {
 
 dependencies {
     implementation(KotlinLibraries.kotlin)
+    implementation(Libraries.timberKt)
 }

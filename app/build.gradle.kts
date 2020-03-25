@@ -37,12 +37,8 @@ dependencies {
     implementation(project(Modules.local))
     implementation(project(Modules.remote))
     implementation(project(Modules.repository))
-
-    implementation(KotlinLibraries.kotlin)
-    implementation(AndroidLibraries.coreKtx)
-    implementation(AndroidLibraries.constraintLayout)
-    androidTestImplementation(TestLibraries.junit)
-    androidTestImplementation(TestLibraries.espresso)
+    // FEATURES modules
+    implementation(project(Modules.featureHome))
     // KOIN
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)
