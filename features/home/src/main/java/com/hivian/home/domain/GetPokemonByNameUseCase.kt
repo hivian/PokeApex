@@ -8,14 +8,14 @@ import com.hivian.repository.utils.Resource
 
 
 /**
- * Use case that gets a [Resource][List][Pokemon] from [PokedexRepository]
+ * Use case that gets a [Resource][Pokemon] from [PokedexRepository]
  * and makes some specific logic actions on it.
  *
  */
-class GetTopPokemonsUseCase(private val repository: PokedexRepository) {
+class GetPokemonByNameUseCase(private val repository: PokedexRepository) {
 
-    suspend operator fun invoke(forceRefresh: Boolean = false): LiveData<Resource<List<Pokemon>>> {
-        return Transformations.map(repository.getTopPokemonsWithCache(forceRefresh)) {
+    suspend operator fun invoke(forceRefresh: Boolean = false, name: String): LiveData<Resource<Pokemon>> {
+        return Transformations.map(repository.getPokemonDetailWithCache(forceRefresh, name)) {
             it // Place here your specific logic actions
         }
     }

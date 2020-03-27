@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -8,15 +9,15 @@
             type="com.hivian.home.pokemon_list.PokemonListViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        tools:context=".pokemon_list.PokemonListFragment"
+        android:id="@+id/fragment_detail_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".pokemon_list.PokemonListFragment">
+        app:showWhenLoading="@{viewModel.status}"
+        app:onRefreshListener="@{() -> viewModel.forceRefreshItems()}">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </FrameLayout>
+
 </layout>

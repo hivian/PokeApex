@@ -17,9 +17,7 @@ fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
  * Triggers a snackbar message when the value contained by snackbarTaskMessageLiveEvent is modified.
  */
 fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Int>, timeLength: Int) {
-    snackbarEvent.observe(lifecycleOwner, Observer { event ->
-        snackbarEvent.value?.let { res ->
-            context?.let { showSnackbar(it.getString(res), timeLength) }
-        }
+    snackbarEvent.observe(lifecycleOwner, Observer { stringRes ->
+        context?.let { showSnackbar(it.getString(stringRes), timeLength) }
     })
 }

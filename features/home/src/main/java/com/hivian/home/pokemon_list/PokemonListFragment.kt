@@ -26,7 +26,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(viewModel.event, ::onViewEvent)
+        observe(viewModel.navigationEvent, ::onViewEvent)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         when (viewEvent) {
             is PokemonListEvent.OpenPokemonDetail ->
                 findNavController().navigate(
-                    PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(viewEvent.id))
+                    PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(viewEvent.name))
         }
     }
 

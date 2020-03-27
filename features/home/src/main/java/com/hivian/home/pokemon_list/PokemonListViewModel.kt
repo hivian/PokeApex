@@ -25,7 +25,10 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     private val _pokemons = MediatorLiveData<Resource<List<Pokemon>>>()
     val pokemons: LiveData<Resource<List<Pokemon>>> get() = _pokemons
 
-    val event = SingleLiveData<PokemonListEvent>()
+    // EVENTS
+    val navigationEvent = SingleLiveData<PokemonListEvent>()
+    private val _status = MutableLiveData<Resource.Status>()
+    val status: LiveData<Resource.Status> get() = _status
 
     private var pokemonsSource: LiveData<Resource<List<Pokemon>>> = MutableLiveData()
 
@@ -44,14 +47,16 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
      *
      * @param characterId Character identifier.
      */
-    fun openPokemonDetail(pokemonId: Int) {
-        event.postValue(PokemonListEvent.OpenPokemonDetail(pokemonId))
+    fun openPokemonDetail(name: String) {
+        navigationEvent.postValue(PokemonListEvent.OpenPokemonDetail(name))
     }
 
     private fun getPokemons(forceRefresh: Boolean) = viewModelScope.launch { (dispatchers.main)
         _pokemons.removeSource(pokemonsSource)
         withContext(dispatchers.io) { pokemonsSource = getTopPokemonsUseCase(forceRefresh = forceRefresh) }
         _pokemons.addSource(pokemonsSource) {
+            _pokemons.value = it
+            _status.value = it.status
             if (it.status == Resource.Status.HTTP_ERROR) snackBarError.value = R.string.pokemon_list_server_error
             if (it.status == Resource.Status.NETWORK_ERROR) snackBarError.value = R.string.pokemon_list_network_error
         }

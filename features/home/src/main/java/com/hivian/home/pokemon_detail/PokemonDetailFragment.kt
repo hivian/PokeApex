@@ -1,32 +1,31 @@
 package com.hivian.home.pokemon_detail
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import android.os.Bundle
+import androidx.navigation.fragment.navArgs
+import com.hivian.common.base.BaseFragment
+import com.hivian.common.base.BaseViewModel
+
 import com.hivian.home.R
+import com.hivian.home.databinding.PokemonDetailFragmentBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class PokemonDetailFragment : Fragment() {
+class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, PokemonDetailViewModel>(
+    layoutId = R.layout.pokemon_detail_fragment
+) {
 
-    companion object {
-        fun newInstance() = PokemonDetailFragment()
+    override fun onInitDataBinding() {
+        viewBinding.viewModel = viewModel
     }
 
-    private lateinit var viewModel: PokemonDetailViewModel
+    override fun getViewModel(): BaseViewModel = viewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.pokemon_detail_fragment, container, false)
-    }
+    private val viewModel: PokemonDetailViewModel by viewModel()
+    private val args: PokemonDetailFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(PokemonDetailViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.loadDataWhenActivityStarts(args.pokemonName)
     }
 
 }

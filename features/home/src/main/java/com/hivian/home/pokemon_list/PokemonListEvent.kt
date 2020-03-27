@@ -7,6 +7,6 @@ sealed class PokemonListEvent {
      *
      * @param id Pokemon identifier
      */
-    data class OpenPokemonDetail(val id: Int) : PokemonListEvent()
+    data class OpenPokemonDetail(val name: String) : PokemonListEvent()
 
 }
