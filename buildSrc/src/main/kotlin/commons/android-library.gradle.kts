@@ -1,6 +1,9 @@
 package commons
 
-import com.android.builder.model.AndroidLibrary
+import KotlinLibraries
+import Libraries
+import Releases
+import Versions
 
 plugins {
     id("com.android.library")

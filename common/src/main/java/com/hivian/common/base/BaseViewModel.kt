@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import com.hivian.common.livedata.SingleLiveData
 import com.hivian.common.navigation.NavigationCommand
 import com.hivian.common.utils.Event
 
 abstract class BaseViewModel: ViewModel() {
 
     // FOR ERROR HANDLER
-    protected val _snackbarError = MutableLiveData<Event<Int>>()
-    val snackBarError: LiveData<Event<Int>> get() = _snackbarError
+    val snackBarError = SingleLiveData<Int>()
 
     // FOR NAVIGATION
     private val _navigation = MutableLiveData<Event<NavigationCommand>>()

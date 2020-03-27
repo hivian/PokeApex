@@ -1,7 +1,5 @@
 package com.hivian.repository.utils
 
-import java.lang.Exception
-
 data class Resource<out T>(val status: Status, val data: T?, val code: Int? = null, val error: Exception?) {
     companion object {
         fun <T> success(data: T?): Resource<T> {

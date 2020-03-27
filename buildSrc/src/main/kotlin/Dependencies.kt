@@ -79,6 +79,7 @@ object Libraries {
     // KOIN
     val koin = "org.koin:koin-android:${Versions.koin}"
     val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
+    val koinAndroid = "org.koin:koin-android-architecture:1.0.0-alpha-12"
 
     // ROOM
     val roomCompiler = "androidx.room:room-compiler:${Versions.room}"

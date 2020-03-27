@@ -6,13 +6,10 @@ import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.ApiResult
 import com.hivian.model.dto.network.NetworkPokemonObject
-import com.hivian.model.mapper.Mapper
 import com.hivian.model.mapper.MapperPokedexRepository
-import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
 import com.hivian.remote.PokemonDatasource
 import com.hivian.repository.utils.NetworkBoundResource
 import com.hivian.repository.utils.Resource
-import kotlinx.coroutines.Deferred
 
 interface PokedexRepository {
     suspend fun getTopPokemonsWithCache(

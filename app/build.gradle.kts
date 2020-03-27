@@ -34,6 +34,7 @@ dependencies {
     // COMMON
     implementation(project(Modules.common))
     // DATA modules
+    implementation(project(Modules.model))
     implementation(project(Modules.local))
     implementation(project(Modules.remote))
     implementation(project(Modules.repository))

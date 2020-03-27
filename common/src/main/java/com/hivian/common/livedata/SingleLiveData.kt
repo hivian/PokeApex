@@ -56,4 +56,12 @@ class SingleLiveData<T> : MutableLiveData<T>() {
         pending.set(true)
         super.setValue(value)
     }
+
+    /**
+     * Used for cases where T is Void, to make calls cleaner.
+     */
+    @MainThread
+    fun call() {
+        value = null
+    }
 }

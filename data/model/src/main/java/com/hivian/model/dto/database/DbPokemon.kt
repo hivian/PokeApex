@@ -2,11 +2,7 @@ package com.hivian.model.dto.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonSprites
-import com.hivian.model.domain.PokemonStat
-import com.hivian.model.domain.PokemonType
-import java.util.Date
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @Entity

@@ -5,11 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.hivian.local.converter.ListStringConverter
-import com.hivian.local.converter.PokemonSpriteConverter
-import com.hivian.local.converter.PokemonStatConverter
-import com.hivian.local.converter.PokemonTypeConverter
-import com.hivian.local.converter.DateConverter
+import com.hivian.local.converter.*
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.dto.database.DbPokemon
 

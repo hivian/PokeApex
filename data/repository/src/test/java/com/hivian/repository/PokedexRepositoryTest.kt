@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.hivian.common_test.rules.CoroutinesMainDispatcherRule
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.ApiResult
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
@@ -15,8 +14,6 @@ import com.hivian.repository.utils.FakeData
 import com.hivian.repository.utils.Resource
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule

@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/pokemonListFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.hivian.home.list.ListFragment"
+        android:id="@+id/pokemonListFragment"
+        android:name="com.hivian.home.pokemon_list.PokemonListFragment"
         android:label="home_fragment"
-        tools:layout="@layout/list_fragment" >
+        tools:layout="@layout/pokemon_list_fragment" >
         <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
+            android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"
+            app:destination="@id/pokemonDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.hivian.home.detail.DetailFragment"
+        android:id="@+id/pokemonDetailFragment"
+        android:name="com.hivian.home.pokemon_detail.PokemonDetailFragment"
         android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment" >
+        tools:layout="@layout/pokemon_detail_fragment" >
         <argument
             android:name="pokemonId"
             app:argType="integer" />

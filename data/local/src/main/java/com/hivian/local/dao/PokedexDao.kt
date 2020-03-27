@@ -3,7 +3,7 @@ package com.hivian.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.hivian.model.dto.database.DbPokemon
-import java.util.Date
+import java.util.*
 
 @Dao
 abstract class PokedexDao : BaseDao<DbPokemon> {

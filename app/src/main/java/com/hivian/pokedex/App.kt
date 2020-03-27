@@ -1,7 +1,7 @@
 package com.hivian.pokedex
 
 import android.app.Application
-import com.hivian.pokedex.di.appComponent
+import com.hivian.pokedex.di.toto
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
@@ -23,5 +23,5 @@ class App: Application() {
     }
 
     // PUBLIC API
-    private fun provideComponent() = appComponent
+    private fun provideComponent() = toto
 }

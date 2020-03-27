@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="pokemon_list_network_error">Network error</string>
+    <string name="pokemon_list_server_error">Server error</string>
+    
+</resources>

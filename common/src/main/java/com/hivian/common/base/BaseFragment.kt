@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
 import com.hivian.common.extension.setupSnackbar
 import com.hivian.common.navigation.NavigationCommand
@@ -23,13 +23,18 @@ abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(
     private val layoutId: Int
 ): Fragment() {
 
-    lateinit var viewModel: M
     lateinit var viewBinding: B
 
     /**
      * Called to Initialize view data binding variables when fragment view is created.
      */
     abstract fun onInitDataBinding()
+
+
+    /**
+     * Called to get initialized [BaseViewModel]
+     */
+    abstract fun getViewModel(): BaseViewModel
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -78,11 +83,9 @@ abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeNavigation(getBaseViewModel())
-        setupSnackbar(this, getBaseViewModel().snackBarError, Snackbar.LENGTH_LONG)
+        observeNavigation(getViewModel())
+        setupSnackbar(this, getViewModel().snackBarError, Snackbar.LENGTH_LONG)
     }
-
-    abstract fun getBaseViewModel(): BaseViewModel
 
     // UTILS METHODS ---
 
