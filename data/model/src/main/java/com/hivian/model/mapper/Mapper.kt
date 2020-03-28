@@ -11,7 +11,14 @@ import com.hivian.model.dto.database.DbPokemonType
 import com.hivian.model.dto.network.NetworkPokemonObject
 
 abstract class Mapper<I, O> {
+    /**
+     * Mapping object.
+     *
+     * @param from Initial object to from mapping.
+     * @return An Object containing the results of applying the transformation.
+     */
     abstract fun map(input: I): O
+
     fun map(input: List<I>) : List<O> = input.map { map(it) }
 }
 
@@ -26,7 +33,9 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             abilities = input.abilities,
             forms = input.forms,
             moves = input.moves,
-            sprites = PokemonSprites(input.sprites.frontDefault, input.sprites.backDefault),
+            sprites = PokemonSprites(
+                backDefault = input.sprites.backDefault,
+                frontDefault = input.sprites.frontDefault),
             stats = input.stats.map { PokemonStat(it.name, it.baseStat, it.effort) },
             types = input.types.map { PokemonType(it.slot, it.name) })
     }

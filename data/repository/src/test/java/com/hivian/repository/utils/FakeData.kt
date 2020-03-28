@@ -11,13 +11,13 @@ object FakeData {
 
     fun createFakePokemonsNetwork(count: Int): List<NetworkPokemonObject> {
         return (0 until count).map { id ->
-            createFakePokemonNetwork(id.toString())
+            createFakePokemonNetwork(id.toString(), id)
         }
     }
 
-    fun createFakePokemonNetwork(name: String): NetworkPokemonObject {
+    fun createFakePokemonNetwork(name: String, id: Int = 0): NetworkPokemonObject {
         return NetworkPokemonObject(
-            id = Random().nextInt(), name = "Name_$name",
+            id = id, name = "Name_$name",
             height = 100, weight = 200,
             abilities = arrayListOf(NetworkPokemonAbilityObject(
                 ability = NetworkPokemonAbility(name = "Fireball"),
@@ -25,7 +25,7 @@ object FakeData {
                 slot = 0)),
             forms = arrayListOf(NetworkPokemonForm(name = "Circle")),
             moves = arrayListOf(NetworkPokemonMoveObject(NetworkPokemonMove(name = "Run"))),
-            sprites = NetworkPokemonSprites("", null, "", null, "", null, "", null),
+            sprites = NetworkPokemonSprites("backDefault.jpg", null, "", null, "frontDefault.jpg", null, "", null),
             stats = arrayListOf(NetworkPokemonStatObject(
                 baseStat = 0,
                 effort = 1,
@@ -52,7 +52,7 @@ object FakeData {
             abilities = arrayListOf( "Fireball"),
             forms = arrayListOf("Circle"),
             moves = arrayListOf("Run"),
-            sprites = DbPokemonSprites("", null, "", null, "", null, "", null),
+            sprites = DbPokemonSprites("backDefault.jpg", null, "", null, "frontDefault.jpg", null, "", null),
             stats = arrayListOf(DbPokemonStat(
                 baseStat = 0,
                 effort = 1,
