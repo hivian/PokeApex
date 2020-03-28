@@ -5,6 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseFragment
+import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.extension.observe
 import com.hivian.home.R
@@ -26,7 +27,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(viewModel.navigationEvent, ::onViewEvent)
+        observe(viewModel.event, ::onViewEvent)
+        observe(viewModel.state, ::onViewStateChange)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -35,13 +37,22 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     /**
+     * Observer view state change on [PokemonListViewModel].
+     *
+     * @param viewState State of characters list.
+     */
+    private fun onViewStateChange(viewState: PokemonListViewState) {
+
+    }
+
+    /**
      * Observer view event change on [PokemonListViewModel].
      *
      * @param viewEvent Event on characters list.
      */
-    private fun onViewEvent(viewEvent: PokemonListEvent) {
+    private fun onViewEvent(viewEvent: BaseViewEvent) {
         when (viewEvent) {
-            is PokemonListEvent.OpenPokemonDetail ->
+            is PokemonListViewEvent.OpenPokemonDetailView ->
                 findNavController().navigate(
                     PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(viewEvent.name))
         }

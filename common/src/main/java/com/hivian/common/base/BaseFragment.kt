@@ -83,25 +83,7 @@ abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeNavigation(getViewModel())
         setupSnackbar(this, getViewModel().snackBarError, Snackbar.LENGTH_LONG)
-    }
-
-    // UTILS METHODS ---
-
-    /**
-     * Observe a [NavigationCommand] [Event] [LiveData].
-     * When this [LiveData] is updated, [Fragment] will navigate to its destination
-     */
-    private fun observeNavigation(viewModel: BaseViewModel) {
-        viewModel.navigation.observe(viewLifecycleOwner, Observer {
-            it?.getContentIfNotHandled()?.let { command ->
-                when (command) {
-                    is NavigationCommand.To -> findNavController().navigate(command.directions, getExtras())
-                    is NavigationCommand.Back -> findNavController().navigateUp()
-                }
-            }
-        })
     }
 
     /**

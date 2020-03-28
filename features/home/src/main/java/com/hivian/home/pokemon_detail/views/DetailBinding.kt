@@ -6,6 +6,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.github.ajalt.timberkt.d
+import com.hivian.common.base.BaseViewState
+import com.hivian.home.pokemon_list.PokemonListViewState
 import com.hivian.repository.utils.Resource
 
 object DetailBinding {
@@ -17,10 +19,10 @@ object DetailBinding {
 
     @BindingAdapter("app:showWhenLoading")
     @JvmStatic
-    fun showWhenLoading(view: SwipeRefreshLayout, status: Resource.Status?) {
-        d { "Status: $status" }
-        status?.let {
-            view.isRefreshing = it == Resource.Status.LOADING
+    fun showWhenLoading(view: SwipeRefreshLayout, state: PokemonListViewState?) {
+        d { "Status: $state" }
+        state?.let {
+            view.isRefreshing = it is PokemonListViewState.Loading
         }
     }
 

@@ -19,18 +19,21 @@ import kotlinx.coroutines.withContext
  * for [PokemonListFragment].
  */
 class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseCase,
-                           private val dispatchers: AppDispatchers) : BaseViewModel() {
+                           private val dispatchers: AppDispatchers)
+    : BaseViewModel() {
 
-    // FOR DATA
+    // FOR data
     private val _pokemons = MediatorLiveData<Resource<List<Pokemon>>>()
     val pokemons: LiveData<Resource<List<Pokemon>>> get() = _pokemons
 
-    // EVENTS
-    val navigationEvent = SingleLiveData<PokemonListEvent>()
-    private val _status = MutableLiveData<Resource.Status>()
-    val status: LiveData<Resource.Status> get() = _status
-
     private var pokemonsSource: LiveData<Resource<List<Pokemon>>> = MutableLiveData()
+
+    // FOR event
+    val event = SingleLiveData<PokemonListViewEvent>()
+
+    // FOR state
+    private val _state = MutableLiveData<PokemonListViewState>()
+    val state: LiveData<PokemonListViewState> get() = _state
 
     init {
         getPokemons(false)
@@ -48,17 +51,26 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
      * @param characterId Character identifier.
      */
     fun openPokemonDetail(name: String) {
-        navigationEvent.postValue(PokemonListEvent.OpenPokemonDetail(name))
+        event.postValue(PokemonListViewEvent.OpenPokemonDetailView(name))
     }
 
-    private fun getPokemons(forceRefresh: Boolean) = viewModelScope.launch { (dispatchers.main)
+    private fun getPokemons(forceRefresh: Boolean) = viewModelScope.launch(dispatchers.main) {
         _pokemons.removeSource(pokemonsSource)
         withContext(dispatchers.io) { pokemonsSource = getTopPokemonsUseCase(forceRefresh = forceRefresh) }
         _pokemons.addSource(pokemonsSource) {
             _pokemons.value = it
-            _status.value = it.status
-            if (it.status == Resource.Status.HTTP_ERROR) snackBarError.value = R.string.pokemon_list_server_error
-            if (it.status == Resource.Status.NETWORK_ERROR) snackBarError.value = R.string.pokemon_list_network_error
+             when (it.status) {
+                Resource.Status.SUCCESS -> _state.value = PokemonListViewState.Loaded
+                Resource.Status.LOADING -> _state.value = PokemonListViewState.Loading
+                Resource.Status.HTTP_ERROR -> {
+                    snackBarError.value = R.string.pokemon_list_server_error
+                    _state.value = PokemonListViewState.Error
+                }
+                 Resource.Status.NETWORK_ERROR -> {
+                     snackBarError.value = R.string.pokemon_list_network_error
+                     _state.value = PokemonListViewState.Error
+                 }
+            }
         }
 
     }

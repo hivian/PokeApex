@@ -8,12 +8,12 @@ import retrofit2.http.Query
 
 interface PokemonApiService {
 
-    @GET("/pokemon")
+    @GET("pokemon")
     suspend fun fetchTopPokemonsAsync(
         @Query("offset") offset : Int,
         @Query("limit") limit : Int) : ApiResult<NetworkPokemonObject>
 
-    @GET("/pokemon/{name}")
+    @GET("pokemon/{name}")
     suspend fun fetchPokemonDetailAsync(@Path("name") name : String) : NetworkPokemonObject
 
 }

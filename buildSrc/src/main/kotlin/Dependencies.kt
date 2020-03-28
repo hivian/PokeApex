@@ -52,7 +52,7 @@ object Versions {
     val junit = "4.12"
     val androidTestRunner = "1.1.2-alpha02"
     val espressoCore = "3.2.0-alpha02"
-    val retrofit = "2.5.0"
+    val retrofit = "2.6.0"
     val retrofitCoroutines = "0.9.2"
     val retrofitGson = "2.4.0"
     val gson = "2.8.5"
