@@ -8,10 +8,10 @@ data class ApiResult<T>(
     val count: Int,
 
     @SerializedName("next")
-    var next: String,
+    var next: String?,
 
     @SerializedName("previous")
-    var previous: String,
+    var previous: String?,
 
     @SerializedName("results")
     val results: List<T>

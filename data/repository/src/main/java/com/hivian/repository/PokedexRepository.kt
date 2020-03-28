@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.network.ApiResult
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.remote.PokemonDatasource
@@ -35,16 +34,19 @@ class PokedexRepositoryImpl(
      * [NetworkBoundResource] is responsible to handle this behavior.
      */
     override suspend fun getTopPokemonsWithCache(forceRefresh: Boolean, offset: Int, limit: Int): LiveData<Resource<List<Pokemon>>> {
-        return object : NetworkBoundResource<ApiResult<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
+        return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
-            override fun processResponse(response: ApiResult<NetworkPokemonObject>): List<DbPokemon> =
-                mapper.remoteToDbMapper.map(response.results)
+            override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
+                    mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: List<DbPokemon>) =
                     dao.save(result)
 
             override fun shouldFetch(data: List<DbPokemon>?): Boolean =
-                    data == null || data.isEmpty() || forceRefresh
+                    data == null ||
+                    data.isEmpty() ||
+                    data.first().haveToRefreshFromNetwork() ||
+                    forceRefresh
 
             override suspend fun loadFromDb(): List<DbPokemon> =
                     dao.getTopPokemons()
@@ -52,8 +54,15 @@ class PokedexRepositoryImpl(
             override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
                     mapper.dbToDomainMapper.map(data)
 
-            override suspend fun createCallAsync(): ApiResult<NetworkPokemonObject> =
-                    datasource.fetchTopPokemonsAsync(offset, limit)
+            override suspend fun createCallAsync(): List<NetworkPokemonObject> {
+                val list = mutableListOf<NetworkPokemonObject>()
+                datasource.fetchTopPokemonsAsync(offset, limit).results.forEach {
+                    val networkPokemonObject = datasource.fetchPokemonDetailAsync(it.name)
+                    list.add(networkPokemonObject)
+                }
+                return list
+            }
+
         }.build().asLiveData()
     }
 

@@ -32,7 +32,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                             val code = e.code()
                             Resource.httpError(code, e, processData(loadFromDb()))
                         }
-                        else -> Resource.httpError(null, null, processData(loadFromDb()))
+                        else -> Resource.httpError(null, e, processData(loadFromDb()))
                     }
                     e { "An error happened: $e" }
                     setValue(value)
