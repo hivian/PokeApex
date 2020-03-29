@@ -4,8 +4,8 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.ajalt.timberkt.d
 import com.github.ajalt.timberkt.e
+import com.github.ajalt.timberkt.i
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
@@ -38,7 +38,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                     setValue(value)
                 }
             } else {
-                d { "Return data from local database" }
+                i { "Return data from local database" }
                 setValue(Resource.success(processData(dbResult)))
             }
         }
@@ -50,17 +50,17 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
     // ---
 
     private suspend fun fetchFromNetwork(dbResult: Local) {
-        d { "Return data from local database" }
+        i { "Return data from local database" }
         setValue(Resource.loading(processData(dbResult))) // Dispatch latest value quickly (UX purpose)
         val apiResponse = createCallAsync()
-        d { "Data fetched from network" }
+        i { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
         setValue(Resource.success(processData(loadFromDb())))
     }
 
     @MainThread
     private fun setValue(newValue: Resource<Domain>) {
-        d { "Resource: $newValue" }
+        i { "Resource: $newValue" }
         if (result.value != newValue) result.postValue(newValue)
     }
 

@@ -9,14 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hivian.common.extension.setupSnackbar
-import com.hivian.common.navigation.NavigationCommand
+
 
 abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(
     @LayoutRes

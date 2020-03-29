@@ -46,8 +46,9 @@ object Versions {
     val compileSdk = 29
     val minSdk = 23
     val targetSdk = 29
-    val appCompat = "1.1.0-alpha04"
+    val appCompat = "1.2.0-alpha03"
     val coreKtx = "1.1.0-alpha04"
+    val swipeRefreshLayout = "1.0.0"
     val constraintLayout = "1.1.3"
     val junit = "4.12"
     val androidTestRunner = "1.1.2-alpha02"
@@ -58,6 +59,7 @@ object Versions {
     val gson = "2.8.5"
     val okHttp = "3.12.1"
     val coroutines = "1.1.1"
+    val material = "1.2.0-alpha05"
     val koin = "1.0.2"
     val timberKt = "1.5.1"
     val lifecycle = "2.1.0-alpha04"
@@ -79,7 +81,6 @@ object Libraries {
     // KOIN
     val koin = "org.koin:koin-android:${Versions.koin}"
     val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
-    val koinAndroid = "org.koin:koin-android-architecture:1.0.0-alpha-12"
 
     // ROOM
     val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
@@ -111,8 +112,10 @@ object AndroidLibraries {
     val kotlinCoroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     // ANDROID
+    val material = "com.google.android.material:material:${Versions.material}"
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
+    val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
