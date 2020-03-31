@@ -27,6 +27,17 @@ android {
     dataBinding {
         isEnabled = true
     }
+    sourceSets {
+        getByName("main") {
+            java.srcDir("src/main/kotlin")
+        }
+        getByName("test") {
+            java.srcDir("src/test/kotlin")
+        }
+        getByName("androidTest") {
+            java.srcDir("src/androidTest/kotlin")
+        }
+    }
 }
 
 dependencies {

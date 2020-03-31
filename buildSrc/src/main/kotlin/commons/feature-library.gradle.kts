@@ -16,6 +16,7 @@ dependencies {
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.coreKtx)
     implementation(AndroidLibraries.swipeRefreshLayout)
+    implementation(AndroidLibraries.paging)
     implementation(AndroidLibraries.constraintLayout)
     implementation(AndroidLibraries.lifecycleViewModel)
     implementation(AndroidLibraries.lifecycleExtensions)
