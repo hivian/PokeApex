@@ -11,7 +11,9 @@ import com.hivian.common.extension.gridLayoutManager
 import com.hivian.common.extension.observe
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
-import com.hivian.home.pokemon_list.views.PokemonListAdapter
+import com.hivian.home.pokemon_list.views.adapter.PaginationListener
+import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
+import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,7 +31,19 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         viewBinding.viewModel = viewModel
         viewBinding.includeList.pokemonList.apply {
             adapter = viewAdapter
-            gridLayoutManager?.spanSizeLookup = viewAdapter.getSpanSizeLookup()
+            gridLayoutManager?.let {
+                it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
+                addOnScrollListener(object : PaginationListener(it) {
+                    override fun loadMoreItems() {
+                        viewModel.loadMoreItem()
+                    }
+
+                    override fun isLastPage(): Boolean = false
+
+                    override fun isLoading(): Boolean = viewModel.state.value!!.isAddLoading()
+
+                })
+            }
         }
     }
 
@@ -38,7 +52,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(viewModel.event, ::onViewEvent)
-        observe(viewModel.pokemons, ::onViewDataChange)
+        observe(viewModel.data, ::onViewDataChange)
         observe(viewModel.state, ::onViewStateChange)
     }
 
@@ -48,11 +62,15 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     /**
-     * Observer view data change on [CharactersListViewModel].
+     * Observer view data change on [PokemonListViewModel].
      *
      * @param viewData Paged list of characters.
      */
     private fun onViewDataChange(viewData: List<Pokemon>) {
+        d { "=> onView Data Change - ${viewData.size}:" }
+        viewData.forEach {
+            d { "=> ${it.name}" }
+        }
         viewAdapter.submitList(viewData)
     }
 
@@ -62,7 +80,16 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      * @param viewState State of characters list.
      */
     private fun onViewStateChange(viewState: PokemonListViewState) {
-
+        when (viewState) {
+            is PokemonListViewState.Loaded ->
+                viewAdapter.submitState(PokemonListAdapterState.Added)
+            is PokemonListViewState.AddLoading ->
+                viewAdapter.submitState(PokemonListAdapterState.AddLoading)
+            is PokemonListViewState.AddError ->
+                viewAdapter.submitState(PokemonListAdapterState.AddError)
+            is PokemonListViewState.NoMoreElements ->
+                viewAdapter.submitState(PokemonListAdapterState.NoMore)
+        }
     }
 
     /**

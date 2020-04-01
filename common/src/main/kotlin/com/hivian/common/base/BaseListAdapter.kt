@@ -21,6 +21,11 @@ abstract class BaseListAdapter<T>(
     override fun areContentsTheSame(old: T, new: T): Boolean = contentsSame(old, new)
 }) {
 
+    init {
+        // Avoid That RecyclerView’s Views are Blinking when notifyDataSetChanged.
+        super.setHasStableIds(true)
+    }
+
     /**
      * Called when RecyclerView needs a new [RecyclerView.ViewHolder] of the given type to
      * represent an item.

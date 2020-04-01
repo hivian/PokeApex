@@ -1,4 +1,4 @@
-package com.hivian.home.pokemon_list.views
+package com.hivian.home.pokemon_list.views.adapter.holders
 
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView

@@ -49,7 +49,7 @@ class PokedexRepositoryImpl(
                     forceRefresh
 
             override suspend fun loadFromDb(): List<DbPokemon> =
-                    dao.getTopPokemons()
+                    dao.getTopPokemons(ascLimit = offset + limit)
 
             override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
                     mapper.dbToDomainMapper.map(data)

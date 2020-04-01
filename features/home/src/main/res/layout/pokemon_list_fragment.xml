@@ -14,7 +14,7 @@
         android:id="@+id/fragment_detail_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:showWhenLoading="@{viewModel.state}"
+        app:refreshing="@{viewModel.state.refreshing}"
         app:onRefreshListener="@{() -> viewModel.forceRefreshItems()}">
 
         <androidx.constraintlayout.widget.ConstraintLayout

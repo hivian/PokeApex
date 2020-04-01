@@ -1,12 +1,15 @@
-package com.hivian.home.pokemon_list.views
+package com.hivian.home.pokemon_list.views.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseListAdapter
-import com.hivian.common.base.BasePagedListAdapter
 import com.hivian.home.pokemon_list.PokemonListViewModel
+import com.hivian.home.pokemon_list.views.adapter.holders.ErrorViewHolder
+import com.hivian.home.pokemon_list.views.adapter.holders.LoadingViewHolder
+import com.hivian.home.pokemon_list.views.adapter.holders.PokemonListViewHolder
 import com.hivian.model.domain.Pokemon
 
 /**
@@ -26,15 +29,36 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
     itemsSame = { old, new -> old.pokemonId == new.pokemonId },
     contentsSame = { old, new -> old == new }
 )  {
+    private var state: PokemonListAdapterState = PokemonListAdapterState.Added
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         inflater: LayoutInflater,
         viewType: Int
-    ): RecyclerView.ViewHolder = PokemonListViewHolder(inflater)
+    ): RecyclerView.ViewHolder = when (ItemView.valueOf(viewType)) {
+        ItemView.POKEMON -> { PokemonListViewHolder(inflater) }
+        ItemView.LOADING -> { LoadingViewHolder(inflater) }
+        else -> ErrorViewHolder(inflater)
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is PokemonListViewHolder -> holder.bind(viewModel, getItem(position))
+            is ErrorViewHolder -> holder.bind(viewModel)
+            is LoadingViewHolder -> {}
+        }
+    }
+
+    /**
+     * Update current adapter state with the new one, applying visual changes.
+     *
+     * @param newState State of list adapter to update.
+     */
+    fun submitState(newState: PokemonListAdapterState) {
+        val oldState = state
+        state = newState
+        if (newState.hasExtraRow && oldState != newState) {
+           notifyItemChanged(itemCount - 1)
         }
     }
 
@@ -43,7 +67,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      *
      * @param position Position to query.
      * @return Integer value identifying the type of the view needed to represent at position.
-     * @see BasePagedListAdapter.getItemViewType
+     * @see BaseListAdapter.getItemViewType
      */
     override fun getItemViewType(position: Int) = getItemView(position).type
 
@@ -52,9 +76,15 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      *
      * @param position Adapter position to query.
      * @return The stable ID of the item at position.
-     * @see BasePagedListAdapter.getItemId
+     * @see BaseListAdapter.getItemId
      */
-    override fun getItemId(position: Int) = (getItem(position)?.pokemonId ?: 0).toLong()
+    override fun getItemId(position: Int) =
+        when (getItemView(position)) {
+            ItemView.POKEMON -> (getItem(position)?.pokemonId ?: -1).toLong()
+            ItemView.LOADING -> 0L
+            ItemView.ERROR -> 1L
+        }
+
 
 
     /**
@@ -63,7 +93,16 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      * @param position Current item position.
      * @return ItemView type.
      */
-    internal fun getItemView(position: Int) = ItemView.POKEMON
+    internal fun getItemView(position: Int) : ItemView =
+        if (state.hasExtraRow && position == itemCount - 1) {
+            if (state.isAddError()) {
+                ItemView.ERROR
+            } else {
+                ItemView.LOADING
+            }
+        } else {
+            ItemView.POKEMON
+        }
 
     /**
      * Obtain helper class to provide the number of spans each item occupies.

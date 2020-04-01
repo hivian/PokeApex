@@ -5,6 +5,7 @@ import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.R
 import com.hivian.home.domain.GetTopPokemonsUseCase
+import com.hivian.home.pokemon_list.views.adapter.PaginationListener
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.Resource
@@ -21,9 +22,7 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
 
     // FOR data
     private val _data = MediatorLiveData<Resource<List<Pokemon>>>()
-    val data: LiveData<Resource<List<Pokemon>>> get() = _data
-
-    val pokemons : LiveData<List<Pokemon>> = Transformations.map(data) {
+    val data : LiveData<List<Pokemon>> = Transformations.map(_data) {
         it.data
     }
 
@@ -36,6 +35,10 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     private val _state = MutableLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
 
+    // FOR paging
+    private var currentOffset = 0
+    var isLastPage: Boolean = false
+
     init {
         getPokemons(false)
     }
@@ -43,6 +46,13 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     // PUBLIC ACTIONS ---
 
     fun forceRefreshItems() = getPokemons(true)
+
+    fun loadMoreItem() {
+        currentOffset += PaginationListener.PAGE_SIZE
+        getPokemons(forceRefresh = true,
+            offset = currentOffset,
+            limit = PaginationListener.PAGE_SIZE)
+    }
 
     // ---
 
@@ -55,24 +65,49 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
         event.postValue(PokemonListViewEvent.OpenPokemonDetailView(name))
     }
 
-    private fun getPokemons(forceRefresh: Boolean) = viewModelScope.launch(dispatchers.main) {
+    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = PaginationListener.PAGE_SIZE) = viewModelScope.launch(dispatchers.main) {
+        val isAdditional = offset > 0
+
         _data.removeSource(pokemonsSource)
-        withContext(dispatchers.io) { pokemonsSource = getTopPokemonsUseCase(forceRefresh = forceRefresh) }
+        withContext(dispatchers.io) { pokemonsSource = getTopPokemonsUseCase(forceRefresh, offset, limit) }
         _data.addSource(pokemonsSource) {
             _data.value = it
              when (it.status) {
-                 Resource.Status.SUCCESS -> _state.value = PokemonListViewState.Loaded
-                 Resource.Status.LOADING -> _state.value = PokemonListViewState.Loading
+                 Resource.Status.SUCCESS -> {
+                     if (isAdditional && it.data.isNullOrEmpty()) {
+                         _state.value = PokemonListViewState.NoMoreElements
+                     } else if (it.data.isNullOrEmpty()) {
+                         _state.value = PokemonListViewState.Empty
+                     } else {
+                         _state.value = PokemonListViewState.Loaded
+                     }
+                 }
+                 Resource.Status.LOADING -> {
+                     if (isAdditional) {
+                         _state.value = PokemonListViewState.AddLoading
+                     } else {
+                         _state.value = PokemonListViewState.Loading
+                     }
+                 }
                  Resource.Status.HTTP_ERROR -> {
-                    snackBarError.value = R.string.pokemon_list_server_error
-                    _state.value = PokemonListViewState.Error
+                     snackBarError.value = R.string.pokemon_list_server_error
+                     if (isAdditional) {
+                        PokemonListViewState.AddError
+                     } else {
+                        PokemonListViewState.Error
+                     }
                  }
                  Resource.Status.NETWORK_ERROR -> {
                      snackBarError.value = R.string.pokemon_list_network_error
-                     _state.value = PokemonListViewState.Error
+                     if (isAdditional) {
+                         PokemonListViewState.AddError
+                     } else {
+                         PokemonListViewState.Error
+                     }
                  }
             }
         }
 
     }
+
 }

@@ -15,15 +15,6 @@ object DetailBinding {
         Glide.with(view.context).load(url).apply(RequestOptions.circleCropTransform()).into(view)
     }
 
-    @BindingAdapter("app:showWhenLoading")
-    @JvmStatic
-    fun showWhenLoading(view: SwipeRefreshLayout, state: PokemonListViewState?) {
-        d { "Status: $state" }
-        state?.let {
-            view.isRefreshing = it is PokemonListViewState.Loading
-        }
-    }
-
     @BindingAdapter("app:imageUrl")
     @JvmStatic fun loadImage(view: ImageView, url: String?) {
         Glide.with(view.context).load(url).into(view)
