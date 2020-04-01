@@ -87,7 +87,7 @@ class PokedexRepositoryImpl(
                     forceRefresh
 
             override suspend fun loadFromDb(): DbPokemon =
-                    dao.getPokemon(name)
+                    dao.getPokemonByName(name)
 
             override suspend fun processData(data: DbPokemon): Pokemon =
                     mapper.dbToDomainMapper.map(data)

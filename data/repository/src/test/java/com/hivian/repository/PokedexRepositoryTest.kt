@@ -120,7 +120,7 @@ class UserRepositoryTest {
         val fakePokemonNetwork = FakeData.createFakePokemonNetwork("fake_login")
         coEvery { pokemonService.fetchPokemonDetailAsync("fake_login") } returns fakePokemonNetwork
         val fakePokemonDb = mapper.remoteToDbMapper.map(fakePokemonNetwork)
-        coEvery { pokedexDao.getPokemon("fake_login") } returns fakePokemonDb
+        coEvery { pokedexDao.getPokemonByName("fake_login") } returns fakePokemonDb
         val fakePokemonDomain = MapperPokemonDbToDomainImpl().map(fakePokemonDb)
         every { mapper.dbToDomainMapper.map(fakePokemonDb) } returns fakePokemonDomain
 
@@ -148,7 +148,7 @@ class UserRepositoryTest {
         val fakePokemonNetwork = FakeData.createFakePokemonNetwork("fake_login")
         coEvery { pokemonService.fetchPokemonDetailAsync("fake_login") } returns fakePokemonNetwork
         val fakePokemonDb = MapperPokemonRemoteToDbImpl().map(fakePokemonNetwork)
-        coEvery { pokedexDao.getPokemon("fake_login") } returns fakePokemonDb.apply { lastRefreshed = Date() }
+        coEvery { pokedexDao.getPokemonByName("fake_login") } returns fakePokemonDb.apply { lastRefreshed = Date() }
         val fakePokemonDomain = MapperPokemonDbToDomainImpl().map(fakePokemonDb)
         every { mapper.dbToDomainMapper.map(fakePokemonDb) } returns fakePokemonDomain
 
