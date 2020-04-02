@@ -18,7 +18,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     suspend fun build(): NetworkBoundResource<Remote, Local, Domain> {
         withContext(Dispatchers.Main) { result.value =
-            Resource.loading(null)
+            Resource.Loading
         }
         CoroutineScope(coroutineContext).launch(supervisorJob) {
             val dbResult = loadFromDb()
@@ -27,19 +27,19 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                     fetchFromNetwork(dbResult)
                 } catch (e: Exception) {
                     val value = when (e) {
-                        is IOException -> Resource.networkError(e, processData(loadFromDb()))
+                        is IOException -> Resource.NetworkError
                         is HttpException -> {
                             val code = e.code()
-                            Resource.httpError(code, e, processData(loadFromDb()))
+                            Resource.GenericError(code, convertErrorBody(e))
                         }
-                        else -> Resource.httpError(null, e, processData(loadFromDb()))
+                        else -> Resource.GenericError(null, null)
                     }
                     e { "An error happened: $e" }
                     setValue(value)
                 }
             } else {
                 i { "Return data from local database" }
-                setValue(Resource.success(processData(dbResult)))
+                setValue(Resource.Success(processData(dbResult)))
             }
         }
         return this
@@ -51,11 +51,11 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     private suspend fun fetchFromNetwork(dbResult: Local) {
         i { "Return data from local database" }
-        setValue(Resource.loading(processData(dbResult))) // Dispatch latest value quickly (UX purpose)
+        setValue(Resource.Loading) // Dispatch latest value quickly (UX purpose)
         val apiResponse = createCallAsync()
         i { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
-        setValue(Resource.success(processData(loadFromDb())))
+        setValue(Resource.Success(processData(loadFromDb())))
     }
 
     @MainThread

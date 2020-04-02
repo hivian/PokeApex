@@ -21,12 +21,8 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     : BaseViewModel() {
 
     // FOR data
-    private val _data = MediatorLiveData<Resource<List<Pokemon>>>()
-    val data : LiveData<List<Pokemon>> = Transformations.map(_data) {
-        it.data
-    }
-
-    private var pokemonsSource: LiveData<Resource<List<Pokemon>>> = MutableLiveData()
+    private val _data = MutableLiveData<List<Pokemon>>()
+    val data : LiveData<List<Pokemon>> get() = _data
 
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
@@ -68,43 +64,38 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = PaginationListener.PAGE_SIZE) = viewModelScope.launch(dispatchers.main) {
         val isAdditional = offset > 0
 
-        _data.removeSource(pokemonsSource)
-        withContext(dispatchers.io) { pokemonsSource = getTopPokemonsUseCase(forceRefresh, offset, limit) }
-        _data.addSource(pokemonsSource) {
-            _data.value = it
-             when (it.status) {
-                 Resource.Status.SUCCESS -> {
-                     if (isAdditional && it.data.isNullOrEmpty()) {
-                         _state.value = PokemonListViewState.NoMoreElements
-                     } else if (it.data.isNullOrEmpty()) {
-                         _state.value = PokemonListViewState.Empty
-                     } else {
-                         _state.value = PokemonListViewState.Loaded
-                     }
-                 }
-                 Resource.Status.LOADING -> {
-                     if (isAdditional) {
-                         _state.value = PokemonListViewState.AddLoading
-                     } else {
-                         _state.value = PokemonListViewState.Loading
-                     }
-                 }
-                 Resource.Status.HTTP_ERROR -> {
-                     snackBarError.value = R.string.pokemon_list_server_error
-                     if (isAdditional) {
-                        PokemonListViewState.AddError
-                     } else {
-                        PokemonListViewState.Error
-                     }
-                 }
-                 Resource.Status.NETWORK_ERROR -> {
-                     snackBarError.value = R.string.pokemon_list_network_error
-                     if (isAdditional) {
-                         PokemonListViewState.AddError
-                     } else {
-                         PokemonListViewState.Error
-                     }
-                 }
+        _state.value = if (isAdditional) {
+            PokemonListViewState.AddLoading
+        } else {
+            PokemonListViewState.Loading
+        }
+        val pokemonsAsync =  getTopPokemonsUseCase(offset, limit)
+        when (pokemonsAsync) {
+            is Resource.Success -> {
+                _data.value = pokemonsAsync.value
+                if (isAdditional && pokemonsAsync.value.isEmpty()) {
+                    _state.value = PokemonListViewState.NoMoreElements
+                } else if (pokemonsAsync.value.isEmpty()) {
+                    _state.value = PokemonListViewState.Empty
+                } else {
+                    _state.value = PokemonListViewState.Loaded
+                }
+            }
+            is Resource.GenericError -> {
+                snackBarError.value = R.string.pokemon_list_server_error
+                if (isAdditional) {
+                    PokemonListViewState.AddError
+                } else {
+                    PokemonListViewState.Error
+                }
+            }
+            is Resource.NetworkError -> {
+                snackBarError.value = R.string.pokemon_list_network_error
+                if (isAdditional) {
+                    PokemonListViewState.AddError
+                } else {
+                    PokemonListViewState.Error
+                }
             }
         }
 

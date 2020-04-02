@@ -5,16 +5,17 @@ plugins {
 
 dependencies {
     // MODULES
+    implementation(project(Modules.common))
     implementation(project(Modules.remote))
     implementation(project(Modules.local))
     api(project(Modules.model))
-    api(Libraries.timberKt)
     // ANDROID
     implementation(KotlinLibraries.kotlinCoroutineCore)
     implementation(AndroidLibraries.kotlinCoroutineAndroid)
     implementation(AndroidLibraries.lifecycleExtensions)
     // RETROFIT
     implementation(Libraries.retrofit)
+    implementation(Libraries.gson)
     // KOIN
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)

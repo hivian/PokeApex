@@ -56,10 +56,10 @@ object Versions {
     val espressoCore = "3.2.0-alpha02"
     val retrofit = "2.6.0"
     val retrofitCoroutines = "0.9.2"
-    val retrofitGson = "2.4.0"
+    val retrofitGson = "2.6.0"
     val gson = "2.8.5"
-    val okHttp = "3.12.1"
-    val coroutines = "1.1.1"
+    val okHttp = "4.4.0"
+    val coroutines = "1.3.5"
     val material = "1.2.0-alpha05"
     val koin = "1.0.2"
     val timberKt = "1.5.1"
@@ -69,7 +69,7 @@ object Versions {
     val recyclerview = "1.0.0"
     val safeArgs = "2.1.0-alpha01"
     val glide = "4.9.0"
-    val mockwebserver = "2.7.5"
+    val mockwebserver = "4.4.0"
     val archCoreTest = "2.0.0"
     val androidJunit = "1.1.0"
     val mockk = "1.9.2"
@@ -93,6 +93,8 @@ object Libraries {
     val gson = "com.google.code.gson:gson:${Versions.gson}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofitGson}"
+    val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofitGson}"
+    val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
     val httpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
     // GLIDE
@@ -140,7 +142,7 @@ object TestLibraries {
     val koin = "org.koin:koin-test:${Versions.koin}"
 
     // MOCK WEBSERVER
-    val mockWebServer = "com.squareup.okhttp:mockwebserver:${Versions.mockwebserver}"
+    val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockwebserver}"
 
     // MOCK
     val mockkAndroid = "io.mockk:mockk-android:${Versions.mockk}"

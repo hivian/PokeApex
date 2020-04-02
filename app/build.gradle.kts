@@ -58,4 +58,6 @@ dependencies {
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.navigation)
     implementation(AndroidLibraries.navigationFrag)
+    // LOG
+    implementation(Libraries.timberKt)
 }

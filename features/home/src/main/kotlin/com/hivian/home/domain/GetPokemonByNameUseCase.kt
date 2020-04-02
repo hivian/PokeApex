@@ -14,9 +14,7 @@ import com.hivian.repository.utils.Resource
  */
 class GetPokemonByNameUseCase(private val repository: PokedexRepository) {
 
-    suspend operator fun invoke(forceRefresh: Boolean = false, name: String): LiveData<Resource<Pokemon>> {
-        return Transformations.map(repository.getPokemonDetailWithCache(forceRefresh, name)) {
-            it // Place here your specific logic actions
-        }
+    suspend operator fun invoke(name: String): Resource<Pokemon> {
+        return repository.getPokemonDetailWithCache(name)
     }
 }

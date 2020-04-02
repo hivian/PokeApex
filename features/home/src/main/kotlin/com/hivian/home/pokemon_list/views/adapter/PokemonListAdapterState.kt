@@ -12,7 +12,7 @@ sealed class PokemonListAdapterState(
     /**
      * Listed the added characters into list.
      */
-    object Added : PokemonListAdapterState(hasExtraRow = false)
+    object Added : PokemonListAdapterState(hasExtraRow = true)
 
     /**
      * Loading for new characters to add into list.

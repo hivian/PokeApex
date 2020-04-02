@@ -39,22 +39,6 @@ class PokemonDetailViewModel(private val getPokemonByNameUseCase: GetPokemonByNa
     fun forceRefreshItems() = getPokemonDetail(true)
 
     private fun getPokemonDetail(forceRefresh: Boolean) = viewModelScope.launch(dispatchers.main) {
-        _pokemon.removeSource(pokemonSource)
-        withContext(dispatchers.io) { pokemonSource = getPokemonByNameUseCase(forceRefresh = forceRefresh, name = argsPokemonName) }
-        _pokemon.addSource(pokemonSource) {
-            _pokemon.value = it.data
-            when (it.status) {
-                Resource.Status.SUCCESS -> _state.value = PokemonDetailViewState.Loaded
-                Resource.Status.LOADING -> _state.value = PokemonDetailViewState.Loading
-                Resource.Status.HTTP_ERROR -> {
-                    snackBarError.value = R.string.pokemon_list_server_error
-                    _state.value = PokemonDetailViewState.Error
-                }
-                Resource.Status.NETWORK_ERROR -> {
-                    snackBarError.value = R.string.pokemon_list_network_error
-                    _state.value = PokemonDetailViewState.Error
-                }
-            }
-        }
+
     }
 }

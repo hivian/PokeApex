@@ -47,6 +47,7 @@ object FakeData {
 
     fun createFakePokemonDb(id: Int): DbPokemon {
         return DbPokemon(
+            pokemonId = id,
             name = "Name_$id",
             height = 100, weight = 200,
             abilities = arrayListOf( "Fireball"),

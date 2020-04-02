@@ -63,6 +63,19 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
     }
 
     /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     * @see BasePagedListAdapter.getItemCount
+     */
+    override fun getItemCount() =
+        if (state.hasExtraRow) {
+            super.getItemCount() + 1
+        } else {
+            super.getItemCount()
+        }
+
+    /**
      * Return the view type of the item at position for the purposes of view recycling.
      *
      * @param position Position to query.
@@ -84,8 +97,6 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
             ItemView.LOADING -> 0L
             ItemView.ERROR -> 1L
         }
-
-
 
     /**
      * Obtain the type of view by the item position.

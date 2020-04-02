@@ -17,7 +17,7 @@ fun createRemoteModule(baseUrl: String) = module {
             .setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    factory { OkHttpClient.Builder().addInterceptor(get()).build() }
+    factory { OkHttpClient.Builder().addInterceptor(get<Interceptor>()).build() }
 
     single {
         Retrofit.Builder()
