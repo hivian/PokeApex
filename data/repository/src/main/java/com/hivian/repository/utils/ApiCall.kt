@@ -7,20 +7,20 @@ import retrofit2.HttpException
 import com.hivian.common.generic.fromJson
 import java.io.IOException
 
-suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): Resource<T> {
+suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): NetworkWrapper<T> {
     return withContext(dispatcher) {
         try {
-            Resource.Success(apiCall.invoke())
+            NetworkWrapper.Success(apiCall.invoke())
         } catch (throwable: Throwable) {
             when (throwable) {
-                is IOException -> Resource.NetworkError
+                is IOException -> NetworkWrapper.NetworkError
                 is HttpException -> {
                     val code = throwable.code()
                     val errorResponse = convertErrorBody(throwable)
-                    Resource.GenericError(code, errorResponse)
+                    NetworkWrapper.GenericError(code, errorResponse)
                 }
                 else -> {
-                    Resource.GenericError(null, convertErrorBody(throwable))
+                    NetworkWrapper.GenericError(null, convertErrorBody(throwable))
                 }
             }
         }

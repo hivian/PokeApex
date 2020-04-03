@@ -14,9 +14,11 @@
         android:layout_height="match_parent"
         app:visible="@{viewState.isLoading}">
 
-        <ProgressBar
+        <androidx.core.widget.ContentLoadingProgressBar
+            style="?android:attr/progressBarStyle"
             android:layout_width="@dimen/pokemon_list_loading_size"
             android:layout_height="@dimen/pokemon_list_loading_size"
+            android:theme="@style/AppTheme.ProgressBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

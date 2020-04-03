@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Primary colors-->
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#f3f3f3f3</color>
-    <color name="colorPrimaryLight">#ffffff</color>
-    <color name="colorAccent">#111111</color>
 
-    <!--Text colors-->
-    <color name="textHeadline">#1f1f1f</color>
-    <color name="textBody">#4f4f4f</color>
 
 </resources>

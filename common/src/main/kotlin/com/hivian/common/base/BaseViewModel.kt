@@ -7,7 +7,6 @@ import com.hivian.common.livedata.SingleLiveData
 
 abstract class BaseViewModel: ViewModel() {
 
-    // FOR ERROR HANDLER
-    val snackBarError = SingleLiveData<Int>()
+
 
 }

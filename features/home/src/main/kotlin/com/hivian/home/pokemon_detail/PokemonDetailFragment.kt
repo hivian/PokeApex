@@ -1,6 +1,5 @@
 package com.hivian.home.pokemon_detail
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import com.hivian.common.base.BaseFragment

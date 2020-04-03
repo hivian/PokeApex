@@ -40,6 +40,11 @@ sealed class PokemonListViewState : BaseViewState {
     object Error : PokemonListViewState()
 
     /**
+     * Error on loading characters list.
+     */
+    object ErrorWithData : PokemonListViewState()
+
+    /**
      * Error on add more elements into characters list.
      */
     object AddError : PokemonListViewState()
@@ -94,6 +99,13 @@ sealed class PokemonListViewState : BaseViewState {
      * @return True if is error state, otherwise false.
      */
     fun isError() = this is Error
+
+    /**
+     * Check if current view state is [Error].
+     *
+     * @return True if is error state, otherwise false.
+     */
+    fun isErrorWithData() = this is ErrorWithData
 
     /**
      * Check if current view state is [AddError].

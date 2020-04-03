@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:visible="@{viewState.isLoaded || viewState.addLoading || viewState.addError || viewState.isNoMoreElements}">
+        app:visible="@{viewState.isLoaded|| viewState.addLoading || viewState.addError || viewState.isNoMoreElements || viewState.errorWithData}">
 
         <!--android:theme="@style/AppTheme.BackgroundStyle"-->
         <androidx.recyclerview.widget.RecyclerView

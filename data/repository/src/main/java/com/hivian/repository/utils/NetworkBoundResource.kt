@@ -2,66 +2,49 @@ package com.hivian.repository.utils
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.github.ajalt.timberkt.e
 import com.github.ajalt.timberkt.i
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
-import kotlin.coroutines.coroutineContext
 
 abstract class NetworkBoundResource<Remote, Local, Domain> {
 
-    private val result = MutableLiveData<Resource<Domain>>()
     private val supervisorJob = SupervisorJob()
 
-    suspend fun build(): NetworkBoundResource<Remote, Local, Domain> {
-        withContext(Dispatchers.Main) { result.value =
-            Resource.Loading
-        }
-        CoroutineScope(coroutineContext).launch(supervisorJob) {
+    suspend fun build(): ResultWrapper<Domain> {
+        return withContext(supervisorJob) {
             val dbResult = loadFromDb()
             if (shouldFetch(dbResult)) {
                 try {
                     fetchFromNetwork(dbResult)
                 } catch (e: Exception) {
                     val value = when (e) {
-                        is IOException -> Resource.NetworkError
+                        is IOException -> ResultWrapper.NetworkError(processData(dbResult))
                         is HttpException -> {
                             val code = e.code()
-                            Resource.GenericError(code, convertErrorBody(e))
+                            ResultWrapper.GenericError(processData(dbResult), code, convertErrorBody(e))
                         }
-                        else -> Resource.GenericError(null, null)
+                        else -> ResultWrapper.GenericError(processData(dbResult),null, convertErrorBody(e))
                     }
                     e { "An error happened: $e" }
-                    setValue(value)
+                    value
                 }
             } else {
                 i { "Return data from local database" }
-                setValue(Resource.Success(processData(dbResult)))
+                ResultWrapper.Success(processData(dbResult))
             }
         }
-        return this
     }
-
-    fun asLiveData() = result as LiveData<Resource<Domain>>
 
     // ---
 
-    private suspend fun fetchFromNetwork(dbResult: Local) {
+    private suspend fun fetchFromNetwork(dbResult: Local) : ResultWrapper<Domain> {
         i { "Return data from local database" }
-        setValue(Resource.Loading) // Dispatch latest value quickly (UX purpose)
         val apiResponse = createCallAsync()
         i { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
-        setValue(Resource.Success(processData(loadFromDb())))
-    }
-
-    @MainThread
-    private fun setValue(newValue: Resource<Domain>) {
-        i { "Resource: $newValue" }
-        if (result.value != newValue) result.postValue(newValue)
+        return ResultWrapper.Success(processData(loadFromDb()), isEmptyResult(apiResponse))
     }
 
     @WorkerThread
@@ -81,4 +64,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     @MainThread
     protected abstract suspend fun createCallAsync(): Remote
+
+    @MainThread
+    protected abstract suspend fun isEmptyResult(response: Remote): Boolean
 }

@@ -1,25 +1,6 @@
 package com.hivian.repository
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.hivian.common_test.rules.CoroutinesMainDispatcherRule
-import com.hivian.local.dao.PokedexDao
-import com.hivian.model.domain.Pokemon
-import com.hivian.model.dto.network.ApiResult
-import com.hivian.model.mapper.MapperPokedexRepository
-import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
-import com.hivian.model.mapper.MapperPokemonRemoteToDbImpl
-import com.hivian.remote.PokemonDatasource
-import com.hivian.repository.utils.FakeData
-import com.hivian.repository.utils.Resource
-import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import java.io.IOException
-import java.util.*
 
 @ExperimentalCoroutinesApi
 class UserRepositoryTest {
@@ -32,8 +13,8 @@ class UserRepositoryTest {
     var coroutinesMainDispatcherRule = CoroutinesMainDispatcherRule()
 
     // FOR DATA
-    private lateinit var observer: Observer<Resource<List<Pokemon>>>
-    private lateinit var observerPokemon: Observer<Resource<Pokemon>>
+    private lateinit var observer: Observer<ResultWrapper<List<Pokemon>>>
+    private lateinit var observerPokemon: Observer<ResultWrapper<Pokemon>>
     private lateinit var pokedexRepository: PokedexRepository
     private val pokemonService = mockk<PokemonDatasource>()
     private val pokedexDao = mockk<PokedexDao>(relaxed = true)
@@ -58,9 +39,9 @@ class UserRepositoryTest {
         }
 
         verifyOrder {
-            observer.onChanged(Resource.loading(null)) // Init loading with no value
-            observer.onChanged(Resource.loading(listOf())) // Then trying to load from db (fast temp loading) before load from remote source
-            observer.onChanged(Resource.networkError(exception, listOf())) // Retrofit 403 error
+            observer.onChanged(ResultWrapper.loading(null)) // Init loading with no value
+            observer.onChanged(ResultWrapper.loading(listOf())) // Then trying to load from db (fast temp loading) before load from remote source
+            observer.onChanged(ResultWrapper.networkError(exception, listOf())) // Retrofit 403 error
         }
         confirmVerified(observer)
     }
@@ -81,9 +62,9 @@ class UserRepositoryTest {
         }
 
         verifyOrder {
-            observer.onChanged(Resource.loading(null)) // Loading from remote source
-            observer.onChanged(Resource.loading(listOf())) // Then trying to load from db (fast temp loading) before load from remote source
-            observer.onChanged(Resource.success(fakePokemonsDomain)) // Success
+            observer.onChanged(ResultWrapper.loading(null)) // Loading from remote source
+            observer.onChanged(ResultWrapper.loading(listOf())) // Then trying to load from db (fast temp loading) before load from remote source
+            observer.onChanged(ResultWrapper.success(fakePokemonsDomain)) // Success
         }
 
 
@@ -109,8 +90,8 @@ class UserRepositoryTest {
         }
 
         verifyOrder {
-            observer.onChanged(Resource.loading(null)) // Loading from remote source
-            observer.onChanged(Resource.success(fakePokemonsDomain))// Success
+            observer.onChanged(ResultWrapper.loading(null)) // Loading from remote source
+            observer.onChanged(ResultWrapper.success(fakePokemonsDomain))// Success
         }
 
         confirmVerified(observer)
@@ -130,9 +111,9 @@ class UserRepositoryTest {
         }
 
         verify {
-            observerPokemon.onChanged(Resource.loading(null)) // Loading from remote source
-            observerPokemon.onChanged(Resource.loading(fakePokemonDomain)) // Then trying to load from db (fast temp loading) before load from remote source
-            observerPokemon.onChanged(Resource.success(fakePokemonDomain)) // Success
+            observerPokemon.onChanged(ResultWrapper.loading(null)) // Loading from remote source
+            observerPokemon.onChanged(ResultWrapper.loading(fakePokemonDomain)) // Then trying to load from db (fast temp loading) before load from remote source
+            observerPokemon.onChanged(ResultWrapper.success(fakePokemonDomain)) // Success
         }
 
 
@@ -158,8 +139,8 @@ class UserRepositoryTest {
         }
 
         verify {
-            observerPokemon.onChanged(Resource.loading(null)) // Loading from remote source
-            observerPokemon.onChanged(Resource.success(fakePokemonDomain)) // Success
+            observerPokemon.onChanged(ResultWrapper.loading(null)) // Loading from remote source
+            observerPokemon.onChanged(ResultWrapper.success(fakePokemonDomain)) // Success
         }
 
         confirmVerified(observerPokemon)

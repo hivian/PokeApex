@@ -27,7 +27,7 @@ sealed class PokemonListAdapterState(
     /**
      * No more characters to add into list.
      */
-    object NoMore : PokemonListAdapterState(hasExtraRow = false)
+    object NoMore : PokemonListAdapterState(hasExtraRow = true)
 
     // ============================================================================================
     //  Public helpers methods

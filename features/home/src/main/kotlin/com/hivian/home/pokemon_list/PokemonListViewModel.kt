@@ -1,16 +1,16 @@
 package com.hivian.home.pokemon_list
 
 import androidx.lifecycle.*
+import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.R
+import com.hivian.home.Constants
 import com.hivian.home.domain.GetTopPokemonsUseCase
-import com.hivian.home.pokemon_list.views.adapter.PaginationListener
+
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
-import com.hivian.repository.utils.Resource
+import com.hivian.repository.utils.ResultWrapper
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * A simple [BaseViewModel] that provide the data and handle logic to communicate with the model
@@ -44,10 +44,9 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     fun forceRefreshItems() = getPokemons(true)
 
     fun loadMoreItem() {
-        currentOffset += PaginationListener.PAGE_SIZE
         getPokemons(forceRefresh = true,
-            offset = currentOffset,
-            limit = PaginationListener.PAGE_SIZE)
+            offset = currentOffset + Constants.PAGE_SIZE,
+            limit = Constants.PAGE_SIZE)
     }
 
     // ---
@@ -55,13 +54,14 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
     /**
      * Send interaction event for open character detail view from selected character.
      *
-     * @param characterId Character identifier.
+     * @param name Pokemon identifier.
      */
     fun openPokemonDetail(name: String) {
-        event.postValue(PokemonListViewEvent.OpenPokemonDetailView(name))
+        event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = PaginationListener.PAGE_SIZE) = viewModelScope.launch(dispatchers.main) {
+    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = Constants.PAGE_SIZE) = viewModelScope.launch(dispatchers.main) {
+        d { "= offset: $offset, limit: $limit, currentOffset: $currentOffset" }
         val isAdditional = offset > 0
 
         _state.value = if (isAdditional) {
@@ -69,36 +69,46 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
         } else {
             PokemonListViewState.Loading
         }
-        val pokemonsAsync =  getTopPokemonsUseCase(offset, limit)
+        val pokemonsAsync =  getTopPokemonsUseCase(forceRefresh, offset, limit)
         when (pokemonsAsync) {
-            is Resource.Success -> {
+            is ResultWrapper.Success -> {
+                currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
                 _data.value = pokemonsAsync.value
-                if (isAdditional && pokemonsAsync.value.isEmpty()) {
-                    _state.value = PokemonListViewState.NoMoreElements
+                _state.value = if (isAdditional && pokemonsAsync.emptyResponse) {
+                    PokemonListViewState.NoMoreElements
                 } else if (pokemonsAsync.value.isEmpty()) {
-                    _state.value = PokemonListViewState.Empty
+                    PokemonListViewState.Empty
                 } else {
-                    _state.value = PokemonListViewState.Loaded
+                    PokemonListViewState.Loaded
                 }
             }
-            is Resource.GenericError -> {
-                snackBarError.value = R.string.pokemon_list_server_error
-                if (isAdditional) {
+            is ResultWrapper.GenericError -> {
+                _data.value = pokemonsAsync.value
+                _state.value = if (isAdditional) {
                     PokemonListViewState.AddError
+                } else if (pokemonsAsync.value.isNotEmpty()) {
+                    PokemonListViewState.ErrorWithData
                 } else {
                     PokemonListViewState.Error
                 }
             }
-            is Resource.NetworkError -> {
-                snackBarError.value = R.string.pokemon_list_network_error
-                if (isAdditional) {
+            is ResultWrapper.NetworkError -> {
+                _data.value = pokemonsAsync.value
+                //snackBarError.value = R.string.pokemon_list_network_error
+                _state.value = if (isAdditional) {
                     PokemonListViewState.AddError
+                } else if (pokemonsAsync.value.isNotEmpty()) {
+                    PokemonListViewState.ErrorWithData
                 } else {
                     PokemonListViewState.Error
                 }
             }
         }
 
+    }
+
+    private fun setNewPagingOffset(offset: Int) {
+        currentOffset = offset
     }
 
 }

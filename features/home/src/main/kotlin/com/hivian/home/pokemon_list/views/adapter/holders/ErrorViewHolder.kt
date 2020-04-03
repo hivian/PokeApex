@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hivian.common.base.BaseViewHolder
 import com.hivian.home.databinding.ListItemErrorBinding
 import com.hivian.home.pokemon_list.PokemonListViewModel
+import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 
 /**
  * Class describes characters error view and metadata about its place within the [RecyclerView].
@@ -22,8 +23,10 @@ class ErrorViewHolder(
      *
      * @param viewModel character list view model.
      */
-    fun bind(viewModel: PokemonListViewModel) {
+    fun bind(state: PokemonListAdapterState, viewModel: PokemonListViewModel
+    ) {
         binding.viewModel = viewModel
+        binding.state = state
         binding.executePendingBindings()
     }
 }

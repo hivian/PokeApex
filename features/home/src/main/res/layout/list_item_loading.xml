@@ -5,12 +5,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
         android:padding="@dimen/pokemon_list_item_loading_padding" >
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyle"
+            android:theme="@style/AppTheme.ProgressBar"
             android:layout_width="@dimen/pokemon_list_item_loading_size"
             android:layout_height="@dimen/pokemon_list_item_loading_size"
             android:layout_gravity="center"

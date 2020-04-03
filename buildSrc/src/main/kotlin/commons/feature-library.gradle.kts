@@ -12,6 +12,7 @@ dependencies {
     implementation(KotlinLibraries.kotlin)
     implementation(KotlinLibraries.kotlinCoroutineCore)
     implementation(AndroidLibraries.kotlinCoroutineAndroid)
+    implementation(KotlinLibraries.anko)
     // ANDROID
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.coreKtx)

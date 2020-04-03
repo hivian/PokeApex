@@ -80,7 +80,6 @@ abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupSnackbar(this, getViewModel().snackBarError, Snackbar.LENGTH_LONG)
     }
 
     /**

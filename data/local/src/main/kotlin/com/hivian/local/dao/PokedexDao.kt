@@ -9,8 +9,8 @@ import java.util.*
 @Dao
 abstract class PokedexDao : BaseDao<DbPokemon> {
 
-    @Query("SELECT * FROM DbPokemon ORDER BY name ASC LIMIT :ascLimit")
-    abstract suspend fun getTopPokemons(ascLimit : Int = 20): List<DbPokemon>
+    @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
+    abstract suspend fun getTopPokemons(): List<DbPokemon>
 
     @Query("SELECT * FROM DbPokemon WHERE pokemonId = :pokemonId LIMIT 1")
     abstract suspend fun getPokemonById(pokemonId: Int): DbPokemon?

@@ -1,5 +1,6 @@
 package com.hivian.common.extension
 
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -9,8 +10,12 @@ import com.google.android.material.snackbar.Snackbar
 /**
  * Transforms static java function Snackbar.make() to an extension function on View.
  */
-fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
+fun Fragment.showSnackbar(snackbarText: String, timeLength: Int = Snackbar.LENGTH_LONG) {
     activity?.let { Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show() }
+}
+
+fun Fragment.showSnackbar(@StringRes snackbarTextRes: Int, timeLength: Int = Snackbar.LENGTH_LONG) {
+    activity?.let { Snackbar.make(it.findViewById(android.R.id.content), snackbarTextRes, timeLength).show() }
 }
 
 /**

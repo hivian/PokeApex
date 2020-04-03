@@ -59,4 +59,6 @@ abstract class BaseListAdapter<T>(
             inflater = LayoutInflater.from(parent.context),
             viewType = viewType
         )
+
+
 }

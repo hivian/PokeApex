@@ -46,6 +46,7 @@ object Versions {
     val compileSdk = 29
     val minSdk = 23
     val targetSdk = 29
+    val anko = "0.10.8"
     val appCompat = "1.2.0-alpha03"
     val coreKtx = "1.1.0-alpha04"
     val swipeRefreshLayout = "1.0.0"
@@ -66,7 +67,7 @@ object Versions {
     val lifecycle = "2.1.0-alpha04"
     val nav = "2.0.0"
     val room = "2.1.0-alpha06"
-    val recyclerview = "1.0.0"
+    val recyclerview = "1.2.0-alpha02"
     val safeArgs = "2.1.0-alpha01"
     val glide = "4.9.0"
     val mockwebserver = "4.4.0"
@@ -107,6 +108,7 @@ object Libraries {
 object KotlinLibraries {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     val kotlinCoroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    val anko = "org.jetbrains.anko:anko:${Versions.anko}"
 }
 
 object AndroidLibraries {

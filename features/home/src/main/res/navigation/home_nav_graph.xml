@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/pokemonListFragment"
         android:name="com.hivian.home.pokemon_list.PokemonListFragment"
-        android:label="home_fragment"
+        android:label="@string/pokemon_list_title"
         tools:layout="@layout/pokemon_list_fragment" >
         <action
             android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"

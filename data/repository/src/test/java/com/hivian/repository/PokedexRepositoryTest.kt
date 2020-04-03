@@ -2,7 +2,7 @@ package com.hivian.repository
 
 
 import com.hivian.repository.utils.ErrorResponse
-import com.hivian.repository.utils.Resource
+import com.hivian.repository.utils.ResultWrapper
 import com.hivian.repository.utils.safeApiCall
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -26,7 +26,7 @@ class PokedexRepositoryTest {
         runBlockingTest {
             val lambdaResult = true
             val result = safeApiCall(dispatcher) { lambdaResult }
-            assertEquals(Resource.Success(lambdaResult), result)
+            assertEquals(ResultWrapper.Success(lambdaResult), result)
         }
     }
 
@@ -34,7 +34,7 @@ class PokedexRepositoryTest {
     fun `when lambda throws IOException then it should emit the result as NetworkError`() {
         runBlockingTest {
             val result = safeApiCall(dispatcher) { throw IOException() }
-            assertEquals(Resource.NetworkError, result)
+            assertEquals(ResultWrapper.NetworkError, result)
         }
     }
 
@@ -46,7 +46,7 @@ class PokedexRepositoryTest {
             val result = safeApiCall(dispatcher) {
                 throw HttpException(Response.error<Any>(422, errorBody))
             }
-            assertEquals(Resource.GenericError(422, ErrorResponse("Unexpected parameter")), result)
+            assertEquals(ResultWrapper.GenericError(422, ErrorResponse("Unexpected parameter")), result)
         }
     }
 
@@ -56,7 +56,7 @@ class PokedexRepositoryTest {
             val result = safeApiCall(dispatcher) {
                 throw IllegalStateException()
             }
-            assertEquals(Resource.GenericError(), result)
+            assertEquals(ResultWrapper.GenericError(), result)
         }
     }
 

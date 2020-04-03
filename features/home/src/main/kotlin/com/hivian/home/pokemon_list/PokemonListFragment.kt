@@ -9,23 +9,28 @@ import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.extension.gridLayoutManager
 import com.hivian.common.extension.observe
+import com.hivian.common.extension.showSnackbar
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
 import com.hivian.home.pokemon_list.views.adapter.PaginationListener
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
-import org.koin.android.ext.android.inject
+import com.hivian.model.domain.PokemonSprites
+import com.hivian.model.domain.PokemonStat
+import com.hivian.model.domain.PokemonType
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 
-class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel>(
+class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel> (
     layoutId = R.layout.pokemon_list_fragment
 ) {
 
     private val viewModel: PokemonListViewModel by viewModel()
-    private val viewAdapter : PokemonListAdapter by inject()
+    private val viewAdapter : PokemonListAdapter by lazy {
+        PokemonListAdapter(viewModel)
+    }
 
     override fun onInitDataBinding() {
         viewBinding.viewModel = viewModel
@@ -34,9 +39,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             gridLayoutManager?.let {
                 it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
                 addOnScrollListener(object : PaginationListener(it) {
-                    override fun loadMoreItems() {
-                        viewModel.loadMoreItem()
-                    }
+                    override fun loadMoreItems() = viewModel.loadMoreItem()
 
                     override fun isLastPage(): Boolean = false
 
@@ -67,11 +70,13 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      * @param viewData Paged list of characters.
      */
     private fun onViewDataChange(viewData: List<Pokemon>) {
+        val data = mutableListOf<Pokemon?>()
         d { "=> onView Data Change - ${viewData.size}:" }
         viewData.forEach {
+            data.add(it)
             d { "=> ${it.name}" }
         }
-        viewAdapter.submitList(viewData)
+        viewAdapter.submitList(data)
     }
 
     /**
@@ -89,6 +94,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                 viewAdapter.submitState(PokemonListAdapterState.AddError)
             is PokemonListViewState.NoMoreElements ->
                 viewAdapter.submitState(PokemonListAdapterState.NoMore)
+            is PokemonListViewState.ErrorWithData ->
+                showSnackbar(R.string.pokemon_list_error_text)
         }
     }
 

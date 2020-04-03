@@ -2,13 +2,12 @@ package com.hivian.home.pokemon_list.views.adapter
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hivian.home.Constants
 
 abstract class PaginationListener(private val gridLayoutManager: GridLayoutManager) : RecyclerView.OnScrollListener() {
 
-    companion object {
-        const val PAGE_START = 1
-        const val PAGE_SIZE = 20
-    }
+    var loading = false
+    var previousTotal = 0
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -17,10 +16,17 @@ abstract class PaginationListener(private val gridLayoutManager: GridLayoutManag
         val totalItemCount = gridLayoutManager.itemCount
         val firstVisibleItemPosition = gridLayoutManager.findFirstVisibleItemPosition()
 
-        if (!isLoading() && !isLastPage()) {
+        if (loading) {
+            if (totalItemCount > previousTotal) {
+                loading = false;
+                previousTotal = totalItemCount;
+            }
+        }
+        if (!loading && !isLoading() && !isLastPage()) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount &&
                     firstVisibleItemPosition >= 0 &&
-                    totalItemCount >= PAGE_SIZE) {
+                    totalItemCount >= Constants.PAGE_SIZE) {
+                loading = true
                 loadMoreItems()
             }
         }

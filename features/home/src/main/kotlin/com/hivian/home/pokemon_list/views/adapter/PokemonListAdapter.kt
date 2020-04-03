@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseListAdapter
 import com.hivian.home.pokemon_list.PokemonListViewModel
 import com.hivian.home.pokemon_list.views.adapter.holders.ErrorViewHolder
@@ -44,7 +43,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is PokemonListViewHolder -> holder.bind(viewModel, getItem(position))
-            is ErrorViewHolder -> holder.bind(viewModel)
+            is ErrorViewHolder -> holder.bind(state, viewModel)
             is LoadingViewHolder -> {}
         }
     }
@@ -66,7 +65,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      * Returns the total number of items in the data set held by the adapter.
      *
      * @return The total number of items in this adapter.
-     * @see BasePagedListAdapter.getItemCount
+     * @see BaseListAdapter.getItemCount
      */
     override fun getItemCount() =
         if (state.hasExtraRow) {
@@ -106,7 +105,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      */
     internal fun getItemView(position: Int) : ItemView =
         if (state.hasExtraRow && position == itemCount - 1) {
-            if (state.isAddError()) {
+            if (state.isAddError() || state.isNoMore()) {
                 ItemView.ERROR
             } else {
                 ItemView.LOADING

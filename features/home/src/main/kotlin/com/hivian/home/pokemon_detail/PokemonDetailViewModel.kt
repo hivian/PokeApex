@@ -4,21 +4,19 @@ import androidx.lifecycle.*
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.R
 import com.hivian.home.domain.GetPokemonByNameUseCase
 import com.hivian.home.pokemon_list.PokemonListViewEvent
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
-import com.hivian.repository.utils.Resource
+import com.hivian.repository.utils.ResultWrapper
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PokemonDetailViewModel(private val getPokemonByNameUseCase: GetPokemonByNameUseCase,
     private val dispatchers: AppDispatchers) : BaseViewModel() {
 
     // PRIVATE data
     private lateinit var argsPokemonName: String
-    private var pokemonSource: LiveData<Resource<Pokemon>> = MutableLiveData()
+    private var pokemonSource: LiveData<ResultWrapper<Pokemon>> = MutableLiveData()
 
     private val _pokemon = MediatorLiveData<Pokemon>()
     val pokemon: LiveData<Pokemon> get() = _pokemon
