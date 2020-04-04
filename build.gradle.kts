@@ -1,7 +1,12 @@
 import extensions.applyDefault
 
+plugins {
+    id("com.github.ben-manes.versions")
+}
+
 allprojects {
     plugins.apply(BuildPlugins.DETEKT)
+    //plugins.apply(BuildPlugins.GRADLE_VERSION_PLUGIN)
 
     repositories.applyDefault()
 }

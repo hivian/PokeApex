@@ -14,4 +14,6 @@ val timberModule = module {
     single { Timber.DebugTree() }
 }
 
-val appComponent = listOf(createRemoteModule(BASE_URL), repositoryModule, featureHomeModule, localModule, modelModule, timberModule)
+val appComponent = listOf(createRemoteModule(BASE_URL),
+    repositoryModule, featureHomeModule,
+    localModule, modelModule, timberModule)
