@@ -10,5 +10,5 @@ dependencies {
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)
     implementation(AndroidLibraries.recyclerView)
-    implementation(TestLibraries.coroutine)
+    implementation(TestLibraries.coroutines)
 }

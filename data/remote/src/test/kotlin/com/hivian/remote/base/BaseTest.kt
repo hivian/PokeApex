@@ -2,8 +2,8 @@ package com.hivian.remote.base
 
 import com.hivian.remote.PokemonApiService
 import com.hivian.remote.di.createRemoteModule
-import com.squareup.okhttp.mockwebserver.MockResponse
-import com.squareup.okhttp.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.koin.standalone.StandAloneContext

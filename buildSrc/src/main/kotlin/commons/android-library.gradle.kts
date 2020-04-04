@@ -2,8 +2,6 @@ package commons
 
 import KotlinLibraries
 import Libraries
-import Releases
-import Versions
 
 plugins {
     id("com.android.library")
@@ -13,21 +11,26 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.compileSdk)
+    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
+
     defaultConfig {
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
-        versionCode = Releases.versionCode
-        versionName = Releases.versionName
+        minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
+        targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     dataBinding {
         isEnabled = true
     }
+
     sourceSets {
         getByName("main") {
             java.srcDir("src/main/kotlin")

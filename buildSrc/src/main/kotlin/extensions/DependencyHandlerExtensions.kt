@@ -45,6 +45,16 @@ fun DependencyHandler.kapt(dependencyNotation: String): Dependency? =
     add("kapt", dependencyNotation)
 
 /**
+ * Adds a dependency to the `kaptAndroidTest` configuration.
+ *
+ * @param dependencyNotation name of dependency to add at specific configuration
+ *
+ * @return the dependency
+ */
+fun DependencyHandler.kaptAndroidTest(dependencyNotation: String): Dependency? =
+    add("kaptAndroidTest", dependencyNotation)
+
+/**
  * Adds a dependency to the `testImplementation` configuration.
  *
  * @param dependencyNotation name of dependency to add at specific configuration
@@ -64,3 +74,29 @@ fun DependencyHandler.testImplementation(dependencyNotation: String): Dependency
  */
 fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dependency? =
     add("androidTestImplementation", dependencyNotation)
+
+/**
+ * Adds all the tests dependencies to specific configuration.
+ */
+fun DependencyHandler.addTestsDependencies() {
+    androidTestImplementation(TestLibraries.androidTestRunner)
+    androidTestImplementation(TestLibraries.junit)
+    androidTestImplementation(TestLibraries.mockkAndroid)
+    androidTestImplementation(TestLibraries.fragmentNav)
+    androidTestImplementation(TestLibraries.espresso)
+    androidTestImplementation(TestLibraries.espressoContrib)
+    androidTestImplementation(TestLibraries.koin)
+    androidTestImplementation(TestLibraries.archCoreTest)
+    androidTestImplementation(TestLibraries.mockitoKotlin)
+
+    testImplementation(TestLibraries.roboelectric)
+    testImplementation(TestLibraries.room)
+    testImplementation(TestLibraries.coroutines)
+    testImplementation(TestLibraries.androidTestRunner)
+    testImplementation(TestLibraries.junit)
+    testImplementation(TestLibraries.mockk)
+    testImplementation(TestLibraries.archCoreTest)
+    testImplementation(TestLibraries.mockitoKotlin)
+
+    kaptAndroidTest(TestLibraries.databinding)
+}

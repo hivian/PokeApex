@@ -1,3 +1,5 @@
+import extensions.getLocalProperty
+
 plugins {
     id(Plugins.androidApplication)
     kotlin(Plugins.kotlinAndroid)
@@ -8,25 +10,60 @@ plugins {
 //apply(rootProject.file("common-precompiled.gradle.kts"))
 
 android {
-    compileSdkVersion(Versions.compileSdk)
-    buildToolsVersion = "29.0.2"
+    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
     defaultConfig {
-        applicationId = ApplicationId.id
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
-        versionCode = Releases.versionCode
-        versionName = Releases.versionName
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = BuildAndroidConfig.APPLICATION_ID
+        minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
+        targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
+        buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
+
+        versionCode = BuildAndroidConfig.VERSION_CODE
+        versionName = BuildAndroidConfig.VERSION_NAME
+
+        vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
+        testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
+        testInstrumentationRunnerArguments = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER_ARGUMENTS
     }
+
+    signingConfigs {
+//        create(BuildType.RELEASE) {
+//            keyAlias = getLocalProperty("signing.key.alias")
+//            keyPassword = getLocalProperty("signing.key.password")
+//            storeFile = file(getLocalProperty("signing.store.file"))
+//            storePassword = getLocalProperty("signing.store.password")
+//        }
+    }
+
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+        getByName(BuildType.DEBUG) {
+            applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
+            versionNameSuffix = BuildTypeDebug.versionNameSuffix
+            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+        }
+        getByName(BuildType.RELEASE) {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            //signingConfig = signingConfigs.getByName(name)
+
+            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     dataBinding {
         isEnabled = true
     }
+
     sourceSets {
         getByName("main") {
             java.srcDir("src/main/kotlin")

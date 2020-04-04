@@ -9,10 +9,6 @@ repositories {
     google()
     jcenter()
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://maven.fabric.io/public")
-    maven("https://plugins.gradle.org/m2/")
-    maven("https://ci.android.com/builds/submitted/5837096/androidx_snapshot/latest/repository")
 }
 
 kotlinDslPluginOptions {
@@ -21,10 +17,16 @@ kotlinDslPluginOptions {
 
 object PluginsVersions {
     const val GRADLE_ANDROID = "3.6.0"
+    const val GRADLE_VERSIONS = "0.28.0"
+    const val DETEKT = "1.7.4"
     const val KOTLIN = "1.3.70"
+    const val NAVIGATION = "2.3.0-alpha04"
 }
 
 dependencies {
     implementation("com.android.tools.build:gradle:${PluginsVersions.GRADLE_ANDROID}")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${PluginsVersions.KOTLIN}")
+    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:${PluginsVersions.NAVIGATION}")
+    implementation("com.github.ben-manes:gradle-versions-plugin:${PluginsVersions.GRADLE_VERSIONS}")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${PluginsVersions.DETEKT}")
 }

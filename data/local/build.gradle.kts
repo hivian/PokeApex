@@ -1,3 +1,5 @@
+import extensions.addTestsDependencies
+
 plugins {
     id(Plugins.androidLibraryCommon)
     kotlin(Plugins.kapt)
@@ -18,8 +20,5 @@ dependencies {
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)
     // TEST
-    androidTestImplementation(TestLibraries.androidTestRunner)
-    androidTestImplementation(TestLibraries.junit)
-    androidTestImplementation(TestLibraries.koin)
-    androidTestImplementation(TestLibraries.archCoreTest)
+    addTestsDependencies()
 }

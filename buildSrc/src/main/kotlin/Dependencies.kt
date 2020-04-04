@@ -34,18 +34,10 @@ object Modules {
     val featureDetail = ":features:detail"
 }
 
-object Releases {
-    val versionCode = 1
-    val versionName = "1.0"
-}
-
 object Versions {
     val kotlin = "1.3.70"
-    val gradle = "3.3.2"
+    val gradle = "3.6.0"
     val detekt = "1.6.0"
-    val compileSdk = 29
-    val minSdk = 23
-    val targetSdk = 29
     val anko = "0.10.8"
     val appCompat = "1.2.0-alpha03"
     val coreKtx = "1.1.0-alpha04"
@@ -66,7 +58,7 @@ object Versions {
     val timberKt = "1.5.1"
     val lifecycle = "2.1.0-alpha04"
     val nav = "2.0.0"
-    val room = "2.1.0-alpha06"
+    val room = "2.2.5"
     val recyclerview = "1.2.0-alpha02"
     val safeArgs = "2.1.0-alpha01"
     val glide = "4.9.0"
@@ -76,6 +68,8 @@ object Versions {
     val mockk = "1.9.2"
     val fragmentTest = "1.1.0-alpha06"
     val databinding = "3.3.2"
+    val roboelectric = "4.3.1"
+    val mockitoKotlin = "2.2.0"
 }
 
 object Libraries {
@@ -139,6 +133,9 @@ object TestLibraries {
     val archCoreTest = "androidx.arch.core:core-testing:${Versions.archCoreTest}"
     val junit = "androidx.test.ext:junit:${Versions.androidJunit}"
     val fragmentNav = "androidx.fragment:fragment-testing:${Versions.fragmentTest}"
+    val roboelectric = "org.robolectric:robolectric:${Versions.roboelectric}"
+    val room = "androidx.room:room-testing:${Versions.room}"
+    val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
 
     // KOIN
     val koin = "org.koin:koin-test:${Versions.koin}"
@@ -150,8 +147,8 @@ object TestLibraries {
     val mockkAndroid = "io.mockk:mockk-android:${Versions.mockk}"
     val mockk = "io.mockk:mockk:${Versions.mockk}"
 
-    // COROUTINE
-    val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    // COROUTINES
+    val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
 
     // DATA BINDING
     val databinding = "androidx.databinding:databinding-compiler:${Versions.databinding}"

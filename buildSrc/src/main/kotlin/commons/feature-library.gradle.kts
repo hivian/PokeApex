@@ -1,5 +1,7 @@
 package commons
 
+import extensions.addTestsDependencies
+
 plugins {
     id("commons.android-library")
 }
@@ -30,19 +32,7 @@ dependencies {
     // GLIDE
     implementation(Libraries.glide)
     // TEST
-    androidTestImplementation(TestLibraries.androidTestRunner)
-    androidTestImplementation(TestLibraries.junit)
-    androidTestImplementation(project(Modules.commonTest))
-    androidTestImplementation(TestLibraries.mockkAndroid)
-    androidTestImplementation(TestLibraries.fragmentNav)
-    androidTestImplementation(TestLibraries.espresso)
-    androidTestImplementation(TestLibraries.espressoContrib)
-    androidTestImplementation(TestLibraries.koin)
-    androidTestImplementation(TestLibraries.archCoreTest)
-    testImplementation(TestLibraries.androidTestRunner)
-    testImplementation(TestLibraries.junit)
-    testImplementation(TestLibraries.mockk)
-    testImplementation(TestLibraries.archCoreTest)
-    kaptAndroidTest(TestLibraries.databinding)
     testImplementation(project(Modules.commonTest))
+    androidTestImplementation(project(Modules.commonTest))
+    addTestsDependencies()
 }
