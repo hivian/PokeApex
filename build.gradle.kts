@@ -1,12 +1,9 @@
 import extensions.applyDefault
 
-plugins {
-    id("com.github.ben-manes.versions")
-}
 
 allprojects {
     plugins.apply(BuildPlugins.DETEKT)
-    //plugins.apply(BuildPlugins.GRADLE_VERSION_PLUGIN)
+    plugins.apply(BuildPlugins.UPDATE_DEPENDENCIES)
 
     repositories.applyDefault()
 }
@@ -18,4 +15,3 @@ tasks.register("clean",Delete::class){
 task("x", type = GradleBuild::class) {
     tasks = mutableListOf("detekt", "ktlint", "lintDebug", "testDebugUnitTest")
 }
-

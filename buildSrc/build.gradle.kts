@@ -16,11 +16,11 @@ kotlinDslPluginOptions {
 }
 
 object PluginsVersions {
-    const val GRADLE_ANDROID = "3.6.0"
+    const val GRADLE_ANDROID = "3.6.2"
     const val GRADLE_VERSIONS = "0.28.0"
     const val DETEKT = "1.7.4"
-    const val KOTLIN = "1.3.70"
-    const val NAVIGATION = "2.3.0-alpha04"
+    const val KOTLIN = "1.3.71"
+    const val NAVIGATION = "2.2.1"
 }
 
 dependencies {
