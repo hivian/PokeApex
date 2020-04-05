@@ -35,7 +35,7 @@ object Modules {
 }
 
 object Versions {
-    val kotlin = "1.3.70"
+    val kotlin = "1.3.71"
     val gradle = "3.6.2"
     val detekt = "1.6.0"
     val anko = "0.10.8"
