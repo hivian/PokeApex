@@ -1,8 +1,9 @@
 package com.hivian.common_test
 
 import android.app.Application
-import org.koin.android.ext.android.startKoin
-import org.koin.dsl.module.Module
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 /**
  * We use a separate [Application] for tests to prevent initializing release modules.
@@ -12,6 +13,9 @@ class FakeApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf())
+        startKoin {
+            androidContext(this@FakeApplication)
+            modules(listOf())
+        }
     }
 }

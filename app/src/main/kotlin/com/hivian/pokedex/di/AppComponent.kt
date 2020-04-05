@@ -5,7 +5,7 @@ import com.hivian.local.di.localModule
 import com.hivian.model.di.modelModule
 import com.hivian.remote.di.createRemoteModule
 import com.hivian.repository.di.repositoryModule
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import timber.log.Timber
 
 const val BASE_URL = "https://pokeapi.co/api/v2/"

@@ -4,7 +4,7 @@ import com.hivian.repository.AppDispatchers
 import com.hivian.repository.PokedexRepository
 import com.hivian.repository.PokedexRepositoryImpl
 import kotlinx.coroutines.Dispatchers
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val repositoryModule = module {
     factory { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
