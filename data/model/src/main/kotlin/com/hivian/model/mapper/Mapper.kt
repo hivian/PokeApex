@@ -34,9 +34,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             abilities = input.abilities,
             forms = input.forms,
             moves = input.moves,
-            sprites = PokemonSprites(
-                backDefault = input.sprites.backDefault,
-                frontDefault = input.sprites.frontDefault),
+            imageUrl = input.imageUrl,
             stats = input.stats.map { PokemonStat(it.name, it.baseStat, it.effort) },
             types = input.types.map { PokemonType(it.slot, it.name) })
     }
@@ -52,15 +50,8 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             abilities = input.abilities.map { it.ability.name },
             forms = input.forms.map { it.name },
             moves = input.moves.map { it.move.name },
-            sprites = DbPokemonSprites(
-                backDefault = input.sprites.backDefault,
-                backDefaultFemale = input.sprites.backDefaultFemale,
-                backShiny = input.sprites.backShiny,
-                backShinyFemale = input.sprites.backShinyFemale,
-                frontDefault = input.sprites.frontDefault,
-                frontDefaultFemale = input.sprites.frontDefaultFemale,
-                frontShiny = input.sprites.frontShiny,
-                frontShinyFemale = input.sprites.frontShinyFemale),
+            // High resolution image source.
+            imageUrl = "https://pokeres.bastionbot.org/images/pokemon/${input.id}.png",
             stats = input.stats.map { DbPokemonStat(
                 name = it.stat.name,
                 baseStat = it.baseStat,

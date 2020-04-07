@@ -17,7 +17,7 @@ data class DbPokemon(
     val abilities: List<String>,
     val forms: List<String>,
     val moves: List<String>,
-    val sprites: DbPokemonSprites,
+    val imageUrl: String,
     val stats: List<DbPokemonStat>,
     val types: List<DbPokemonType>,
 
@@ -28,6 +28,6 @@ data class DbPokemon(
      * we fetched it was more than 10 minutes
      */
     fun haveToRefreshFromNetwork() : Boolean =
-            TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 10
+            TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 30
 }
 

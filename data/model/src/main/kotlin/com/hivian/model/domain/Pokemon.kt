@@ -8,7 +8,7 @@ class Pokemon(
     val abilities: List<String>,
     val forms: List<String>,
     val moves: List<String>,
-    val sprites: PokemonSprites,
+    val imageUrl: String,
     val stats: List<PokemonStat>,
     val types: List<PokemonType>
 )

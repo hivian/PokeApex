@@ -15,6 +15,7 @@
         app:visible="@{viewState.isLoading}">
 
         <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressbar_list_loading"
             style="?android:attr/progressBarStyle"
             android:layout_width="@dimen/pokemon_list_loading_size"
             android:layout_height="@dimen/pokemon_list_loading_size"
@@ -23,6 +24,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_list_loading"
+            style="@style/TextAppearance.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pokemon_list_loading_text"
+            android:layout_margin="@dimen/pokemon_list_item_text_padding"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressbar_list_loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

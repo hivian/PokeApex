@@ -30,7 +30,7 @@ class PokemonItemMapperTest {
             assertEquals("Name_0", name)
             assertEquals("Circle", forms.first())
             assertEquals("Fireball", abilities.first())
-            assertEquals("frontDefault.jpg", sprites.frontDefault)
+            assertEquals("https://pokeres.bastionbot.org/images/pokemon/${id}.png", imageUrl)
             assertEquals(0, stats.first().baseStat)
         }
     }
@@ -50,7 +50,7 @@ class PokemonItemMapperTest {
             assertEquals("Name_0", name)
             assertEquals("Circle", forms.first())
             assertEquals("Fireball", abilities.first())
-            assertEquals("frontDefault.jpg", sprites.frontDefault)
+            assertEquals("https://", imageUrl)
             assertEquals(0, stats.first().baseStat)
         }
     }

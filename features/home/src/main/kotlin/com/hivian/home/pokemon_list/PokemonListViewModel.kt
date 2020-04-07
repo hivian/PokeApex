@@ -33,7 +33,6 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
 
     // FOR paging
     private var currentOffset = 0
-    var isLastPage: Boolean = false
 
     init {
         getPokemons(false)
@@ -60,7 +59,7 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = Constants.PAGE_SIZE) = viewModelScope.launch(dispatchers.main) {
+    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) = viewModelScope.launch(dispatchers.main) {
         d { "= offset: $offset, limit: $limit, currentOffset: $currentOffset" }
         val isAdditional = offset > 0
 

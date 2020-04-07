@@ -13,8 +13,8 @@ import com.hivian.repository.utils.ResultWrapper
 interface PokedexRepository {
     suspend fun getTopPokemonsWithCache(
         forceRefresh: Boolean = false,
-        offset: Int = 0,
-        limit: Int = 20
+        offset: Int,
+        limit: Int
     ): ResultWrapper<List<Pokemon>>
     suspend fun getPokemonDetailWithCache(
         forceRefresh: Boolean = false,

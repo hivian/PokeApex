@@ -56,9 +56,11 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
     fun submitState(newState: PokemonListAdapterState) {
         val oldState = state
         state = newState
+/*
         if (newState.hasExtraRow && oldState != newState) {
            notifyItemChanged(itemCount - 1)
         }
+*/
     }
 
     /**
@@ -67,12 +69,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      * @return The total number of items in this adapter.
      * @see BaseListAdapter.getItemCount
      */
-    override fun getItemCount() =
-        if (state.hasExtraRow) {
-            super.getItemCount() + 1
-        } else {
-            super.getItemCount()
-        }
+    override fun getItemCount() = super.getItemCount()
 
     /**
      * Return the view type of the item at position for the purposes of view recycling.
@@ -90,12 +87,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      * @return The stable ID of the item at position.
      * @see BaseListAdapter.getItemId
      */
-    override fun getItemId(position: Int) =
-        when (getItemView(position)) {
-            ItemView.POKEMON -> (getItem(position)?.pokemonId ?: -1).toLong()
-            ItemView.LOADING -> 0L
-            ItemView.ERROR -> 1L
-        }
+    override fun getItemId(position: Int) = (getItem(position)?.pokemonId ?: -1).toLong()
 
     /**
      * Obtain the type of view by the item position.
@@ -103,16 +95,7 @@ class PokemonListAdapter(val viewModel: PokemonListViewModel) : BaseListAdapter<
      * @param position Current item position.
      * @return ItemView type.
      */
-    internal fun getItemView(position: Int) : ItemView =
-        if (state.hasExtraRow && position == itemCount - 1) {
-            if (state.isAddError() || state.isNoMore()) {
-                ItemView.ERROR
-            } else {
-                ItemView.LOADING
-            }
-        } else {
-            ItemView.POKEMON
-        }
+    internal fun getItemView(position: Int) : ItemView = ItemView.POKEMON
 
     /**
      * Obtain helper class to provide the number of spans each item occupies.

@@ -8,6 +8,7 @@
     <string name="pokemon_list_title">Pokedex</string>
     <string name="pokemon_list_empty_text">Empty pokemon list</string>
     <string name="pokemon_list_error_text">Ups… an error occurred on obtain pokemon list, please swipe down to try again</string>
+    <string name="pokemon_list_loading_text">Updating pokemon list. It can take a few seconds.</string>
     <string name="pokemon_list_add_error_text">Error on fetch more pokemon</string>
     <string name="pokemon_list_add_no_more_text">No more pokemons to fetch</string>
     <string name="pokemon_list_add_retry_button">Retry</string>

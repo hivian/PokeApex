@@ -38,6 +38,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             adapter = viewAdapter
             gridLayoutManager?.let {
                 it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
+/*
                 addOnScrollListener(object : PaginationListener(it) {
                     override fun loadMoreItems() = viewModel.loadMoreItem()
 
@@ -46,6 +47,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                     override fun isLoading(): Boolean = viewModel.state.value!!.isAddLoading()
 
                 })
+*/
             }
         }
     }

@@ -53,7 +53,7 @@ object FakeData {
             abilities = arrayListOf( "Fireball"),
             forms = arrayListOf("Circle"),
             moves = arrayListOf("Run"),
-            sprites = DbPokemonSprites("backDefault.jpg", null, "", null, "frontDefault.jpg", null, "", null),
+            imageUrl = "https://",
             stats = arrayListOf(DbPokemonStat(
                 baseStat = 0,
                 effort = 1,
