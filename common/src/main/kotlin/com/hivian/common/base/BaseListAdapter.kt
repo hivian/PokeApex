@@ -2,6 +2,7 @@ package com.hivian.common.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,8 @@ abstract class BaseListAdapter<T>(
     override fun areItemsTheSame(old: T, new: T): Boolean = itemsSame(old, new)
     override fun areContentsTheSame(old: T, new: T): Boolean = contentsSame(old, new)
 }) {
+
+    private var recyclerView: RecyclerView? = null
 
     init {
         // Avoid That RecyclerView’s Views are Blinking when notifyDataSetChanged.
@@ -60,5 +63,35 @@ abstract class BaseListAdapter<T>(
             viewType = viewType
         )
 
+    /**
+     * Called by RecyclerView when it starts observing this Adapter.
+     *
+     * @param recyclerView The RecyclerView instance which started observing this adapter.
+     * @see PagedListAdapter.onAttachedToRecyclerView
+     */
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
+        super.onAttachedToRecyclerView(recyclerView)
+    }
+
+    /**
+     * Called by RecyclerView when it stops observing this Adapter.
+     *
+     * @param recyclerView The RecyclerView instance which stopped observing this adapter.
+     * @see PagedListAdapter.onDetachedFromRecyclerView
+     */
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = null
+        super.onDetachedFromRecyclerView(recyclerView)
+    }
+
+
+    /**
+     * Convenience method to scroll to a certain position in [RecyclerView]
+     * @param position Scroll to this adapter position
+     */
+    open fun scrollTo(position: Int) {
+        recyclerView?.scrollToPosition(position)
+    }
 
 }

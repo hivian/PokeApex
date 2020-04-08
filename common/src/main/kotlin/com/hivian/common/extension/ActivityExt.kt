@@ -22,7 +22,7 @@ import com.hivian.common.R
 fun Fragment.showCustomDialog(@StringRes title : Int? = null, @StringRes message : Int? = null,
                         @StringRes positiveBtn: Int? = null, @StringRes negativeBtn: Int? = null,
                         onPositive : () -> Unit) {
-    val builder = AlertDialog.Builder(context)
+    val builder = AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
 
     title?.let { builder.setTitle(it) }
     message?.let { builder.setMessage(it) }

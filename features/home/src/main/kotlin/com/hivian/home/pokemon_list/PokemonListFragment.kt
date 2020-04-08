@@ -118,6 +118,10 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_jump_to_top -> {
+            viewAdapter.scrollTo(0)
+            true
+        }
         R.id.action_refresh -> {
             showCustomDialog(
                 title = R.string.dialog_title,

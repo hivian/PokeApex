@@ -10,6 +10,13 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>-->
     </style>
 
+    <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.BackgroundStyle">
         <item name="android:background">@color/colorPrimaryLight</item>
     </style>
