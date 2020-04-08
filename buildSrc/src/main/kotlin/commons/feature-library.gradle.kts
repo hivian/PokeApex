@@ -1,5 +1,9 @@
 package commons
 
+import AndroidLibraries
+import KotlinLibraries
+import Libraries
+import Modules
 import extensions.addTestsDependencies
 
 plugins {

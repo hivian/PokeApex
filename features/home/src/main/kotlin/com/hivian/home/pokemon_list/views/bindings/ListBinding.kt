@@ -3,12 +3,9 @@ package com.hivian.home.pokemon_list.views.bindings
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.github.ajalt.timberkt.d
 import com.hivian.home.R
-import com.hivian.home.pokemon_list.PokemonListViewState
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import org.jetbrains.anko.textResource
 

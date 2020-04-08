@@ -6,8 +6,9 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-import org.koin.standalone.StandAloneContext
-import org.koin.standalone.inject
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.core.inject
 import org.koin.test.KoinTest
 import java.io.File
 
@@ -25,12 +26,14 @@ abstract class BaseTest: KoinTest {
     @After
     open fun tearDown(){
         this.stopMockServer()
-        StandAloneContext.stopKoin()
+        stopKoin()
     }
 
     // CONFIGURATION
     private fun configureDi(){
-        StandAloneContext.startKoin(listOf(createRemoteModule(mockServer.url("/").toString())))
+        startKoin {
+            modules(listOf(createRemoteModule(mockServer.url("/").toString())))
+        }
     }
 
     private fun configureMockServer(){

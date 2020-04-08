@@ -1,7 +1,6 @@
 package com.hivian.repository.utils
 
 import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.database.DbPokemonSprites
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
 import com.hivian.model.dto.network.*

@@ -1,9 +1,7 @@
 package com.hivian.common.ui.bindings
 
 import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import androidx.databinding.BindingAdapter
 
 /**

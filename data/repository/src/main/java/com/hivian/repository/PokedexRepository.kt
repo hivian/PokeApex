@@ -31,15 +31,15 @@ class PokedexRepositoryImpl(
     val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
 
     override suspend fun getTopPokemonsWithCache(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
-        //return safeApiCall(Dispatchers.IO) { fetchPokemonsAsync(offset, limit) }
-
         return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
                     mapper.remoteToDbMapper.map(response)
 
-            override suspend fun saveCallResult(result: List<DbPokemon>) =
-                    dao.save(result)
+            override suspend fun saveCallResult(result: List<DbPokemon>) {
+                if (forceRefresh) dao.deleteAll()
+                dao.save(result)
+            }
 
             override fun shouldFetch(data: List<DbPokemon>?): Boolean =
                     data == null ||
@@ -53,8 +53,6 @@ class PokedexRepositoryImpl(
                     mapper.dbToDomainMapper.map(data)
 
             override suspend fun createCallAsync(): List<NetworkPokemonObject> {
-                if (forceRefresh) dao.deleteAll()
-
                 val list = mutableListOf<NetworkPokemonObject>()
                 datasource.fetchTopPokemonsAsync(offset, limit).results.forEach {
                     val networkPokemonObject = datasource.fetchPokemonDetailAsync(it.name)
@@ -75,7 +73,6 @@ class PokedexRepositoryImpl(
      * [NetworkBoundResource] is responsible to handle this behavior.
      */
     override suspend fun getPokemonDetailWithCache(forceRefresh: Boolean, name: String): ResultWrapper<Pokemon> {
-        //return safeApiCall(Dispatchers.IO) { fetchPokemonAsync(name) }
         return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =

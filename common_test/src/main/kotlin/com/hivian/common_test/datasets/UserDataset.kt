@@ -1,7 +1,6 @@
 package com.hivian.common_test.datasets
 
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonSprites
 import com.hivian.model.domain.PokemonStat
 import com.hivian.model.domain.PokemonType
 

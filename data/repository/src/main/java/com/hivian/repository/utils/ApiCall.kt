@@ -1,10 +1,10 @@
 package com.hivian.repository.utils
 
 import com.google.gson.annotations.SerializedName
+import com.hivian.common.generic.fromJson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import com.hivian.common.generic.fromJson
 import java.io.IOException
 
 suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): NetworkWrapper<T> {

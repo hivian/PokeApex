@@ -1,11 +1,9 @@
 package com.hivian.model.mapper
 
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonSprites
 import com.hivian.model.domain.PokemonStat
 import com.hivian.model.domain.PokemonType
 import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.database.DbPokemonSprites
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
 import com.hivian.model.dto.network.NetworkPokemonObject

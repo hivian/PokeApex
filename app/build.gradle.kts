@@ -1,5 +1,3 @@
-import extensions.getLocalProperty
-
 plugins {
     id(Plugins.androidApplication)
     kotlin(Plugins.kotlinAndroid)

@@ -11,8 +11,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import com.google.android.material.snackbar.Snackbar
-import com.hivian.common.extension.setupSnackbar
 
 
 abstract class BaseFragment<B : ViewDataBinding, M : BaseViewModel>(

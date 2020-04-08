@@ -4,7 +4,8 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.github.ajalt.timberkt.e
 import com.github.ajalt.timberkt.i
-import kotlinx.coroutines.*
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 

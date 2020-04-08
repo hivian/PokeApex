@@ -1,6 +1,9 @@
 package com.hivian.home.pokemon_detail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
 import com.hivian.common.livedata.SingleLiveData

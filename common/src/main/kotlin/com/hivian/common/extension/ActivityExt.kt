@@ -1,11 +1,9 @@
 package com.hivian.common.extension
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import com.hivian.common.R
 
 

@@ -1,3 +1,5 @@
+import extensions.addTestsDependencies
+
 plugins {
     id(Plugins.androidLibraryCommon)
 }
@@ -10,4 +12,6 @@ dependencies {
     implementation(AndroidLibraries.navigation)
     implementation(AndroidLibraries.navigationFrag)
     implementation(AndroidLibraries.preferences)
+
+    addTestsDependencies()
 }
