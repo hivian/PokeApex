@@ -26,5 +26,6 @@ abstract class PokedexDatabase: RoomDatabase() {
         fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext, PokedexDatabase::class.java, "pokedex.db")
                 .build()
+
     }
 }

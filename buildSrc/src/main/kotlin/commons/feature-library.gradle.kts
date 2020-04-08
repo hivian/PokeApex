@@ -26,6 +26,7 @@ dependencies {
     implementation(AndroidLibraries.recyclerView)
     implementation(AndroidLibraries.navigation)
     implementation(AndroidLibraries.navigationFrag)
+    implementation(AndroidLibraries.preferences)
     // KOIN (Because each feature has to handle its dependencies)
     implementation(Libraries.koin)
     implementation(Libraries.koinViewModel)

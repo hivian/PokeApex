@@ -44,7 +44,6 @@ class PokedexRepositoryImpl(
             override fun shouldFetch(data: List<DbPokemon>?): Boolean =
                     data == null ||
                     data.isEmpty() ||
-                    data.first().haveToRefreshFromNetwork() ||
                     forceRefresh
 
             override suspend fun loadFromDb(): List<DbPokemon> =
@@ -54,6 +53,8 @@ class PokedexRepositoryImpl(
                     mapper.dbToDomainMapper.map(data)
 
             override suspend fun createCallAsync(): List<NetworkPokemonObject> {
+                if (forceRefresh) dao.deleteAll()
+
                 val list = mutableListOf<NetworkPokemonObject>()
                 datasource.fetchTopPokemonsAsync(offset, limit).results.forEach {
                     val networkPokemonObject = datasource.fetchPokemonDetailAsync(it.name)
@@ -67,23 +68,6 @@ class PokedexRepositoryImpl(
 
         }.build()
     }
-
-    suspend fun fetchPokemonsAsync(offset: Int, limit: Int) : List<Pokemon> {
-        // Get from DB
-        data.value = fetchPokemonsDb(offset + limit)
-        val pokemonList = mutableListOf<NetworkPokemonObject>()
-        val apiResult = datasource.fetchTopPokemonsAsync(offset, limit)
-        apiResult.results.forEach {
-            val networkPokemonObject = datasource.fetchPokemonDetailAsync(it.name)
-            pokemonList.add(networkPokemonObject)
-        }
-        val pokemonListDb = mapper.remoteToDbMapper.map(pokemonList)
-        dao.save(pokemonListDb)
-        return mapper.dbToDomainMapper.map(dao.getTopPokemons())
-    }
-
-    suspend fun fetchPokemonsDb(limit: Int) =
-        mapper.dbToDomainMapper.map(dao.getTopPokemons())
 
     /**
      * Suspended function that will get details of a [Pokemon]
@@ -102,7 +86,6 @@ class PokedexRepositoryImpl(
 
             override fun shouldFetch(data: DbPokemon?): Boolean =
                     data == null ||
-                    data.haveToRefreshFromNetwork() ||
                     data.name.isEmpty() ||
                     forceRefresh
 
@@ -117,13 +100,6 @@ class PokedexRepositoryImpl(
 
             override suspend fun isEmptyResult(response: NetworkPokemonObject): Boolean = false
         }.build()
-    }
-
-    suspend fun fetchPokemonAsync(name: String) : Pokemon {
-        val networkPokemonObject = datasource.fetchPokemonDetailAsync(name)
-        val pokemonListDb = mapper.remoteToDbMapper.map(networkPokemonObject)
-        dao.save(pokemonListDb)
-        return mapper.dbToDomainMapper.map(pokemonListDb)
     }
 
 }

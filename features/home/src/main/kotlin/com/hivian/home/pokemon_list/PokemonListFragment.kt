@@ -1,6 +1,9 @@
 package com.hivian.home.pokemon_list
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.github.ajalt.timberkt.d
@@ -9,18 +12,14 @@ import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.extension.gridLayoutManager
 import com.hivian.common.extension.observe
+import com.hivian.common.extension.showCustomDialog
 import com.hivian.common.extension.showSnackbar
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
-import com.hivian.home.pokemon_list.views.adapter.PaginationListener
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonSprites
-import com.hivian.model.domain.PokemonStat
-import com.hivian.model.domain.PokemonType
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 
 class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel> (
@@ -28,7 +27,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 ) {
 
     private val viewModel: PokemonListViewModel by viewModel()
-    private val viewAdapter : PokemonListAdapter by lazy {
+    private val viewAdapter: PokemonListAdapter by lazy {
         PokemonListAdapter(viewModel)
     }
 
@@ -38,21 +37,16 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             adapter = viewAdapter
             gridLayoutManager?.let {
                 it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
-/*
-                addOnScrollListener(object : PaginationListener(it) {
-                    override fun loadMoreItems() = viewModel.loadMoreItem()
-
-                    override fun isLastPage(): Boolean = false
-
-                    override fun isLoading(): Boolean = viewModel.state.value!!.isAddLoading()
-
-                })
-*/
             }
         }
     }
 
     override fun getViewModel(): BaseViewModel = viewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -110,8 +104,30 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         when (viewEvent) {
             is PokemonListViewEvent.OpenPokemonDetailView ->
                 findNavController().navigate(
-                    PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(viewEvent.name))
+                    PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(
+                        viewEvent.name
+                    )
+                )
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.menu_pokemon_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_refresh -> {
+            showCustomDialog(
+                title = R.string.dialog_title,
+                message = R.string.dialog_description) {
+                    viewModel.forceRefreshItems()
+            }
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
 }

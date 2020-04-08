@@ -60,6 +60,7 @@ object Versions {
     val nav = "2.2.1"
     val room = "2.2.5"
     val recyclerview = "1.1.0"
+    val preferences = "1.1.0"
     val safeArgs = "2.1.0-alpha01"
     val glide = "4.11.0"
     val mockwebserver = "4.4.0"
@@ -122,6 +123,7 @@ object AndroidLibraries {
     val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
     val navigation = "androidx.navigation:navigation-ui-ktx:${Versions.nav}"
     val navigationFrag = "androidx.navigation:navigation-fragment-ktx:${Versions.nav}"
+    val preferences = "androidx.preference:preference-ktx:${Versions.preferences}"
 }
 
 object TestLibraries {

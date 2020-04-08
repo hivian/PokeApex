@@ -18,6 +18,9 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
     abstract suspend fun getPokemonByName(name: String): DbPokemon
 
+    @Query("DELETE FROM DbPokemon")
+    abstract suspend fun deleteAll()
+
     @Transaction
     open suspend fun upsert(pokemon: DbPokemon) {
         val isPokemon = getPokemonById(pokemon.pokemonId)

@@ -9,4 +9,5 @@ dependencies {
     implementation(AndroidLibraries.paging)
     implementation(AndroidLibraries.navigation)
     implementation(AndroidLibraries.navigationFrag)
+    implementation(AndroidLibraries.preferences)
 }

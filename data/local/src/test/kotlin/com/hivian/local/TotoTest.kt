@@ -25,7 +25,7 @@ class TotoTest {
 
     @Test
     fun `test Dao call`() {
-        val myDao = mockk<PokedexDao>()
+        val myDao = mockk<PokedexDao>(relaxed = true)
         every { appDatabase.pokedexDao() } returns myDao
 
         assertEquals(appDatabase.pokedexDao(), myDao)

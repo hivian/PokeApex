@@ -68,38 +68,30 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
         } else {
             PokemonListViewState.Loading
         }
-        val pokemonsAsync =  getTopPokemonsUseCase(forceRefresh, offset, limit)
-        when (pokemonsAsync) {
+        when (val pokemonsAsync =  getTopPokemonsUseCase(forceRefresh, offset, limit)) {
             is ResultWrapper.Success -> {
                 currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
                 _data.value = pokemonsAsync.value
-                _state.value = if (isAdditional && pokemonsAsync.emptyResponse) {
-                    PokemonListViewState.NoMoreElements
-                } else if (pokemonsAsync.value.isEmpty()) {
-                    PokemonListViewState.Empty
-                } else {
-                    PokemonListViewState.Loaded
+                _state.value = when {
+                    isAdditional && pokemonsAsync.emptyResponse -> PokemonListViewState.NoMoreElements
+                    pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
+                    else -> PokemonListViewState.Loaded
                 }
             }
             is ResultWrapper.GenericError -> {
                 _data.value = pokemonsAsync.value
-                _state.value = if (isAdditional) {
-                    PokemonListViewState.AddError
-                } else if (pokemonsAsync.value.isNotEmpty()) {
-                    PokemonListViewState.ErrorWithData
-                } else {
-                    PokemonListViewState.Error
+                _state.value = when {
+                    isAdditional -> PokemonListViewState.AddError
+                    pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
+                    else -> PokemonListViewState.Error
                 }
             }
             is ResultWrapper.NetworkError -> {
                 _data.value = pokemonsAsync.value
-                //snackBarError.value = R.string.pokemon_list_network_error
-                _state.value = if (isAdditional) {
-                    PokemonListViewState.AddError
-                } else if (pokemonsAsync.value.isNotEmpty()) {
-                    PokemonListViewState.ErrorWithData
-                } else {
-                    PokemonListViewState.Error
+                _state.value = when {
+                    isAdditional -> PokemonListViewState.AddError
+                    pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
+                    else -> PokemonListViewState.Error
                 }
             }
         }

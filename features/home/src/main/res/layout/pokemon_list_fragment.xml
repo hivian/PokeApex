@@ -14,6 +14,7 @@
         android:id="@+id/fragment_detail_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:enabled="false"
         app:refreshing="@{viewModel.state.refreshing}"
         app:onRefreshListener="@{() -> viewModel.forceRefreshItems()}">
 
