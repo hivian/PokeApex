@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseFragment
@@ -115,6 +116,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.menu_pokemon_list, menu)
+
+        configureSearchView(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
@@ -133,5 +136,20 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         else -> {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun configureSearchView(menu: Menu) {
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.queryHint = getString(R.string.pokemon_list_search_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                query?.let { viewModel.getPokemonListByPattern(it) }
+                return true
+            }
+        })
     }
 }

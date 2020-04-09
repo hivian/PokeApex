@@ -18,6 +18,9 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
     abstract suspend fun getPokemonByName(name: String): DbPokemon
 
+    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%'")
+    abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
+
     @Query("DELETE FROM DbPokemon")
     abstract suspend fun deleteAll()
 

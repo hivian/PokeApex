@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.hivian.common_test.datasets.UserDataset.FAKE_POKEMONS
 import com.hivian.common_test.extensions.blockingObserve
-import com.hivian.home.domain.GetTopPokemonsUseCase
+import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.home.pokemon_list.PokemonListViewEvent
 import com.hivian.home.pokemon_list.PokemonListViewModel
 import com.hivian.home.pokemon_list.PokemonListViewState
@@ -33,22 +33,22 @@ class PokemonListUnitTests {
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var getTopPokemonsUseCase: GetTopPokemonsUseCase
+    private lateinit var pokemonListUseCase: PokemonListUseCase
     private lateinit var pokemonListViewModel: PokemonListViewModel
     private val appDispatchers = AppDispatchers(Dispatchers.Unconfined, Dispatchers.Unconfined)
 
     @Before
     fun setUp() {
-        getTopPokemonsUseCase = mockk()
+        pokemonListUseCase = mockk()
     }
 
     @Test
     fun `Pokemons requested when ViewModel is created`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val result = ResultWrapper.Success(FAKE_POKEMONS)
-        coEvery { getTopPokemonsUseCase(false) } returns result
+        coEvery { pokemonListUseCase.getPokemonList(false) } returns result
 
-        pokemonListViewModel = PokemonListViewModel(getTopPokemonsUseCase, appDispatchers)
+        pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)
 
         verify {
@@ -63,9 +63,9 @@ class PokemonListUnitTests {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val observerState = mockk<Observer<PokemonListViewState>>(relaxed = true)
         val result = ResultWrapper.NetworkError(emptyList<Pokemon>())
-        coEvery { getTopPokemonsUseCase(any()) } returns result
+        coEvery { pokemonListUseCase.getPokemonList(any()) } returns result
 
-        pokemonListViewModel = PokemonListViewModel(getTopPokemonsUseCase, appDispatchers)
+        pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)
         pokemonListViewModel.state.observeForever(observerState)
 
@@ -80,9 +80,9 @@ class PokemonListUnitTests {
     @Test
     fun `Pokemon clicks on item on RecyclerView`() {
         val event = PokemonListViewEvent.OpenPokemonDetailView(FAKE_POKEMONS.first().name)
-        coEvery { getTopPokemonsUseCase(false) } returns ResultWrapper.Success(FAKE_POKEMONS)
+        coEvery { pokemonListUseCase.getPokemonList(false) } returns ResultWrapper.Success(FAKE_POKEMONS)
 
-        pokemonListViewModel = PokemonListViewModel(getTopPokemonsUseCase, appDispatchers)
+        pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.openPokemonDetail(FAKE_POKEMONS.first().name)
 
         Assert.assertEquals(event.name,
@@ -93,9 +93,9 @@ class PokemonListUnitTests {
     fun `Pokemon refreshes list with swipe to refresh`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val result = ResultWrapper.Success(FAKE_POKEMONS)
-        coEvery { getTopPokemonsUseCase(any()) } returns result
+        coEvery { pokemonListUseCase.getPokemonList(any()) } returns result
 
-        pokemonListViewModel = PokemonListViewModel(getTopPokemonsUseCase, appDispatchers)
+        pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)
         pokemonListViewModel.forceRefreshItems()
 

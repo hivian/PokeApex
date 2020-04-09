@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
-import com.hivian.model.dto.network.NetworkPokemon
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.remote.PokemonDatasource
@@ -12,7 +11,7 @@ import com.hivian.repository.utils.NetworkBoundResource
 import com.hivian.repository.utils.ResultWrapper
 
 interface PokedexRepository {
-    suspend fun getTopPokemonsWithCache(
+    suspend fun getPokemonListWithCache(
         forceRefresh: Boolean = false,
         offset: Int,
         limit: Int
@@ -21,6 +20,7 @@ interface PokedexRepository {
         forceRefresh: Boolean = false,
         name: String
     ): ResultWrapper<Pokemon>
+    suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
 }
 
 class PokedexRepositoryImpl(
@@ -31,7 +31,7 @@ class PokedexRepositoryImpl(
 
     val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
 
-    override suspend fun getTopPokemonsWithCache(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
+    override suspend fun getPokemonListWithCache(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
         return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
@@ -96,5 +96,9 @@ class PokedexRepositoryImpl(
             override suspend fun isEmptyResult(response: NetworkPokemonObject): Boolean = false
         }.build()
     }
+
+    override suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon> =
+        mapper.dbToDomainMapper.map(dao.getPokemonListByPattern(pattern))
+
 
 }

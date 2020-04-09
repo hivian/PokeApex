@@ -6,6 +6,7 @@
 
     <!--Pokemon list-->
     <string name="pokemon_list_title">Pokedex</string>
+    <string name="pokemon_list_search_hint">Search…</string>
     <string name="pokemon_list_empty_text">Empty pokemon list</string>
     <string name="pokemon_list_error_text">Ups… an error occurred on obtain pokemon list, please try again</string>
     <string name="pokemon_list_loading_text">Updating pokemon list. It can take a few seconds.</string>

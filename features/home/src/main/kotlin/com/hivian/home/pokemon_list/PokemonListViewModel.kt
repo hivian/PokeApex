@@ -7,7 +7,7 @@ import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.Constants
-import com.hivian.home.domain.GetTopPokemonsUseCase
+import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ResultWrapper
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * A simple [BaseViewModel] that provide the data and handle logic to communicate with the model
  * for [PokemonListFragment].
  */
-class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseCase,
+class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                            private val dispatchers: AppDispatchers)
     : BaseViewModel() {
 
@@ -69,7 +69,7 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
         } else {
             PokemonListViewState.Loading
         }
-        when (val pokemonsAsync =  getTopPokemonsUseCase(forceRefresh, offset, limit)) {
+        when (val pokemonsAsync =  pokemonListUseCase.getPokemonList(forceRefresh, offset, limit)) {
             is ResultWrapper.Success -> {
                 currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
                 _data.value = pokemonsAsync.value
@@ -96,7 +96,10 @@ class PokemonListViewModel(private val getTopPokemonsUseCase: GetTopPokemonsUseC
                 }
             }
         }
+    }
 
+    fun getPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
+        _data.value = pokemonListUseCase.getPokemonListByPattern(pattern)
     }
 
     private fun setNewPagingOffset(offset: Int) {
