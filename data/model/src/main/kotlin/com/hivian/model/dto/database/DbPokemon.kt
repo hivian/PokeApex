@@ -14,6 +14,7 @@ data class DbPokemon(
     val name: String,
     val height: Int,
     val weight: Int,
+    val generation: Int?,
     val abilities: List<String>,
     val forms: List<String>,
     val moves: List<String>,

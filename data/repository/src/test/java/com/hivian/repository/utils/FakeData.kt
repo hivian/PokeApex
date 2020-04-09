@@ -49,6 +49,7 @@ object FakeData {
             pokemonId = id,
             name = "Name_$id",
             height = 100, weight = 200,
+            generation = 1,
             abilities = arrayListOf( "Fireball"),
             forms = arrayListOf("Circle"),
             moves = arrayListOf("Run"),

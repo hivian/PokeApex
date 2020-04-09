@@ -45,6 +45,7 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             name = input.name,
             height = input.height,
             weight = input.weight,
+            generation = Generations.from(input.id),
             abilities = input.abilities.map { it.ability.name },
             forms = input.forms.map { it.name },
             moves = input.moves.map { it.move.name },
