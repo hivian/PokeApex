@@ -13,16 +13,16 @@ data class DbPokemon(
 
     val pokemonId: Int,
     val name: String,
-    val height: Int,
-    val weight: Int,
-    val abilities: List<String>,
-    val forms: List<String>,
-    val moves: List<String>,
     val imageUrl: String,
-    val stats: List<DbPokemonStat>,
-    val types: List<DbPokemonType>,
+    val height: Int = 0,
+    val weight: Int = 0,
+    val abilities: List<String> = emptyList(),
+    val forms: List<String> = emptyList(),
+    val moves: List<String> = emptyList(),
+    val stats: List<DbPokemonStat> = emptyList(),
+    val types: List<DbPokemonType> = emptyList(),
 
-    val generation: Int?,
+    val generation: Int? = null,
     var new: Boolean = true,
     var lastRefreshed: Date = Date()
 ) {

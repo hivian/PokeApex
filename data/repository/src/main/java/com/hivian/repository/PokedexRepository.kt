@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
+import com.hivian.model.dto.network.NetworkPokemon
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.remote.PokemonDatasource
@@ -37,13 +38,13 @@ class PokedexRepositoryImpl(
                     mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: List<DbPokemon>) {
-                if (forceRefresh) dao.deleteAll()
                 dao.save(result)
             }
 
             override fun shouldFetch(data: List<DbPokemon>?): Boolean =
                     data == null ||
                     data.isEmpty() ||
+                    data.first().haveToRefreshFromNetwork() ||
                     forceRefresh
 
             override suspend fun loadFromDb(): List<DbPokemon> =
@@ -53,12 +54,8 @@ class PokedexRepositoryImpl(
                     mapper.dbToDomainMapper.map(data)
 
             override suspend fun createCallAsync(): List<NetworkPokemonObject> {
-                val list = mutableListOf<NetworkPokemonObject>()
-                datasource.fetchTopPokemonsAsync(offset, limit).results.forEach {
-                    val networkPokemonObject = datasource.fetchPokemonDetailAsync(it.name)
-                    list.add(networkPokemonObject)
-                }
-                return list
+                val results = datasource.fetchTopPokemonsAsync(offset, limit).results
+                return mapper.networkToObjectImpl.map(results)
             }
 
             override suspend fun isEmptyResult(response: List<NetworkPokemonObject>): Boolean =
@@ -84,6 +81,7 @@ class PokedexRepositoryImpl(
             override fun shouldFetch(data: DbPokemon?): Boolean =
                     data == null ||
                     data.name.isEmpty() ||
+                    data.haveToRefreshFromNetwork() ||
                     forceRefresh
 
             override suspend fun loadFromDb(): DbPokemon =

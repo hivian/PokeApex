@@ -6,6 +6,7 @@ import com.hivian.model.domain.PokemonType
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
+import com.hivian.model.dto.network.NetworkPokemon
 import com.hivian.model.dto.network.NetworkPokemonObject
 
 abstract class Mapper<I, O> {
@@ -20,7 +21,10 @@ abstract class Mapper<I, O> {
     fun map(input: List<I>) : List<O> = input.map { map(it) }
 }
 
-data class MapperPokedexRepository(val remoteToDbMapper: MapperPokemonRemoteToDbImpl, val dbToDomainMapper: MapperPokemonDbToDomainImpl)
+data class MapperPokedexRepository(
+    val remoteToDbMapper: MapperPokemonRemoteToDbImpl,
+    val dbToDomainMapper: MapperPokemonDbToDomainImpl,
+    val networkToObjectImpl : MapperNetworkPokemonToObjectImpl)
 
 class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
     override fun map(input: DbPokemon): Pokemon {
@@ -63,5 +67,14 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             ) }
         )
     }
+}
 
+class MapperNetworkPokemonToObjectImpl : Mapper<NetworkPokemon, NetworkPokemonObject>() {
+    override fun map(input: NetworkPokemon): NetworkPokemonObject {
+        return NetworkPokemonObject().apply {
+            // Pokemon id is at the end of the Pokemon url
+            id = input.url.trimEnd('/').substringAfterLast("/").toInt()
+            name = input.name
+        }
+    }
 }

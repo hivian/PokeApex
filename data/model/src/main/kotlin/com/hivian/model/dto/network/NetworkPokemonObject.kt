@@ -4,34 +4,34 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkPokemonObject(
     @SerializedName("id")
-    val id: Int,
+    var id: Int = 0,
 
     @SerializedName("name")
-    val name: String,
+    var name: String = "",
 
     @SerializedName("height")
-    val height: Int,
+    var height: Int = 0,
 
     @SerializedName("weight")
-    val weight: Int,
+    var weight: Int = 0,
 
     @SerializedName("abilities")
-    val abilities: List<NetworkPokemonAbilityObject>,
+    var abilities: List<NetworkPokemonAbilityObject> = emptyList(),
 
     @SerializedName("forms")
-    val forms: List<NetworkPokemonForm>,
+    var forms: List<NetworkPokemonForm> = emptyList(),
 
     @SerializedName("moves")
-    val moves: List<NetworkPokemonMoveObject>,
+    var moves: List<NetworkPokemonMoveObject> = emptyList(),
 
     @SerializedName("sprites")
-    val sprites: NetworkPokemonSprites,
+    var sprites: NetworkPokemonSprites = NetworkPokemonSprites(),
 
     @SerializedName("stats")
-    val stats: List<NetworkPokemonStatObject>,
+    var stats: List<NetworkPokemonStatObject> = emptyList(),
 
     @SerializedName("types")
-    val types: List<NetworkPokemonTypeObject>
+    var types: List<NetworkPokemonTypeObject> = emptyList()
 
 )
 
