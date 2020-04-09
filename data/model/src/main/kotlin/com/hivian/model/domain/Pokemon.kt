@@ -10,5 +10,6 @@ class Pokemon(
     val moves: List<String>,
     val imageUrl: String,
     val stats: List<PokemonStat>,
-    val types: List<PokemonType>
+    val types: List<PokemonType>,
+    val generation: Int?
 )

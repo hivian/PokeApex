@@ -29,6 +29,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             name = input.name,
             height = input.height,
             weight = input.weight,
+            generation = input.generation,
             abilities = input.abilities,
             forms = input.forms,
             moves = input.moves,

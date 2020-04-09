@@ -2,6 +2,7 @@ package com.hivian.model.dto.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sun.org.apache.xpath.internal.operations.Bool
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -14,7 +15,6 @@ data class DbPokemon(
     val name: String,
     val height: Int,
     val weight: Int,
-    val generation: Int?,
     val abilities: List<String>,
     val forms: List<String>,
     val moves: List<String>,
@@ -22,6 +22,8 @@ data class DbPokemon(
     val stats: List<DbPokemonStat>,
     val types: List<DbPokemonType>,
 
+    val generation: Int?,
+    var new: Boolean = true,
     var lastRefreshed: Date = Date()
 ) {
     /**
