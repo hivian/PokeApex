@@ -17,7 +17,6 @@ interface PokedexRepository {
         limit: Int
     ): ResultWrapper<List<Pokemon>>
     suspend fun getPokemonDetailWithCache(
-        forceRefresh: Boolean = false,
         name: String
     ): ResultWrapper<Pokemon>
     suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
@@ -69,7 +68,7 @@ class PokedexRepositoryImpl(
      * whether in cache (SQLite) or via network (API).
      * [NetworkBoundResource] is responsible to handle this behavior.
      */
-    override suspend fun getPokemonDetailWithCache(forceRefresh: Boolean, name: String): ResultWrapper<Pokemon> {
+    override suspend fun getPokemonDetailWithCache(name: String): ResultWrapper<Pokemon> {
         return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =
@@ -81,8 +80,7 @@ class PokedexRepositoryImpl(
             override fun shouldFetch(data: DbPokemon?): Boolean =
                     data == null ||
                     data.name.isEmpty() ||
-                    data.haveToRefreshFromNetwork() ||
-                    forceRefresh
+                    data.haveToRefreshFromNetwork()
 
             override suspend fun loadFromDb(): DbPokemon =
                     dao.getPokemonByName(name)

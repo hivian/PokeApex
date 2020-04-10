@@ -11,29 +11,29 @@ import com.hivian.common.base.BaseViewState
 sealed class PokemonDetailViewState : BaseViewState {
 
     /**
-     * Loaded characters list.
+     * Loaded pokemon detail info.
      */
     object Loaded : PokemonDetailViewState()
 
     /**
-     * Loading characters list.
+     * Loading pokemon detail info.
      */
     object Loading : PokemonDetailViewState()
 
     /**
-     * Empty characters list.
-     */
-    object Empty : PokemonDetailViewState()
-
-    /**
-     * Error on loading characters list.
+     * Error on loading pokemon detail info.
      */
     object Error : PokemonDetailViewState()
 
     /**
-     * No more elements for adding into characters list.
+     * Add current pokemon to favorite list.
      */
-    object NoMoreElements : PokemonDetailViewState()
+    object AddToFavorite : PokemonDetailViewState()
+
+    /**
+     * Added current pokemon to favorite list.
+     */
+    object AddedToFavorite : PokemonDetailViewState()
 
     // ============================================================================================
     //  Public helpers methods
@@ -54,13 +54,6 @@ sealed class PokemonDetailViewState : BaseViewState {
     fun isLoading() = this is Loading
 
     /**
-     * Check if current view state is [Empty].
-     *
-     * @return True if is empty state, otherwise false.
-     */
-    fun isEmpty() = this is Empty
-
-    /**
      * Check if current view state is [Error].
      *
      * @return True if is error state, otherwise false.
@@ -68,9 +61,16 @@ sealed class PokemonDetailViewState : BaseViewState {
     fun isError() = this is Error
 
     /**
-     * Check if current view state is [NoMoreElements].
+     * Check if current view state is [AddToFavorite].
      *
-     * @return True if is no more elements state, otherwise false.
+     * @return True if is add to favorite state, otherwise false.
      */
-    fun isNoMoreElements() = this is NoMoreElements
+    fun isAddToFavorite() = this is AddToFavorite
+
+    /**
+     * Check if current view state is [AddedToFavorite].
+     *
+     * @return True if is added to favorite state, otherwise false.
+     */
+    fun isAddedToFavorite() = this is AddedToFavorite
 }

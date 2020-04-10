@@ -10,4 +10,4 @@ import java.util.*
 fun String.capitalize(): String =
     firstOrNull()?.let { firstChar ->
         firstChar.toTitleCase() + substring(1).toLowerCase(Locale.getDefault())
-    } ?: this
+    } ?: run { "" }

@@ -11,6 +11,7 @@ import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
+import com.hivian.common.base.BaseViewState
 import com.hivian.common.extension.gridLayoutManager
 import com.hivian.common.extension.observe
 import com.hivian.common.extension.showCustomDialog
@@ -40,13 +41,13 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                 it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
             }
         }
+        setupToolbar()
     }
 
     override fun getViewModel(): BaseViewModel = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +60,14 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         d { "TIMBER IS WORKING" }
+    }
+
+    /**
+     * Configure app custom support action bar.
+     */
+    private fun setupToolbar() {
+        setHasOptionsMenu(true)
+        requireCompatActivity().setSupportActionBar(viewBinding.toolbar)
     }
 
     /**
@@ -81,7 +90,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      *
      * @param viewState State of characters list.
      */
-    private fun onViewStateChange(viewState: PokemonListViewState) {
+    private fun onViewStateChange(viewState: BaseViewState) {
         when (viewState) {
             is PokemonListViewState.Loaded ->
                 viewAdapter.submitState(PokemonListAdapterState.Added)

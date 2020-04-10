@@ -1,45 +1,65 @@
 package com.hivian.home.pokemon_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.hivian.common.base.BaseViewModel
-import com.hivian.common.base.BaseViewState
+import com.hivian.common.extension.capitalize
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.domain.GetPokemonByNameUseCase
+import com.hivian.home.domain.PokemonDetailUseCase
 import com.hivian.home.pokemon_list.PokemonListViewEvent
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ResultWrapper
 import kotlinx.coroutines.launch
 
-class PokemonDetailViewModel(private val getPokemonByNameUseCase: GetPokemonByNameUseCase,
-    private val dispatchers: AppDispatchers) : BaseViewModel() {
+class PokemonDetailViewModel(private val pokemonDetailUseCase: PokemonDetailUseCase,
+                             private val dispatchers: AppDispatchers) : BaseViewModel() {
 
-    // PRIVATE data
-    private lateinit var argsPokemonName: String
-    private var pokemonSource: LiveData<ResultWrapper<Pokemon>> = MutableLiveData()
-
-    private val _pokemon = MediatorLiveData<Pokemon>()
-    val pokemon: LiveData<Pokemon> get() = _pokemon
-
-    // FOR event
-    val event = SingleLiveData<PokemonListViewEvent>()
-
-    // FOR state
-    private val _state = MutableLiveData<BaseViewState>()
-    val state: LiveData<BaseViewState> get() = _state
-
-    // PUBLIC ACTIONS ---
-    fun loadDataWhenActivityStarts(name: String) {
-        argsPokemonName = name
-        getPokemonDetail(false)
+    private val _data = MediatorLiveData<Pokemon>()
+    val data: LiveData<Pokemon> = Transformations.map(_data) { pokemon ->
+        pokemon.apply { name = name.capitalize() }
     }
 
-    fun forceRefreshItems() = getPokemonDetail(true)
+    // FOR event
+    val event = SingleLiveData<PokemonDetailViewEvent>()
 
-    private fun getPokemonDetail(forceRefresh: Boolean) = viewModelScope.launch(dispatchers.main) {
+    // FOR state
+    private val _state = MutableLiveData<PokemonDetailViewState>()
+    val state: LiveData<PokemonDetailViewState> get() = _state
 
+
+    // ============================================================================================
+    //  Public methods
+    // ============================================================================================
+
+    /**
+     * Fetch selected character detail info.
+     *
+     * @param pokemonName Pokemon name.
+     */
+    fun loadPokemonDetail(pokemonName: String) {
+        _state.postValue(PokemonDetailViewState.Loading)
+        viewModelScope.launch(dispatchers.main) {
+            when (val result = pokemonDetailUseCase(pokemonName)) {
+                is ResultWrapper.Success -> {
+                    _data.value = result.value
+                    _state.value = PokemonDetailViewState.Loaded
+                }
+                is ResultWrapper.GenericError -> {
+                    _data.value = result.value
+                    _state.value = PokemonDetailViewState.Error
+                }
+                is ResultWrapper.NetworkError -> {
+                    _data.value = result.value
+                    _state.value = PokemonDetailViewState.Error
+                }
+            }
+        }
+    }
+
+    /**
+     * Send interaction event for dismiss character detail view.
+     */
+    fun dismissCharacterDetail() {
+        event.value = PokemonDetailViewEvent.DismissPokemonDetailView
     }
 }

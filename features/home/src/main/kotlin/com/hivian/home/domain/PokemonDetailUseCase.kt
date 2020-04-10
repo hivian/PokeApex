@@ -10,9 +10,9 @@ import com.hivian.repository.utils.ResultWrapper
  * and makes some specific logic actions on it.
  *
  */
-class GetPokemonByNameUseCase(private val repository: PokedexRepository) {
+class PokemonDetailUseCase(private val repository: PokedexRepository) {
 
-    suspend operator fun invoke(forceRefresh: Boolean = false, name: String): ResultWrapper<Pokemon> {
-        return repository.getPokemonDetailWithCache(forceRefresh, name)
+    suspend operator fun invoke(name: String): ResultWrapper<Pokemon> {
+        return repository.getPokemonDetailWithCache(name)
     }
 }

@@ -9,6 +9,6 @@ import com.hivian.common.extension.capitalize
  * Capitalize text in [TextView]
  */
 @BindingAdapter("textCapitalized")
-fun textCapitalized(textView : TextView, text: String) {
-    textView.text = text.capitalize()
+fun textCapitalized(textView : TextView, text: String?) {
+    textView.text = text?.capitalize()
 }

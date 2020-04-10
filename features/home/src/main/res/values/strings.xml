@@ -18,7 +18,7 @@
     <string name="pokemon_detail_dialog_loading_text">Loading detail…</string>
     <string name="pokemon_detail_dialog_error_text">Error on obtain detail, please try later.</string>
     <string name="pokemon_detail_added_to_favorite_message">Added to your favorite list</string>
-    <string name="pokemon_detail_image_content_description">Image of the selected character</string>
+    <string name="pokemon_detail_image_content_description">Image of the selected pokemon</string>
     
     <!--Item menu-->
     <string name="action_refresh">Refresh</string>

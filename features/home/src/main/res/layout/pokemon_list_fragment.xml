@@ -9,42 +9,66 @@
             type="com.hivian.home.pokemon_list.PokemonListViewModel" />
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        tools:context=".pokemon_list.PokemonListFragment"
-        android:id="@+id/fragment_detail_root_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:enabled="false"
-        app:refreshing="@{viewModel.state.refreshing}"
-        app:onRefreshListener="@{() -> viewModel.forceRefreshItems()}">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_detail_root_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/include_list"
-                layout="@layout/view_pokemon_list"
-                app:viewState="@{viewModel.state}"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="Pokédex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-            <include
-                android:id="@+id/include_list_empty"
-                layout="@layout/view_pokemon_list_empty"
-                app:viewState="@{viewModel.state}"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <include
-                android:id="@+id/include_list_error"
-                layout="@layout/view_pokemon_list_error"
-                app:viewState="@{viewModel.state}"/>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            tools:context=".pokemon_list.PokemonListFragment"
+            android:id="@+id/fragment_detail_root_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:enabled="false"
+            app:refreshing="@{viewModel.state.refreshing}"
+            app:onRefreshListener="@{() -> viewModel.forceRefreshItems()}">
 
-            <include
-                android:id="@+id/include_list_loading"
-                layout="@layout/view_pokemon_list_loading"
-                app:viewState="@{viewModel.state}"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/include_list"
+                    layout="@layout/view_pokemon_list"
+                    app:viewState="@{viewModel.state}"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <include
+                    android:id="@+id/include_list_empty"
+                    layout="@layout/view_pokemon_list_empty"
+                    app:viewState="@{viewModel.state}"/>
 
+                <include
+                    android:id="@+id/include_list_error"
+                    layout="@layout/view_pokemon_list_error"
+                    app:viewState="@{viewModel.state}"/>
+
+                <include
+                    android:id="@+id/include_list_loading"
+                    layout="@layout/view_pokemon_list_loading"
+                    app:viewState="@{viewModel.state}"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

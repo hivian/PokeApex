@@ -60,7 +60,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) = viewModelScope.launch(dispatchers.main) {
+    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
         d { "= offset: $offset, limit: $limit, currentOffset: $currentOffset" }
         val isAdditional = offset > 0
 
@@ -69,30 +69,33 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         } else {
             PokemonListViewState.Loading
         }
-        when (val pokemonsAsync =  pokemonListUseCase.getPokemonList(forceRefresh, offset, limit)) {
-            is ResultWrapper.Success -> {
-                currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
-                _data.value = pokemonsAsync.value
-                _state.value = when {
-                    isAdditional && pokemonsAsync.emptyResponse -> PokemonListViewState.NoMoreElements
-                    pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
-                    else -> PokemonListViewState.Loaded
+        viewModelScope.launch(dispatchers.main) {
+            when (val pokemonsAsync =
+                pokemonListUseCase.getPokemonList(forceRefresh, offset, limit)) {
+                is ResultWrapper.Success -> {
+                    currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
+                    _data.value = pokemonsAsync.value
+                    _state.value = when {
+                        isAdditional && pokemonsAsync.emptyResponse -> PokemonListViewState.NoMoreElements
+                        pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
+                        else -> PokemonListViewState.Loaded
+                    }
                 }
-            }
-            is ResultWrapper.GenericError -> {
-                _data.value = pokemonsAsync.value
-                _state.value = when {
-                    isAdditional -> PokemonListViewState.AddError
-                    pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
-                    else -> PokemonListViewState.Error
+                is ResultWrapper.GenericError -> {
+                    _data.value = pokemonsAsync.value
+                    _state.value = when {
+                        isAdditional -> PokemonListViewState.AddError
+                        pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
+                        else -> PokemonListViewState.Error
+                    }
                 }
-            }
-            is ResultWrapper.NetworkError -> {
-                _data.value = pokemonsAsync.value
-                _state.value = when {
-                    isAdditional -> PokemonListViewState.AddError
-                    pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
-                    else -> PokemonListViewState.Error
+                is ResultWrapper.NetworkError -> {
+                    _data.value = pokemonsAsync.value
+                    _state.value = when {
+                        isAdditional -> PokemonListViewState.AddError
+                        pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
+                        else -> PokemonListViewState.Error
+                    }
                 }
             }
         }
