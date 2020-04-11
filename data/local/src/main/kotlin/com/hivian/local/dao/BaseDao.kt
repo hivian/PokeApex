@@ -8,11 +8,20 @@ import androidx.room.Update
 interface BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg users: T)
+    suspend fun insert(pokemons: T): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(pokemons: List<T>): LongArray
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(vararg users: T)
+    suspend fun update(pokemons: T): Int
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(pokemons: List<T>): Int
 
     @Delete
-    suspend fun delete(vararg users: T)
+    suspend fun delete(pokemons: T): Int
+
+    @Delete
+    suspend fun delete(pokemons: List<T>): Int
 }

@@ -9,20 +9,20 @@ import java.util.concurrent.TimeUnit
 @Entity
 data class DbPokemon(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    var id: Int = 0,
 
-    val pokemonId: Int,
-    val name: String,
-    val imageUrl: String,
-    val height: Int = 0,
-    val weight: Int = 0,
-    val abilities: List<String> = emptyList(),
-    val forms: List<String> = emptyList(),
-    val moves: List<String> = emptyList(),
-    val stats: List<DbPokemonStat> = emptyList(),
-    val types: List<DbPokemonType> = emptyList(),
+    var pokemonId: Int,
+    var name: String,
+    var imageUrl: String,
+    var height: Int = 0,
+    var weight: Int = 0,
+    var abilities: List<String> = emptyList(),
+    var forms: List<String> = emptyList(),
+    var moves: List<String> = emptyList(),
+    var stats: List<DbPokemonStat> = emptyList(),
+    var types: List<DbPokemonType> = emptyList(),
 
-    val generation: Int? = null,
+    var generation: Int? = null,
     var new: Boolean = true,
     var lastRefreshed: Date = Date()
 ) {

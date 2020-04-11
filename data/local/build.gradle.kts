@@ -9,6 +9,7 @@ dependencies {
     // ROOM
     kapt(Libraries.roomCompiler)
     implementation(project(Modules.common))
+    implementation(project(Modules.commonTest))
     implementation(Libraries.roomRunTime)
     implementation(Libraries.roomKtx)
     implementation(AndroidLibraries.lifecycleExtensions)

@@ -3,7 +3,7 @@ package com.hivian.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
-import com.hivian.common_test.datasets.UserDataset.FAKE_POKEMONS
+import com.hivian.common_test.datasets.FakeData
 import com.hivian.common_test.extensions.blockingObserve
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.home.pokemon_list.PokemonListViewEvent
@@ -45,7 +45,7 @@ class PokemonListUnitTests {
     @Test
     fun `Pokemons requested when ViewModel is created`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
-        val result = ResultWrapper.Success(FAKE_POKEMONS)
+        val result = ResultWrapper.Success(FakeData.createFakePokemonsDomain(3))
         coEvery { pokemonListUseCase.getPokemonList(false) } returns result
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
@@ -79,11 +79,12 @@ class PokemonListUnitTests {
 
     @Test
     fun `Pokemon clicks on item on RecyclerView`() {
-        val event = PokemonListViewEvent.OpenPokemonDetailView(FAKE_POKEMONS.first().name)
-        coEvery { pokemonListUseCase.getPokemonList(false) } returns ResultWrapper.Success(FAKE_POKEMONS)
+        val fakeDataSet = FakeData.createFakePokemonsDomain(3)
+        val event = PokemonListViewEvent.OpenPokemonDetailView(fakeDataSet.first().name)
+        coEvery { pokemonListUseCase.getPokemonList(false) } returns ResultWrapper.Success(fakeDataSet)
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
-        pokemonListViewModel.openPokemonDetail(FAKE_POKEMONS.first().name)
+        pokemonListViewModel.openPokemonDetail(fakeDataSet.first().name)
 
         Assert.assertEquals(event.name,
             (pokemonListViewModel.event.blockingObserve()!! as PokemonListViewEvent.OpenPokemonDetailView).name)
@@ -92,7 +93,7 @@ class PokemonListUnitTests {
     @Test
     fun `Pokemon refreshes list with swipe to refresh`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
-        val result = ResultWrapper.Success(FAKE_POKEMONS)
+        val result = ResultWrapper.Success(FakeData.createFakePokemonsDomain(3))
         coEvery { pokemonListUseCase.getPokemonList(any()) } returns result
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)

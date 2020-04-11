@@ -84,6 +84,8 @@ fun DependencyHandler.addTestsDependencies() {
     androidTestImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.mockkAndroid)
     androidTestImplementation(TestLibraries.fragmentNav)
+    androidTestImplementation(TestLibraries.coroutines)
+    androidTestImplementation(TestLibraries.room)
     androidTestImplementation(TestLibraries.espresso)
     androidTestImplementation(TestLibraries.espressoContrib)
     androidTestImplementation(TestLibraries.koin)

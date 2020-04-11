@@ -22,7 +22,7 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
 
     @Query("DELETE FROM DbPokemon")
-    abstract suspend fun deleteAll()
+    abstract suspend fun deleteAll() : Int
 
     @Transaction
     open suspend fun upsert(pokemon: DbPokemon) {

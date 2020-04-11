@@ -1,5 +1,8 @@
-package com.hivian.repository.utils
+package com.hivian.common_test.datasets
 
+import com.hivian.model.domain.Pokemon
+import com.hivian.model.domain.PokemonStat
+import com.hivian.model.domain.PokemonType
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
@@ -10,7 +13,10 @@ object FakeData {
 
     fun createFakePokemonsNetwork(count: Int): List<NetworkPokemonObject> {
         return (0 until count).map { id ->
-            createFakePokemonNetwork(id.toString(), id)
+            createFakePokemonNetwork(
+                id.toString(),
+                id
+            )
         }
     }
 
@@ -44,7 +50,7 @@ object FakeData {
         }
     }
 
-    fun createFakePokemonDb(id: Int): DbPokemon {
+    fun createFakePokemonDb(id: Int = 0): DbPokemon {
         return DbPokemon(
             pokemonId = id,
             name = "Name_$id",
@@ -65,6 +71,19 @@ object FakeData {
                     name = "Water"
                 ))
         )
+    }
+
+    fun createFakePokemonsDomain(count: Int): List<Pokemon> {
+        return (0 until count).map { id ->
+            createFakePokemonDomain(id)
+        }
+    }
+
+    fun createFakePokemonDomain(id: Int = 0): Pokemon {
+        return Pokemon(pokemonId = id, name="pokemon_$id", height = 50, weight = 100, abilities = listOf("ability$id"),
+            forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
+            stats = listOf(PokemonStat(baseStat = 2, effort = 3, name = "Type$id")),
+            types = listOf(PokemonType(slot = id, name = "Type$id")))
     }
 
     private val DATE_REFRESH: Date = GregorianCalendar(2018, 5, 12).time
