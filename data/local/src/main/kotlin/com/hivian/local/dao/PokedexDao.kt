@@ -13,7 +13,7 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     abstract suspend fun getTopPokemons(): List<DbPokemon>
 
     @Query("SELECT * FROM DbPokemon WHERE pokemonId = :pokemonId LIMIT 1")
-    abstract suspend fun getPokemonById(pokemonId: Int): DbPokemon?
+    abstract suspend fun getPokemonByServerId(pokemonId: Int): DbPokemon?
 
     @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
     abstract suspend fun getPokemonByName(name: String): DbPokemon
@@ -26,7 +26,7 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
 
     @Transaction
     open suspend fun upsert(pokemon: DbPokemon) {
-        val isPokemon = getPokemonById(pokemon.pokemonId)
+        val isPokemon = getPokemonByServerId(pokemon.pokemonId)
         if (isPokemon != null) {
             update(pokemon)
         } else {

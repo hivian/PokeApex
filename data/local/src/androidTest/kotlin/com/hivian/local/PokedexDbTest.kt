@@ -9,12 +9,12 @@ import com.hivian.local.dao.PokedexDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
+
 
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
@@ -43,7 +43,7 @@ class PokedexDbTest {
     }
 
     @Test
-    fun runSingleItemCRUDTest() {
+    fun runSingleItemCRUD() {
         val fakeData = FakeData.createFakePokemonDb()
         runBlocking {
             // Insert
@@ -69,7 +69,7 @@ class PokedexDbTest {
     }
 
     @Test
-    fun runMultipleItemCRUDTest() {
+    fun runMultipleItemCRUD() {
         val fakeDataList = FakeData.createFakePokemonsDb(5)
         runBlocking {
             // Insert all
@@ -89,8 +89,32 @@ class PokedexDbTest {
     }
 
     @Test
-    fun runCustomQueriesTest() {
+    fun getPokemonListByPattern() {
+        val fakeDataList = FakeData.createFakePokemonsDb(3)
+        runBlocking {
+            // Find by matching pattern
+            pokedexDao.insert(fakeDataList)
+            var matchingPattern = pokedexDao.getPokemonListByPattern("Name")
+            assertEquals(3, matchingPattern.size)
+            matchingPattern = pokedexDao.getPokemonListByPattern("Name_1")
+            assertEquals(1, matchingPattern.size)
+        }
+    }
 
+    @Test
+    fun upsertPokemons() {
+        val fakeDataList = FakeData.createFakePokemonsDb(3)
+        runBlocking {
+            pokedexDao.insert(fakeDataList)
+            val newFakeDataList = fakeDataList.mapIndexed { index, item ->
+                item.apply { name = "Update_$index" }
+            }
+            pokedexDao.upsert(newFakeDataList)
+            val updatedData = pokedexDao.getTopPokemons()
+            updatedData.forEach {
+                assertTrue("Update" in it.name)
+            }
+        }
     }
 
 }
