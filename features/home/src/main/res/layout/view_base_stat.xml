@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="title"
+            type="String" />
+        <variable
+            name="value"
+            type="String" />
+        <variable
+            name="progressValue"
+            type="Integer" />
+    </data>
+
+    <merge>
+        <TextView
+            style="@style/TextAppearance.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{title}"
+            android:textSize="16sp"
+            tools:text="HP" />
+
+        <TextView
+            style="@style/TextAppearance.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:text="@{value}"
+            tools:text="55" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:theme="@style/AppTheme.ProgressBar"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="4"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="@{progressValue}" />
+
+    </merge>
+</layout>

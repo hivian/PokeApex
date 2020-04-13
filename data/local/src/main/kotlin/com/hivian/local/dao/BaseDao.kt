@@ -14,14 +14,8 @@ interface BaseDao<T> {
     suspend fun insert(pokemons: List<T>): LongArray
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(pokemons: T): Int
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(pokemons: List<T>): Int
+    suspend fun update(vararg pokemons: T): Int
 
     @Delete
-    suspend fun delete(pokemons: T): Int
-
-    @Delete
-    suspend fun delete(pokemons: List<T>): Int
+    suspend fun delete(vararg pokemons: T): Int
 }

@@ -21,10 +21,10 @@
             style="@style/TextAppearance.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:text="@{viewModel.data.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:textCapitalized="@{viewModel.data.name}"
             tools:text="Character name" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -33,11 +33,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
-            android:text="jsdkfjsqmldkfjqm qdf jqlskdfjm qsdf jkqmsdkf qmskldfjqmskldjfmqsdkjf"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pokemon_name"
             tools:text="Character description" />
+
+        <com.hivian.home.pokemon_list.views.customs.BaseStatView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/pokemon_description"
+            app:title="HP"
+            app:value="65"
+            app:progressValue="35" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

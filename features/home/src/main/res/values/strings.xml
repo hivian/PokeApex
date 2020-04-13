@@ -19,6 +19,14 @@
     <string name="pokemon_detail_dialog_error_text">Error on obtain detail, please try later.</string>
     <string name="pokemon_detail_added_to_favorite_message">Added to your favorite list</string>
     <string name="pokemon_detail_image_content_description">Image of the selected pokemon</string>
+    <string name="pokemon_detail_base_stat_title">Base stats</string>
+    <string name="pokemon_detail_base_stat_hp">HP</string>
+    <string name="pokemon_detail_base_stat_attack">Attack</string>
+    <string name="pokemon_detail_base_stat_defense">Defense</string>
+    <string name="pokemon_detail_base_stat_special_attack">Sp. Attack</string>
+    <string name="pokemon_detail_base_stat_special_defense">Sp. Defense</string>
+    <string name="pokemon_detail_base_stat_speed">Speed</string>
+    <string name="pokemon_detail_base_stat_total">Total</string>
     
     <!--Item menu-->
     <string name="action_refresh">Refresh</string>

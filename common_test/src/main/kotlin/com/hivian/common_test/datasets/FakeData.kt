@@ -83,7 +83,7 @@ object FakeData {
     fun createFakePokemonDomain(id: Int = 0): Pokemon {
         return Pokemon(pokemonId = id, name="pokemon_$id", height = 50, weight = 100, abilities = listOf("ability$id"),
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
-            stats = listOf(PokemonStat(baseStat = 2, effort = 3, name = "Type$id")),
+            stats = listOf(PokemonStat(baseStat = 2, effort = 3, name = PokemonStat.Type.SPD)),
             types = listOf(PokemonType(slot = id, name = "Type$id")))
     }
 

@@ -38,7 +38,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             forms = input.forms,
             moves = input.moves,
             imageUrl = input.imageUrl,
-            stats = input.stats.map { PokemonStat(it.name, it.baseStat, it.effort) },
+            stats = input.stats.map { PokemonStat(PokemonStat.Type.valueOf(it.name), it.baseStat, it.effort) },
             types = input.types.map { PokemonType(it.slot, it.name) })
     }
 }

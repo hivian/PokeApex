@@ -10,6 +10,10 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>-->
     </style>
 
+    <style name="AppTheme.ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/londrina_shadow</item>
+    </style>
+
     <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>

@@ -8,6 +8,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import androidx.annotation.AnimatorRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +48,8 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
         setHasOptionsMenu(true)
         requireCompatActivity().setSupportActionBar(viewBinding.toolbar)
         requireCompatActivity().supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //val typeface = ResourcesCompat.getFont(context!!, R.font.londrina_shadow)
+        //viewBinding.collapsed.setExpandedTitleTypeface(typeface)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

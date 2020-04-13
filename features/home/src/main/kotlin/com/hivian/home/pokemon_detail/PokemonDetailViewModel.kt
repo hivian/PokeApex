@@ -5,7 +5,6 @@ import com.hivian.common.base.BaseViewModel
 import com.hivian.common.extension.capitalize
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.domain.PokemonDetailUseCase
-import com.hivian.home.pokemon_list.PokemonListViewEvent
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ResultWrapper
@@ -61,5 +60,9 @@ class PokemonDetailViewModel(private val pokemonDetailUseCase: PokemonDetailUseC
      */
     fun dismissCharacterDetail() {
         event.value = PokemonDetailViewEvent.DismissPokemonDetailView
+    }
+
+    fun statToPercentage(stat: Int): Int {
+        return 100 * stat / 255
     }
 }
