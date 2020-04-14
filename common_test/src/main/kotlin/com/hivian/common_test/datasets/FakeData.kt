@@ -1,7 +1,7 @@
 package com.hivian.common_test.datasets
 
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonStat
+import com.hivian.model.domain.PokemonStats
 import com.hivian.model.domain.PokemonType
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
@@ -83,7 +83,7 @@ object FakeData {
     fun createFakePokemonDomain(id: Int = 0): Pokemon {
         return Pokemon(pokemonId = id, name="pokemon_$id", height = 50, weight = 100, abilities = listOf("ability$id"),
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
-            stats = listOf(PokemonStat(baseStat = 2, effort = 3, name = PokemonStat.Type.SPD)),
+            stats = PokemonStats(),
             types = listOf(PokemonType(slot = id, name = "Type$id")))
     }
 

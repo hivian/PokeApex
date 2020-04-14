@@ -1,7 +1,7 @@
 package com.hivian.model.mapper
 
 import com.hivian.model.domain.Pokemon
-import com.hivian.model.domain.PokemonStat
+import com.hivian.model.domain.PokemonStats
 import com.hivian.model.domain.PokemonType
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
@@ -38,7 +38,18 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             forms = input.forms,
             moves = input.moves,
             imageUrl = input.imageUrl,
-            stats = input.stats.map { PokemonStat(PokemonStat.Type.valueOf(it.name), it.baseStat, it.effort) },
+            stats = PokemonStats().apply {
+                input.stats.map {
+                    when (it.name) {
+                        "hp" -> hp = it.baseStat
+                        "attack" -> attack = it.baseStat
+                        "defense" -> defense = it.baseStat
+                        "special-attack" -> specialAttack = it.baseStat
+                        "special-defense" -> specialDefense = it.baseStat
+                        "speed" -> speed = it.baseStat
+                    }
+                }
+            },
             types = input.types.map { PokemonType(it.slot, it.name) })
     }
 }
@@ -64,7 +75,7 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             types = input.types.map { DbPokemonType(
                 slot = it.slot,
                 name = it.type.name
-            ) }
+            )}
         )
     }
 }

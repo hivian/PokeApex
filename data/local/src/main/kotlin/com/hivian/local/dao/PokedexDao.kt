@@ -27,9 +27,9 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Transaction
     open suspend fun upsert(pokemon: DbPokemon) {
         val isPokemon = getPokemonByServerId(pokemon.pokemonId)
-        if (isPokemon != null) {
-            update(pokemon)
-        } else {
+        isPokemon?.let {
+            update(pokemon.apply { id = isPokemon.id })
+        } ?: run {
             insert(pokemon)
         }
     }

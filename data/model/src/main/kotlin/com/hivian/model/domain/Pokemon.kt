@@ -9,7 +9,7 @@ data class Pokemon(
     var abilities: List<String> = emptyList(),
     var forms: List<String> = emptyList(),
     var moves: List<String> = emptyList(),
-    var stats: List<PokemonStat> = emptyList(),
+    var stats: PokemonStats = PokemonStats(),
     var types: List<PokemonType> = emptyList(),
     var generation: Int? = null
 )

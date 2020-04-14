@@ -51,7 +51,7 @@ class PokemonItemMapperTest {
             assertEquals("Circle", forms.first())
             assertEquals("Fireball", abilities.first())
             assertEquals("https://", imageUrl)
-            assertEquals(0, stats.first().baseStat)
+            assertEquals(0, stats.hp)
         }
     }
 }

@@ -6,6 +6,7 @@ import com.hivian.common.extension.capitalize
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.domain.PokemonDetailUseCase
 import com.hivian.model.domain.Pokemon
+import com.hivian.model.domain.PokemonStats
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ResultWrapper
 import kotlinx.coroutines.launch

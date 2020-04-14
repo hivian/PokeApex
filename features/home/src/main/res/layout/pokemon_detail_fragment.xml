@@ -60,7 +60,7 @@
 
             <include
                 android:id="@+id/include_detail_body"
-                layout="@layout/view_pokemon_detail_content"
+                layout="@layout/view_pokemon_detail_base_stats"
                 app:viewModel="@{viewModel}"/>
 
         </androidx.core.widget.NestedScrollView>

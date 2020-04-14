@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hivian.home.pokemon_detail.PokemonDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/pokemon_detail_content_padding_horizontal"
+        android:paddingEnd="@dimen/pokemon_detail_content_padding_horizontal"
+        android:paddingTop="@dimen/pokemon_detail_content_padding_top">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pokemon_name"
+            style="@style/TextAppearance.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:text="@{@string/pokemon_detail_base_stat_title}"
+            tools:text="@string/pokemon_detail_base_stat_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pokemon_description"
+            style="@style/TextAppearance.Body"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pokemon_name"
+            tools:text="Description" />
+
+        <include
+            android:id="@+id/view_stat_hp"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top_big"
+            app:layout_constraintTop_toBottomOf="@+id/pokemon_description"
+            app:title="@{@string/pokemon_detail_base_stat_hp}"
+            app:value="@{viewModel.data.stats.hp}"
+            app:progressValue="@{viewModel.data.stats.hpPercent()}" />
+
+        <include
+            android:id="@+id/view_stat_attack"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_hp"
+            app:title="@{@string/pokemon_detail_base_stat_attack}"
+            app:value="@{viewModel.data.stats.attack}"
+            app:progressValue="@{viewModel.data.stats.attackPercent()}" />
+
+        <include
+            android:id="@+id/view_stat_defense"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_attack"
+            app:title="@{@string/pokemon_detail_base_stat_defense}"
+            app:value="@{viewModel.data.stats.defense}"
+            app:progressValue="@{viewModel.data.stats.defensePercent()}" />
+
+        <include
+            android:id="@+id/view_stat_special_attack"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_defense"
+            app:title="@{@string/pokemon_detail_base_stat_special_attack}"
+            app:value="@{viewModel.data.stats.specialAttack}"
+            app:progressValue="@{viewModel.data.stats.specialAttackPercent()}" />
+
+        <include
+            android:id="@+id/view_stat_special_defense"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_special_attack"
+            app:title="@{@string/pokemon_detail_base_stat_special_defense}"
+            app:value="@{viewModel.data.stats.specialDefense}"
+            app:progressValue="@{viewModel.data.stats.specialDefensePercent()}" />
+
+        <include
+            android:id="@+id/view_stat_speed"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_special_defense"
+            app:title="@{@string/pokemon_detail_base_stat_speed}"
+            app:value="@{viewModel.data.stats.speed}"
+            app:progressValue="@{viewModel.data.stats.speedPercent()}" />
+
+        <include
+            android:id="@+id/view_stat_total"
+            layout="@layout/view_base_stat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/view_stat_speed"
+            app:title="@{@string/pokemon_detail_base_stat_total}"
+            app:value="@{viewModel.data.stats.sum()}"
+            app:progressValue="@{viewModel.data.stats.sumPercent()}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -79,7 +79,7 @@ class PokedexRepositoryImpl(
 
             override fun shouldFetch(data: DbPokemon?): Boolean =
                     data == null ||
-                    data.name.isEmpty() ||
+                    data.stats.isEmpty() ||
                     data.haveToRefreshFromNetwork()
 
             override suspend fun loadFromDb(): DbPokemon =

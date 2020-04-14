@@ -23,7 +23,6 @@ data class DbPokemon(
     var types: List<DbPokemonType> = emptyList(),
 
     var generation: Int? = null,
-    var new: Boolean = true,
     var lastRefreshed: Date = Date()
 ) {
     /**
