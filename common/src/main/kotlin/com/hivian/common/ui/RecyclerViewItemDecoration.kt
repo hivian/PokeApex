@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.ceil
 
 class RecyclerViewItemDecoration(
-    internal val spacingPx: Int
+    private val spacingPx: Int
 ) : RecyclerView.ItemDecoration() {
 
     /**
@@ -64,8 +64,8 @@ class RecyclerViewItemDecoration(
         val rows = ceil(itemCount / cols.toDouble()).toInt()
 
         outRect.top = spacingPx
-        outRect.left = spacingPx
-        outRect.right = if (position % cols == cols - 1) spacingPx else 0
+        outRect.left = if (position % cols == cols - 1) spacingPx / 2 else spacingPx
+        outRect.right = if (position % cols == cols - 1) spacingPx else spacingPx / 2
         outRect.bottom = if (position / cols == rows - 1) spacingPx else 0
     }
 
