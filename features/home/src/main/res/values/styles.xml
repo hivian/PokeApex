@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextViewAppearance.PokemonType" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_pokemon_type</item>
+        <item name="android:paddingStart">@dimen/spacer_2</item>
+        <item name="android:paddingEnd">@dimen/spacer_2</item>
+        <item name="android:paddingTop">@dimen/spacer_1</item>
+        <item name="android:paddingBottom">@dimen/spacer_1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>

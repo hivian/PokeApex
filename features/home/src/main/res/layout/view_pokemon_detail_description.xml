@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hivian.home.pokemon_detail.PokemonDetailViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/cardview_corner_radius"
+        app:cardElevation="@dimen/cardview_item_elevation"
+        app:cardBackgroundColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/AppTheme.SurfaceStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacer_2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_name"
+                style="@style/TextAppearance.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacer_1"
+                android:ellipsize="end"
+                android:gravity="start"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_ranking"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textCapitalized="@{viewModel.data.name}"
+                tools:text="Pokemon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ranking"
+                style="@style/TextAppearance.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="@{viewModel.data.ranking}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_name"
+                tools:text="#001" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewAppearance.PokemonType"
+                android:id="@+id/pokemon_type_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacer_2"
+                app:bgColorFromType="@{viewModel.data.types.slot1}"
+                app:textUppercased="@{viewModel.data.types.slot1}"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_type_2"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_name"
+                tools:text="Fire" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewAppearance.PokemonType"
+                android:id="@+id/pokemon_type_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:visible="@{!viewModel.data.types.slot2.isEmpty()}"
+                app:bgColorFromType="@{viewModel.data.types.slot2}"
+                app:textUppercased="@{viewModel.data.types.slot2}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_type_1"
+                app:layout_constraintTop_toTopOf="@id/pokemon_type_1"
+                tools:text="Flying" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

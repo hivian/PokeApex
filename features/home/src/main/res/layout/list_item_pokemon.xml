@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.openPokemonDetail(pokemon.name)}"
-        app:cardCornerRadius="@dimen/pokemon_list_item_corner_radius"
-        app:cardElevation="@dimen/pokemon_list_item_elevation"
+        app:cardCornerRadius="@dimen/cardview_corner_radius"
+        app:cardElevation="@dimen/cardview_item_elevation"
         app:cardBackgroundColor="@android:color/transparent">
 
         <androidx.constraintlayout.widget.ConstraintLayout

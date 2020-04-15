@@ -54,14 +54,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:clipChildren="false"
+            android:paddingTop="@dimen/spacer_1"
             android:paddingBottom="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             style="@style/AppTheme.BackgroundStyle">
 
-            <include
-                android:id="@+id/include_detail_body"
-                layout="@layout/view_pokemon_detail_base_stats"
-                app:viewModel="@{viewModel}"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacer_1"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/include_description_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_pokemon_detail_description"
+                    app:viewModel="@{viewModel}"/>
+
+                <include
+                    android:id="@+id/include_detail_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacer_2"
+                    layout="@layout/view_pokemon_detail_base_stats"
+                    app:viewModel="@{viewModel}"/>
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 

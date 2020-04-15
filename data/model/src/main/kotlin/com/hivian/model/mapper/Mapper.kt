@@ -2,7 +2,7 @@ package com.hivian.model.mapper
 
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.domain.PokemonStats
-import com.hivian.model.domain.PokemonType
+import com.hivian.model.domain.PokemonTypes
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
@@ -51,7 +51,14 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
                     }
                 }
             },
-            types = input.types.map { it.name }
+            types = PokemonTypes().apply {
+                input.types.map {
+                    when (it.slot) {
+                        1 -> { slot1 = it.name }
+                        2 -> { slot2 = it.name }
+                    }
+                }
+            }
         )
     }
 }

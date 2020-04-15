@@ -2,7 +2,7 @@ package com.hivian.common_test.datasets
 
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.domain.PokemonStats
-import com.hivian.model.domain.PokemonType
+import com.hivian.model.domain.PokemonTypes
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
@@ -85,7 +85,7 @@ object FakeData {
             height = 50, weight = 100, abilities = listOf("ability$id"),
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
             stats = PokemonStats(),
-            types = listOf("Type$id"))
+            types = PokemonTypes())
     }
 
     private val DATE_REFRESH: Date = GregorianCalendar(2018, 5, 12).time
