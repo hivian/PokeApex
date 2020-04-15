@@ -30,6 +30,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
     override fun map(input: DbPokemon): Pokemon {
         return Pokemon(
             pokemonId = input.pokemonId,
+            ranking = "#${input.pokemonId.toString().padStart(3, '0')}",
             name = input.name,
             height = input.height,
             weight = input.weight,
@@ -50,7 +51,8 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
                     }
                 }
             },
-            types = input.types.map { PokemonType(it.slot, it.name) })
+            types = input.types.map { it.name }
+        )
     }
 }
 

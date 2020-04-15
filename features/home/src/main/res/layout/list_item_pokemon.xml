@@ -43,16 +43,35 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_name"
+                style="@style/TextAppearance.CardTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pokemon_list_item_text_padding"
-                app:textCapitalized="@{pokemon.name}"
+                android:layout_marginStart="@dimen/pokemon_list_item_text_padding"
+                android:layout_marginTop="@dimen/pokemon_list_item_text_padding"
+                android:layout_marginBottom="@dimen/pokemon_list_item_text_padding"
+                android:ellipsize="end"
+                android:gravity="start"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_ranking"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                tools:text="Pokemon name"
-                style="@style/TextAppearance.CardTitle" />
+                app:layout_constraintTop_toBottomOf="@id/character_image"
+                app:textCapitalized="@{pokemon.name}"
+                tools:text="Pokemon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ranking"
+                style="@style/TextAppearance.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pokemon_list_item_text_padding"
+                android:gravity="end"
+                android:text="@{pokemon.ranking}"
+                android:textSize="@dimen/corps"
+                app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_name"
+                tools:text="#001" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

@@ -4,7 +4,7 @@
     <dimen name="pokemon_list_loading_size">50dp</dimen>
     <dimen name="pokemon_list_item_elevation">5dp</dimen>
     <dimen name="pokemon_list_item_corner_radius">5dp</dimen>
-    <dimen name="pokemon_list_item_size">140dp</dimen>
+    <dimen name="pokemon_list_item_size">130dp</dimen>
     <dimen name="pokemon_list_item_padding">10dp</dimen>
     <dimen name="pokemon_list_item_text_padding">10dp</dimen>
     <dimen name="pokemon_list_item_loading_size">30dp</dimen>

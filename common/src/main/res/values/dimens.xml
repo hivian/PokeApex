@@ -2,4 +2,40 @@
 <resources>
     <dimen name="progress_bar_container_padding">10dp</dimen>
     <dimen name="progress_bar_loading_size">70dp</dimen>
+
+    <dimen name="spacer_0">4dp</dimen>
+    <dimen name="spacer_1">8dp</dimen>
+    <dimen name="spacer_2">16dp</dimen>
+    <dimen name="spacer_3">32dp</dimen>
+    <dimen name="spacer_4">48dp</dimen>
+    <dimen name="spacer_5">56dp</dimen>
+    <dimen name="spacer_6">64dp</dimen>
+    <dimen name="spacer_7">72dp</dimen>
+
+    <dimen name="big_title">50sp</dimen>
+    <dimen name="title_0">24sp</dimen>
+    <dimen name="title_1">20sp</dimen>
+    <dimen name="title_2">18sp</dimen>
+    <dimen name="title_3">16sp</dimen>
+    <dimen name="title_4">14sp</dimen>
+
+    <dimen name="corps">14sp</dimen>
+    <dimen name="small">12sp</dimen>
+    <dimen name="extra_small">10sp</dimen>
+    <dimen name="extra_extra_small">8sp</dimen>
+
+    <dimen name="button">48dp</dimen>
+
+    <dimen name="icon_0">20dp</dimen>
+    <dimen name="icon_1">32dp</dimen>
+    <dimen name="icon_2">42dp</dimen>
+    <dimen name="icon_3">54dp</dimen>
+    <dimen name="icon_4">64dp</dimen>
+    <dimen name="icon_5">84dp</dimen>
+    <dimen name="icon_6">110dp</dimen>
+    <dimen name="icon_7">128dp</dimen>
+    <dimen name="icon_8">146dp</dimen>
+    <dimen name="icon_9">168dp</dimen>
+    <dimen name="icon_10">220dp</dimen>
+
 </resources>
