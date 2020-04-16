@@ -1,5 +1,6 @@
 package com.hivian.home.pokemon_detail.views.bindings
 
+
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.widget.TextView
@@ -38,8 +39,8 @@ fun convertColor(@ColorRes color: Int, context: Context): Int {
  * @param height height in tenths of a meter (decimeters)
  */
 @BindingAdapter("heightMeter")
-fun TextView.heightMeter(height: Int) {
-    text = context.getString(RHome.string.pokemon_detail_description_height_value, height.toFloat() / 10)
+fun heightMeter(view : TextView, height: Int) {
+    view.text = view.context.getString(RHome.string.pokemon_detail_description_height_value, height.toFloat() / 10)
 }
 
 /**
@@ -47,6 +48,6 @@ fun TextView.heightMeter(height: Int) {
  * @param weight weight in tenths of a kilogram (hectograms)
  */
 @BindingAdapter("weightKg")
-fun TextView.weightKg(weight: Int) {
-    text = context.getString(RHome.string.pokemon_detail_description_weight_value, weight.toFloat() / 10)
+fun weightKg(view : TextView, weight: Int) {
+    view.text = view.context.getString(RHome.string.pokemon_detail_description_weight_value, weight.toFloat() / 10)
 }

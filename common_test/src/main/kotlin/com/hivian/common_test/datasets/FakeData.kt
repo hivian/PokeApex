@@ -81,7 +81,7 @@ object FakeData {
     }
 
     fun createFakePokemonDomain(id: Int = 0): Pokemon {
-        return Pokemon(pokemonId = id, name="pokemon_$id", ranking = id.toString().padStart(3,'0'),
+        return Pokemon(pokemonId = id, name="pokemon_$id",
             height = 50, weight = 100, abilities = listOf("ability$id"),
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
             stats = PokemonStats(),

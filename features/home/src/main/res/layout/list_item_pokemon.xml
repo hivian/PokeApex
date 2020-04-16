@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/pokemon_list_item_text_padding"
                 android:gravity="end"
-                android:text="@{pokemon.ranking}"
+                app:text="@{@string/pokemon_rank(pokemon.pokemonId)}"
                 android:textSize="@dimen/corps"
                 app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_name"
                 app:layout_constraintEnd_toEndOf="parent"

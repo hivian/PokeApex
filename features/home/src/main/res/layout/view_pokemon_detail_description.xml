@@ -40,12 +40,12 @@
                 style="@style/TextAppearance.Body.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.data.ranking}"
                 android:layout_marginStart="@dimen/spacer_0"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_name"
                 app:layout_constraintStart_toEndOf="@id/pokemon_name"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_height_title"
+                app:text="@{@string/pokemon_rank(viewModel.data.pokemonId)}"
                 tools:text="#001" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -53,12 +53,12 @@
                 android:id="@+id/pokemon_type_1"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacer_2"
-                app:bgColorFromType="@{viewModel.data.types.slot1}"
-                app:textUppercased="@{viewModel.data.types.slot1}"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_type_2"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_name"
+                app:bgColorFromType="@{viewModel.data.types.slot1}"
+                app:textUppercased="@{viewModel.data.types.slot1}"
                 tools:text="Fire" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -67,10 +67,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacer_2"
                 app:visible="@{!viewModel.data.types.slot2.isEmpty()}"
-                app:bgColorFromType="@{viewModel.data.types.slot2}"
-                app:textUppercased="@{viewModel.data.types.slot2}"
                 app:layout_constraintStart_toEndOf="@id/pokemon_type_1"
                 app:layout_constraintTop_toTopOf="@id/pokemon_type_1"
+                app:bgColorFromType="@{viewModel.data.types.slot2}"
+                app:textUppercased="@{viewModel.data.types.slot2}"
                 tools:text="Flying" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -79,9 +79,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacer_0"
-                android:text="@string/pokemon_detail_description_height_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_height_value"
+                android:text="@string/pokemon_detail_description_height_title"
                 tools:text="Height:" />
 
             <androidx.appcompat.widget.AppCompatTextView

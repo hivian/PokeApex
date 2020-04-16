@@ -2,7 +2,6 @@ package com.hivian.model.domain
 
 data class Pokemon(
     var pokemonId: Int,
-    var ranking: String,
     var name: String,
     var imageUrl: String,
     var height: Int = 0,

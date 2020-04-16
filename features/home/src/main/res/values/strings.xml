@@ -4,6 +4,8 @@
     <string name="pokemon_list_network_error">Network error</string>
     <string name="pokemon_list_server_error">Server error</string>
 
+    <string name="pokemon_rank">#%1$03d</string>
+
     <!--Pokemon list-->
     <string name="pokemon_list_title">Pokedex</string>
     <string name="pokemon_list_search_hint">Search…</string>
