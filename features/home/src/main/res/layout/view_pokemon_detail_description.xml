@@ -25,12 +25,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_name"
                 style="@style/TextAppearance.Title"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacer_1"
                 android:ellipsize="end"
                 android:gravity="start"
-                app:layout_constraintEnd_toStartOf="@id/pokemon_ranking"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:textCapitalized="@{viewModel.data.name}"
@@ -38,20 +37,20 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_ranking"
-                style="@style/TextAppearance.Body"
+                style="@style/TextAppearance.Body.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:text="@{viewModel.data.ranking}"
+                android:layout_marginStart="@dimen/spacer_0"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_name"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/pokemon_name"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_height_title"
                 tools:text="#001" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextViewAppearance.PokemonType"
                 android:id="@+id/pokemon_type_1"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacer_2"
                 app:bgColorFromType="@{viewModel.data.types.slot1}"
@@ -65,15 +64,56 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextViewAppearance.PokemonType"
                 android:id="@+id/pokemon_type_2"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacer_2"
                 app:visible="@{!viewModel.data.types.slot2.isEmpty()}"
                 app:bgColorFromType="@{viewModel.data.types.slot2}"
                 app:textUppercased="@{viewModel.data.types.slot2}"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/pokemon_type_1"
                 app:layout_constraintTop_toTopOf="@id/pokemon_type_1"
                 tools:text="Flying" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.Body.Light"
+                android:id="@+id/pokemon_height_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacer_0"
+                android:text="@string/pokemon_detail_description_height_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_height_value"
+                tools:text="Height:" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.Body.Light"
+                android:id="@+id/pokemon_weight_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacer_0"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_height_title"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_weight_value"
+                android:text="@string/pokemon_detail_description_weight_title"
+                tools:text="Weight:" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.Body.Secondary.Small"
+                android:id="@+id/pokemon_height_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:heightMeter="@{viewModel.data.height}"
+                tools:text="0.7 m" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.Body.Secondary.Small"
+                android:id="@+id/pokemon_weight_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_height_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:weightKg="@{viewModel.data.weight}"
+                tools:text="6.9 kg" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

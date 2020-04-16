@@ -10,6 +10,8 @@
     <!--Text colors-->
     <color name="textHeadline">#f1f1f1</color>
     <color name="textBody">#d3d3d3</color>
+    <color name="textBodySecondary">#f1f1f1</color>
+    <color name="textBodyLight">#b6b6b6</color>
 
     <color name="black">#09131c</color>
     <color name="blue">#006dba</color>

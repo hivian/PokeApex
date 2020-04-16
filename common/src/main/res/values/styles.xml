@@ -49,6 +49,18 @@
         <item name="android:textColor">@color/textBody</item>
     </style>
 
+    <style name="TextAppearance.Body.Light" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/textBodyLight</item>
+    </style>
+
+    <style name="TextAppearance.Body.Secondary" parent="@style/TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/textBodySecondary</item>
+    </style>
+
+    <style name="TextAppearance.Body.Secondary.Small" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/textBodySecondary</item>
+    </style>
+
     <style name="AppTheme.ProgressBar">
         <item name="colorAccent">@color/colorAccent</item> <!-- Whatever color you want-->
     </style>

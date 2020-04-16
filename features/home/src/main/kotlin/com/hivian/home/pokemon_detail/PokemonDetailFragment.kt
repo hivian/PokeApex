@@ -7,6 +7,7 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.AnimatorRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
@@ -84,8 +85,7 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
      */
     private fun onViewEvent(viewEvent: BaseViewEvent) {
         when (viewEvent) {
-            is PokemonDetailViewEvent.DismissPokemonDetailView ->
-                findNavController().navigateUp()
+            is PokemonDetailViewEvent.DismissPokemonDetailView -> findNavController().navigateUp()
         }
     }
 

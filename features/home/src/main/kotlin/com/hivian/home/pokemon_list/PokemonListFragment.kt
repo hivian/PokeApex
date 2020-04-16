@@ -18,6 +18,7 @@ import com.hivian.common.extension.showCustomDialog
 import com.hivian.common.extension.showSnackbar
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
+import com.hivian.home.pokemon_detail.views.bindings.weightKg
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon

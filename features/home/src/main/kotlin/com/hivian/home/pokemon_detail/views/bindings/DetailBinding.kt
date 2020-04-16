@@ -7,31 +7,46 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import com.hivian.common.R
+import com.hivian.common.R as RCommon
+import com.hivian.home.R as RHome
 import java.util.*
 
 
-object DetailBinding {
-
-    @BindingAdapter("bgColorFromType")
-    @JvmStatic fun bgColorFromType(view: TextView, type: String?) {
-        val colorRes = when (type?.toLowerCase(Locale.getDefault())) {
-            "grass", "bug" -> R.color.lightTeal
-            "fire" -> R.color.lightRed
-            "water", "fighting", "normal" -> R.color.lightBlue
-            "electric", "psychic" -> R.color.lightYellow
-            "poison", "ghost" -> R.color.lightPurple
-            "ground", "rock" -> R.color.lightBrown
-            "dark" -> R.color.black
-            else -> R.color.lightBlue
-        }
-        val bg = view.background as GradientDrawable
-        bg.setColor(convertColor(colorRes, view.context))
+@BindingAdapter("bgColorFromType")
+fun bgColorFromType(view: TextView, type: String?) {
+    val colorRes = when (type?.toLowerCase(Locale.getDefault())) {
+        "grass", "bug" -> RCommon.color.lightTeal
+        "fire" -> RCommon.color.lightRed
+        "water", "fighting", "normal" -> RCommon.color.lightBlue
+        "electric", "psychic" -> RCommon.color.lightYellow
+        "poison", "ghost" -> RCommon.color.lightPurple
+        "ground", "rock" -> RCommon.color.lightBrown
+        "dark" -> RCommon.color.black
+        else -> RCommon.color.lightBlue
     }
+    val bg = view.background as GradientDrawable
+    bg.setColor(convertColor(colorRes, view.context))
+}
 
-    @ColorInt
-    fun convertColor(@ColorRes color: Int, context: Context): Int {
-        return ContextCompat.getColor(context, color)
-    }
+@ColorInt
+fun convertColor(@ColorRes color: Int, context: Context): Int {
+    return ContextCompat.getColor(context, color)
+}
 
+/**
+ * Display Pokemon's height
+ * @param height height in tenths of a meter (decimeters)
+ */
+@BindingAdapter("heightMeter")
+fun TextView.heightMeter(height: Int) {
+    text = context.getString(RHome.string.pokemon_detail_description_height_value, height.toFloat() / 10)
+}
+
+/**
+ * Display Pokemon's weight
+ * @param weight weight in tenths of a kilogram (hectograms)
+ */
+@BindingAdapter("weightKg")
+fun TextView.weightKg(weight: Int) {
+    text = context.getString(RHome.string.pokemon_detail_description_weight_value, weight.toFloat() / 10)
 }

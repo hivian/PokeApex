@@ -3,13 +3,15 @@
 
     <!--Primary colors-->
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#f3f3f3f3</color>
+    <color name="colorPrimaryDark">#f3f3f3</color>
     <color name="colorPrimaryLight">#ffffff</color>
     <color name="colorAccent">#111111</color>
 
     <!--Text colors-->
     <color name="textHeadline">#1f1f1f</color>
     <color name="textBody">#4f4f4f</color>
+    <color name="textBodyLight">#9D9D9D</color>
+    <color name="textBodySecondary">#1f1f1f</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#303943</color>
