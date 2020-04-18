@@ -18,7 +18,7 @@
 
     <!--Pokemon detail-->
     <string name="pokemon_detail_dialog_loading_text">Loading detail…</string>
-    <string name="pokemon_detail_dialog_error_text">Error on obtain detail, please try later.</string>
+    <string name="pokemon_detail_dialog_error_text">Error on obtain detail, check your connection.</string>
     <string name="pokemon_detail_added_to_favorite_message">Added to your favorite list</string>
     <string name="pokemon_detail_image_content_description">Image of the selected pokemon</string>
 
@@ -35,6 +35,11 @@
     <string name="pokemon_detail_base_stat_special_defense">Sp. Defense</string>
     <string name="pokemon_detail_base_stat_speed">Speed</string>
     <string name="pokemon_detail_base_stat_total">Total</string>
+
+    <string name="toast_added_to_favorites">Added to Favorites</string>
+    <string name="toast_removed_from_favorites">Removed from Favorites</string>
+    <string name="toast_added_to_caught">Added to Caught checklist</string>
+    <string name="toast_removed_from_caught">Removed from Caught checklist</string>
     
     <!--Item menu-->
     <string name="action_refresh">Refresh</string>

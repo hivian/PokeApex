@@ -5,7 +5,7 @@
     <color name="colorPrimary">#1d1d1d</color>
     <color name="colorPrimaryDark">#0f0f0f</color>
     <color name="colorPrimaryLight">#121212</color>
-    <color name="colorAccent">#f1f1f1</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <!--Text colors-->
     <color name="textHeadline">#f1f1f1</color>

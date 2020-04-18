@@ -1,8 +1,12 @@
 package com.hivian.common.extension
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.hivian.common.R
 
@@ -37,4 +41,28 @@ fun Fragment.showCustomDialog(@StringRes title : Int? = null, @StringRes message
     builder.setNegativeButton(negativeBtn ?: R.string.btn_cancel, dialogClickListener)
 
     builder.create().show()
+}
+
+/**
+ * Display predefined Toast message from [CharSequence]
+ */
+fun Fragment.toast(message: CharSequence) {
+    val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+    toast.customize(requireContext())
+    toast.show()
+}
+/**
+ * Display predefined Toast message from [Int] resource.
+ */
+fun Context.toast(@StringRes messageId: Int) {
+    val toast = Toast.makeText(this, messageId, Toast.LENGTH_SHORT)
+    toast.customize(this)
+    toast.show()
+}
+
+private fun Toast.customize(context: Context) {
+    view.background.setTint(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+    view.findViewById<TextView>(android.R.id.message).apply {
+        setTextColor(ContextCompat.getColor(context, R.color.textHeadline))
+    }
 }

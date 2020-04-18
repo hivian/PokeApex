@@ -12,7 +12,15 @@ import com.hivian.repository.utils.ResultWrapper
  */
 class PokemonDetailUseCase(private val repository: PokedexRepository) {
 
-    suspend operator fun invoke(name: String): ResultWrapper<Pokemon> {
-        return repository.getPokemonDetailWithCache(name)
+    suspend fun getDetailWithCache(name: String): ResultWrapper<Pokemon> {
+        return repository.getPokemonDetailWithCacheRemote(name)
+    }
+
+    suspend fun updateFavoriteStatus(id: Int, favorite: Boolean) {
+        return repository.updateFavoriteStatusLocal(id, favorite)
+    }
+
+    suspend fun updateCaughtStatus(id: Int, caught: Boolean) {
+        return repository.updateCaughtStatusLocal(id, caught)
     }
 }

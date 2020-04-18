@@ -9,4 +9,24 @@ sealed class PokemonDetailViewEvent : BaseViewEvent {
      */
     object DismissPokemonDetailView : PokemonDetailViewEvent()
 
+    /**
+     * Added to favorites event
+     */
+    object AddedToFavorites: PokemonDetailViewEvent()
+
+    /**
+     * Removed from favorites event
+     */
+    object RemovedFromFavorites: PokemonDetailViewEvent()
+
+    /**
+     * Added to caught event
+     */
+    object AddedToCaught: PokemonDetailViewEvent()
+
+    /**
+     * Removed from caught event
+     */
+    object RemovedFromCaught: PokemonDetailViewEvent()
+
 }

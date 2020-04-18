@@ -26,7 +26,7 @@
 
     <dimen name="button">48dp</dimen>
 
-    <dimen name="icon_0">20dp</dimen>
+    <dimen name="icon_0">24dp</dimen>
     <dimen name="icon_1">32dp</dimen>
     <dimen name="icon_2">42dp</dimen>
     <dimen name="icon_3">54dp</dimen>

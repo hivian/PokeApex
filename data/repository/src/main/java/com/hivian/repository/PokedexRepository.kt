@@ -11,15 +11,17 @@ import com.hivian.repository.utils.NetworkBoundResource
 import com.hivian.repository.utils.ResultWrapper
 
 interface PokedexRepository {
-    suspend fun getPokemonListWithCache(
+    suspend fun getPokemonListWithCacheRemote(
         forceRefresh: Boolean = false,
         offset: Int,
         limit: Int
     ): ResultWrapper<List<Pokemon>>
-    suspend fun getPokemonDetailWithCache(
+    suspend fun getPokemonDetailWithCacheRemote(
         name: String
     ): ResultWrapper<Pokemon>
     suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
+    suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
+    suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
 }
 
 class PokedexRepositoryImpl(
@@ -30,7 +32,7 @@ class PokedexRepositoryImpl(
 
     val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
 
-    override suspend fun getPokemonListWithCache(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
+    override suspend fun getPokemonListWithCacheRemote(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
         return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
@@ -68,7 +70,7 @@ class PokedexRepositoryImpl(
      * whether in cache (SQLite) or via network (API).
      * [NetworkBoundResource] is responsible to handle this behavior.
      */
-    override suspend fun getPokemonDetailWithCache(name: String): ResultWrapper<Pokemon> {
+    override suspend fun getPokemonDetailWithCacheRemote(name: String): ResultWrapper<Pokemon> {
         return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =
@@ -98,5 +100,12 @@ class PokedexRepositoryImpl(
     override suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon> =
         mapper.dbToDomainMapper.map(dao.getPokemonListByPattern(pattern))
 
+    override suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean) {
+        dao.updatePokemonFavoriteStatus(pokemonId, favorite)
+    }
+
+    override suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean) {
+        dao.updatePokemonCaughtStatus(pokemonId, caught)
+    }
 
 }

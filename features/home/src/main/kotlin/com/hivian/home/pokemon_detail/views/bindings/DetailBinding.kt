@@ -3,11 +3,16 @@ package com.hivian.home.pokemon_detail.views.bindings
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.hivian.home.pokemon_detail.PokemonCaughtViewState
+import com.hivian.home.pokemon_detail.PokemonFavoriteViewState
+import org.jetbrains.anko.image
+import org.jetbrains.anko.imageResource
 import com.hivian.common.R as RCommon
 import com.hivian.home.R as RHome
 import java.util.*
@@ -50,4 +55,24 @@ fun heightMeter(view : TextView, height: Int) {
 @BindingAdapter("weightKg")
 fun weightKg(view : TextView, weight: Int) {
     view.text = view.context.getString(RHome.string.pokemon_detail_description_weight_value, weight.toFloat() / 10)
+}
+
+@BindingAdapter("srcState")
+fun srcState(view: ImageButton, state: PokemonFavoriteViewState?) {
+    state?.let {
+        view.imageResource = when (state) {
+            PokemonFavoriteViewState.AddedToFavorite -> RHome.drawable.ic_favorite_active
+            PokemonFavoriteViewState.RemovedFromFavorite -> RHome.drawable.ic_favorite_inactive
+        }
+    }
+}
+
+@BindingAdapter("srcState")
+fun srcState(view: ImageButton, state: PokemonCaughtViewState?) {
+    state?.let {
+        view.imageResource = when (state) {
+            PokemonCaughtViewState.AddedToCaught -> RHome.drawable.ic_caught_active
+            PokemonCaughtViewState.RemovedFromCaught -> RHome.drawable.ic_caught_inactive
+        }
+    }
 }

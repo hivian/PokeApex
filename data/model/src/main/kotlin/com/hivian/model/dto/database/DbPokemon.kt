@@ -22,6 +22,8 @@ data class DbPokemon(
     var stats: List<DbPokemonStat> = emptyList(),
     var types: List<DbPokemonType> = emptyList(),
 
+    var favorite: Boolean = false,
+    var caught: Boolean = false,
     var generation: Int? = null,
     var lastRefreshed: Date = Date()
 ) {

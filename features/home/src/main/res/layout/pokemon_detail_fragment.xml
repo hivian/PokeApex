@@ -26,7 +26,7 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title="@{viewModel.data.name}">
+                app:textCapitalized="@{viewModel.data.name}">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image_view_detail"
@@ -44,7 +44,7 @@
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:contentInsetStartWithNavigation="0dp"
-                    app:navigationOnClickListener="@{() -> viewModel.dismissCharacterDetail()}"/>
+                    app:navigationOnClickListener="@{() -> viewModel.dismissPokemonDetail()}"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

@@ -1,24 +1,15 @@
 package com.hivian.home.pokemon_detail
 
-import android.animation.Animator
-import android.animation.AnimatorInflater
 import android.os.Bundle
-import android.view.animation.BounceInterpolator
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.LinearInterpolator
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.AnimatorRes
-import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
 import com.hivian.common.extension.loadAnimator
 import com.hivian.common.extension.observe
+import com.hivian.common.extension.toast
 import com.hivian.common.ui.views.ProgressBarDialog
 
 import com.hivian.home.R
@@ -55,25 +46,27 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observe(viewModel.state, ::onViewStateChange)
+        observe(viewModel.networkState, ::onViewStateChange)
         observe(viewModel.event, ::onViewEvent)
         viewModel.loadPokemonDetail(args.pokemonName)
     }
 
     /**
-     * Observer view state change on [PokemonDetailViewState].
+     * Observer view state change on [PokemonNetworkViewState].
      *
      * @param viewState State of pokemon detail.
      */
     private fun onViewStateChange(viewState: BaseViewState) {
         when (viewState) {
-            is PokemonDetailViewState.Loaded -> {
+            is PokemonNetworkViewState.Loaded -> {
                 viewBinding.imageViewDetail.loadAnimator(R.animator.animator_pokemon_image)
                 progressDialog.dismiss()
             }
-            is PokemonDetailViewState.Loading ->
+            is PokemonNetworkViewState.Loading ->
                 progressDialog.show(R.string.pokemon_detail_dialog_loading_text)
-            is PokemonDetailViewState.Error ->
+            is PokemonNetworkViewState.ErrorWithData ->
+                viewBinding.imageViewDetail.loadAnimator(R.animator.animator_pokemon_image)
+            is PokemonNetworkViewState.Error ->
                 progressDialog.dismissWithErrorMessage(R.string.pokemon_detail_dialog_error_text)
         }
     }
@@ -86,6 +79,10 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
     private fun onViewEvent(viewEvent: BaseViewEvent) {
         when (viewEvent) {
             is PokemonDetailViewEvent.DismissPokemonDetailView -> findNavController().navigateUp()
+            is PokemonDetailViewEvent.AddedToFavorites -> requireContext().toast(R.string.toast_added_to_favorites)
+            is PokemonDetailViewEvent.RemovedFromFavorites -> requireContext().toast(R.string.toast_removed_from_favorites)
+            is PokemonDetailViewEvent.AddedToCaught -> requireContext().toast(R.string.toast_added_to_caught)
+            is PokemonDetailViewEvent.RemovedFromCaught -> requireContext().toast(R.string.toast_removed_from_caught)
         }
     }
 

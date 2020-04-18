@@ -6,6 +6,7 @@
         android:id="@+id/action_refresh"
         android:icon="@drawable/ic_refresh"
         android:title=""
+        android:visible="false"
         app:showAsAction="ifRoom"/>
 
     <item

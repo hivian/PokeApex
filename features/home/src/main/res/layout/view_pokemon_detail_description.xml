@@ -115,6 +115,33 @@
                 app:weightKg="@{viewModel.data.weight}"
                 tools:text="6.9 kg" />
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                style="@style/AppTheme.ImageButton"
+                android:id="@+id/icon_favorite"
+                android:layout_width="@dimen/icon_1"
+                android:layout_height="@dimen/icon_1"
+                android:onClick="@{() -> viewModel.toggleFavoriteStatus()}"
+                app:srcState="@{viewModel.favoriteState}"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintBottom_toBottomOf="@+id/icon_owned"
+                app:layout_constraintEnd_toStartOf="@+id/icon_owned"
+                app:layout_constraintStart_toEndOf="@+id/pokemon_type_2"
+                app:layout_constraintTop_toTopOf="@+id/icon_owned" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                style="@style/AppTheme.ImageButton"
+                android:id="@+id/icon_owned"
+                android:layout_width="@dimen/icon_1"
+                android:layout_height="@dimen/icon_1"
+                android:onClick="@{() -> viewModel.toggleCaughtStatus()}"
+                app:srcState="@{viewModel.caughtState}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@+id/pokemon_type_2"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_weight_value"
+                app:layout_constraintVertical_bias="1.0" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

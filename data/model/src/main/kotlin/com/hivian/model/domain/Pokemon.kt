@@ -11,5 +11,7 @@ data class Pokemon(
     var moves: List<String> = emptyList(),
     var stats: PokemonStats = PokemonStats(),
     var types: PokemonTypes = PokemonTypes(),
+    var favorite: Boolean = false,
+    var caught: Boolean = false,
     var generation: Int? = null
 )

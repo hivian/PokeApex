@@ -21,6 +21,12 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%'")
     abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
 
+    @Query("UPDATE DbPokemon SET favorite = :favorite WHERE pokemonId = :pokemonId")
+    abstract suspend fun updatePokemonFavoriteStatus(pokemonId: Int, favorite: Boolean): Int
+
+    @Query("UPDATE DbPokemon SET caught = :caught WHERE pokemonId = :pokemonId")
+    abstract suspend fun updatePokemonCaughtStatus(pokemonId: Int, caught: Boolean): Int
+
     @Query("DELETE FROM DbPokemon")
     abstract suspend fun deleteAll() : Int
 

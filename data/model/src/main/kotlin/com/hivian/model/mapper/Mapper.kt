@@ -57,7 +57,9 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
                         2 -> { slot2 = it.name }
                     }
                 }
-            }
+            },
+            favorite = input.favorite,
+            caught = input.caught
         )
     }
 }

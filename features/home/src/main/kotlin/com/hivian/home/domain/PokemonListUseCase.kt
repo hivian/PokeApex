@@ -14,7 +14,7 @@ import com.hivian.repository.utils.ResultWrapper
 class PokemonListUseCase(private val repository: PokedexRepository) {
 
     suspend fun getPokemonList(forceRefresh: Boolean = false, offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): ResultWrapper<List<Pokemon>> {
-        return repository.getPokemonListWithCache(forceRefresh, offset, limit)
+        return repository.getPokemonListWithCacheRemote(forceRefresh, offset, limit)
     }
 
     suspend fun getPokemonListByPattern(pattern: String): List<Pokemon> =

@@ -8,32 +8,37 @@ import com.hivian.common.base.BaseViewState
  *
  * @see BaseViewState
  */
-sealed class PokemonDetailViewState : BaseViewState {
+sealed class PokemonNetworkViewState : BaseViewState {
 
     /**
      * Loaded pokemon detail info.
      */
-    object Loaded : PokemonDetailViewState()
+    object Loaded : PokemonNetworkViewState()
 
     /**
      * Loading pokemon detail info.
      */
-    object Loading : PokemonDetailViewState()
+    object Loading : PokemonNetworkViewState()
 
     /**
      * Error on loading pokemon detail info.
      */
-    object Error : PokemonDetailViewState()
+    object Error : PokemonNetworkViewState()
 
     /**
-     * Add current pokemon to favorite list.
+     * Error on loading pokemons list with local in db.
      */
-    object AddToFavorite : PokemonDetailViewState()
+    object ErrorWithData : PokemonNetworkViewState()
 
     /**
-     * Added current pokemon to favorite list.
+     * Added current character to caught list.
      */
-    object AddedToFavorite : PokemonDetailViewState()
+    object AddedToCaught : PokemonNetworkViewState()
+
+    /**
+     * Removed current pokemon to caught list.
+     */
+    object RemovedFromCaught : PokemonNetworkViewState()
 
     // ============================================================================================
     //  Public helpers methods
@@ -61,16 +66,23 @@ sealed class PokemonDetailViewState : BaseViewState {
     fun isError() = this is Error
 
     /**
-     * Check if current view state is [AddToFavorite].
+     * Check if current view state is [Error] with local data.
      *
-     * @return True if is add to favorite state, otherwise false.
+     * @return True if is error state, otherwise false.
      */
-    fun isAddToFavorite() = this is AddToFavorite
+    fun isErrorWithData() = this is ErrorWithData
 
     /**
-     * Check if current view state is [AddedToFavorite].
+     * Check if current view state is [AddedToCaught].
      *
-     * @return True if is added to favorite state, otherwise false.
+     * @return True if add to caught state, otherwise false.
      */
-    fun isAddedToFavorite() = this is AddedToFavorite
+    fun isAddedToCaught() = this is AddedToCaught
+
+    /**
+     * Check if current view state is [RemovedFromCaught].
+     *
+     * @return True if remove caught state, otherwise false.
+     */
+    fun isRemovedFromCaught() = this is RemovedFromCaught
 }

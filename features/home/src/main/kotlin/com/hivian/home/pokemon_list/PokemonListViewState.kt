@@ -40,7 +40,7 @@ sealed class PokemonListViewState : BaseViewState {
     object Error : PokemonListViewState()
 
     /**
-     * Error on loading characters list.
+     * Error on loading characters list with local in db.
      */
     object ErrorWithData : PokemonListViewState()
 
@@ -101,7 +101,7 @@ sealed class PokemonListViewState : BaseViewState {
     fun isError() = this is Error
 
     /**
-     * Check if current view state is [Error].
+     * Check if current view state is [Error] with local data.
      *
      * @return True if is error state, otherwise false.
      */
