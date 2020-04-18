@@ -43,6 +43,8 @@
     
     <!--Item menu-->
     <string name="action_refresh">Refresh</string>
+    <string name="action_display_favorites">Favorites</string>
+    <string name="action_display_caught">Caught checklist</string>
 
     <!--Dialog menu-->
     <string name="dialog_title">Update list ?</string>

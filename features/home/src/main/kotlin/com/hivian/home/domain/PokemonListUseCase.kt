@@ -20,4 +20,10 @@ class PokemonListUseCase(private val repository: PokedexRepository) {
     suspend fun getPokemonListByPattern(pattern: String): List<Pokemon> =
         repository.getPokemonListByPatternLocal(pattern)
 
+    suspend fun getPokemonFavorites(): List<Pokemon> =
+        repository.getPokemonFavorites()
+
+    suspend fun getPokemonCaught(): List<Pokemon> =
+        repository.getPokemonCaught()
+
 }

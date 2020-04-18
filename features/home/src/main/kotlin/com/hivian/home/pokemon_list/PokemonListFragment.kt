@@ -18,7 +18,6 @@ import com.hivian.common.extension.showCustomDialog
 import com.hivian.common.extension.showSnackbar
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
-import com.hivian.home.pokemon_detail.views.bindings.weightKg
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
@@ -127,6 +126,14 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_display_favorites -> {
+            viewModel.loadPokemonFavorites()
+            true
+        }
+        R.id.action_display_caught -> {
+            viewModel.loadPokemonCaught()
+            true
+        }
         R.id.action_jump_to_top -> {
             viewAdapter.scrollTo(0)
             true
@@ -153,7 +160,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(query: String?): Boolean {
-                query?.let { viewModel.getPokemonListByPattern(it) }
+                query?.let { viewModel.loadPokemonListByPattern(it) }
                 return true
             }
         })

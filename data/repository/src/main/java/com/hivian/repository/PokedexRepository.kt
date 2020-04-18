@@ -22,6 +22,8 @@ interface PokedexRepository {
     suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
+    suspend fun getPokemonFavorites(): List<Pokemon>
+    suspend fun getPokemonCaught(): List<Pokemon>
 }
 
 class PokedexRepositoryImpl(
@@ -107,5 +109,11 @@ class PokedexRepositoryImpl(
     override suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean) {
         dao.updatePokemonCaughtStatus(pokemonId, caught)
     }
+
+    override suspend fun getPokemonFavorites(): List<Pokemon> =
+        mapper.dbToDomainMapper.map(dao.getPokemonFavorites())
+
+    override suspend fun getPokemonCaught(): List<Pokemon> =
+        mapper.dbToDomainMapper.map(dao.getPokemonCaught())
 
 }

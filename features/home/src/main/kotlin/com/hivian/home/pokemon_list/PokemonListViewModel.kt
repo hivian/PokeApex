@@ -36,15 +36,15 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     private var currentOffset = 0
 
     init {
-        getPokemons(false)
+        loadPokemons(false)
     }
 
     // PUBLIC ACTIONS ---
 
-    fun forceRefreshItems() = getPokemons(true)
+    fun forceRefreshItems() = loadPokemons(true)
 
     fun loadMoreItem() {
-        getPokemons(forceRefresh = true,
+        loadPokemons(forceRefresh = true,
             offset = currentOffset + Constants.PAGE_SIZE,
             limit = Constants.PAGE_SIZE)
     }
@@ -60,8 +60,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun getPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
-        d { "= offset: $offset, limit: $limit, currentOffset: $currentOffset" }
+    private fun loadPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
         val isAdditional = offset > 0
 
         _state.value = if (isAdditional) {
@@ -101,8 +100,16 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         }
     }
 
-    fun getPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
+    fun loadPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
         _data.value = pokemonListUseCase.getPokemonListByPattern(pattern)
+    }
+
+    fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
+        _data.value = pokemonListUseCase.getPokemonFavorites()
+    }
+
+    fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
+        _data.value = pokemonListUseCase.getPokemonCaught()
     }
 
     private fun setNewPagingOffset(offset: Int) {

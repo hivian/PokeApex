@@ -22,4 +22,16 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
+    <item
+        android:id="@+id/action_display_favorites"
+        android:icon="@drawable/ic_favorites"
+        android:title="@string/action_display_favorites"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_display_caught"
+        android:icon="@drawable/ic_caught_library"
+        android:title="@string/action_display_caught"
+        app:showAsAction="ifRoom"/>
+
 </menu>
