@@ -10,7 +10,7 @@ import java.util.*
 abstract class PokedexDao : BaseDao<DbPokemon> {
 
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
-    abstract suspend fun getTopPokemons(): List<DbPokemon>
+    abstract suspend fun getAllPokemon(): List<DbPokemon>
 
     @Query("SELECT * FROM DbPokemon WHERE pokemonId = :pokemonId LIMIT 1")
     abstract suspend fun getPokemonByServerId(pokemonId: Int): DbPokemon?
@@ -18,13 +18,13 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
     abstract suspend fun getPokemonByName(name: String): DbPokemon
 
-    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%'")
+    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' ORDER BY pokemonId ASC")
     abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
 
-    @Query("SELECT * FROM DbPokemon WHERE favorite = 1")
+    @Query("SELECT * FROM DbPokemon WHERE favorite = 1 ORDER BY pokemonId ASC")
     abstract suspend fun getPokemonFavorites(): List<DbPokemon>
 
-    @Query("SELECT * FROM DbPokemon WHERE caught = 1")
+    @Query("SELECT * FROM DbPokemon WHERE caught = 1 ORDER BY pokemonId ASC")
     abstract suspend fun getPokemonCaught(): List<DbPokemon>
 
     @Query("UPDATE DbPokemon SET favorite = :favorite WHERE pokemonId = :pokemonId")

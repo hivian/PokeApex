@@ -22,6 +22,7 @@ import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.security.acl.Group
 
 
 class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel> (
@@ -126,11 +127,18 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_display_all -> {
+            item.isChecked = !item.isChecked
+            viewModel.loadAllPokemons()
+            true
+        }
         R.id.action_display_favorites -> {
+            item.isChecked = !item.isChecked
             viewModel.loadPokemonFavorites()
             true
         }
         R.id.action_display_caught -> {
+            item.isChecked = !item.isChecked
             viewModel.loadPokemonCaught()
             true
         }

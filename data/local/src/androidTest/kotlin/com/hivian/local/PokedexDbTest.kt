@@ -78,7 +78,7 @@ class PokedexDbTest {
             assertEquals(fakeDataList.size, insertedAllId.size)
 
             // Find all
-            val findAll = pokedexDao.getTopPokemons()
+            val findAll = pokedexDao.getAllPokemon()
             assertNotNull(findAll)
             assertEquals(fakeDataList.size, findAll.size)
 
@@ -110,7 +110,7 @@ class PokedexDbTest {
                 item.apply { name = "Update_$index" }
             }
             pokedexDao.upsert(newFakeDataList)
-            val updatedData = pokedexDao.getTopPokemons()
+            val updatedData = pokedexDao.getAllPokemon()
             updatedData.forEach {
                 assertTrue("Update" in it.name)
             }

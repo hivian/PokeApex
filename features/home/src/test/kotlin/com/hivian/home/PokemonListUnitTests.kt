@@ -46,7 +46,7 @@ class PokemonListUnitTests {
     fun `Pokemons requested when ViewModel is created`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val result = ResultWrapper.Success(FakeData.createFakePokemonsDomain(3))
-        coEvery { pokemonListUseCase.getPokemonList(false) } returns result
+        coEvery { pokemonListUseCase.getAllPokemonRemote(false) } returns result
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)
@@ -63,7 +63,7 @@ class PokemonListUnitTests {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val observerState = mockk<Observer<PokemonListViewState>>(relaxed = true)
         val result = ResultWrapper.NetworkError(emptyList<Pokemon>())
-        coEvery { pokemonListUseCase.getPokemonList(any()) } returns result
+        coEvery { pokemonListUseCase.getAllPokemonRemote(any()) } returns result
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)
@@ -81,7 +81,7 @@ class PokemonListUnitTests {
     fun `Pokemon clicks on item on RecyclerView`() {
         val fakeDataSet = FakeData.createFakePokemonsDomain(3)
         val event = PokemonListViewEvent.OpenPokemonDetailView(fakeDataSet.first().name)
-        coEvery { pokemonListUseCase.getPokemonList(false) } returns ResultWrapper.Success(fakeDataSet)
+        coEvery { pokemonListUseCase.getAllPokemonRemote(false) } returns ResultWrapper.Success(fakeDataSet)
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.openPokemonDetail(fakeDataSet.first().name)
@@ -94,7 +94,7 @@ class PokemonListUnitTests {
     fun `Pokemon refreshes list with swipe to refresh`() {
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val result = ResultWrapper.Success(FakeData.createFakePokemonsDomain(3))
-        coEvery { pokemonListUseCase.getPokemonList(any()) } returns result
+        coEvery { pokemonListUseCase.getAllPokemonRemote(any()) } returns result
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.data.observeForever(observer)

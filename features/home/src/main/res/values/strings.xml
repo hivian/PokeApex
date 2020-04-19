@@ -43,6 +43,7 @@
     
     <!--Item menu-->
     <string name="action_refresh">Refresh</string>
+    <string name="action_display_all">All</string>
     <string name="action_display_favorites">Favorites</string>
     <string name="action_display_caught">Caught checklist</string>
 

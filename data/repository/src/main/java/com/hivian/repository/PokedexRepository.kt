@@ -22,8 +22,9 @@ interface PokedexRepository {
     suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
-    suspend fun getPokemonFavorites(): List<Pokemon>
-    suspend fun getPokemonCaught(): List<Pokemon>
+    suspend fun getAllPokemonLocal(): List<Pokemon>
+    suspend fun getPokemonFavoritesLocal(): List<Pokemon>
+    suspend fun getPokemonCaughtLocal(): List<Pokemon>
 }
 
 class PokedexRepositoryImpl(
@@ -51,7 +52,7 @@ class PokedexRepositoryImpl(
                     forceRefresh
 
             override suspend fun loadFromDb(): List<DbPokemon> =
-                    dao.getTopPokemons()
+                    dao.getAllPokemon()
 
             override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
                     mapper.dbToDomainMapper.map(data)
@@ -110,10 +111,13 @@ class PokedexRepositoryImpl(
         dao.updatePokemonCaughtStatus(pokemonId, caught)
     }
 
-    override suspend fun getPokemonFavorites(): List<Pokemon> =
+    override suspend fun getAllPokemonLocal(): List<Pokemon> =
+        mapper.dbToDomainMapper.map(dao.getAllPokemon())
+
+    override suspend fun getPokemonFavoritesLocal(): List<Pokemon> =
         mapper.dbToDomainMapper.map(dao.getPokemonFavorites())
 
-    override suspend fun getPokemonCaught(): List<Pokemon> =
+    override suspend fun getPokemonCaughtLocal(): List<Pokemon> =
         mapper.dbToDomainMapper.map(dao.getPokemonCaught())
 
 }

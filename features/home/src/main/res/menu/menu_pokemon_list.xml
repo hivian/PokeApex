@@ -22,16 +22,24 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item
-        android:id="@+id/action_display_favorites"
-        android:icon="@drawable/ic_favorites"
-        android:title="@string/action_display_favorites"
-        app:showAsAction="ifRoom"/>
+    <group
+        android:id="@+id/group_action_filter"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_display_all"
+            android:title="@string/action_display_all"
+            android:checked="true"
+            app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_display_caught"
-        android:icon="@drawable/ic_caught_library"
-        android:title="@string/action_display_caught"
-        app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/action_display_favorites"
+            android:title="@string/action_display_favorites"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_display_caught"
+            android:title="@string/action_display_caught"
+            app:showAsAction="never"/>
+    </group>
 
 </menu>

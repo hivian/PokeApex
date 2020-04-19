@@ -3,7 +3,6 @@ package com.hivian.home.pokemon_list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.Constants
@@ -36,15 +35,15 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     private var currentOffset = 0
 
     init {
-        loadPokemons(false)
+        loadPokemonsRemote(false)
     }
 
     // PUBLIC ACTIONS ---
 
-    fun forceRefreshItems() = loadPokemons(true)
+    fun forceRefreshItems() = loadPokemonsRemote(true)
 
     fun loadMoreItem() {
-        loadPokemons(forceRefresh = true,
+        loadPokemonsRemote(forceRefresh = true,
             offset = currentOffset + Constants.PAGE_SIZE,
             limit = Constants.PAGE_SIZE)
     }
@@ -60,7 +59,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun loadPokemons(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
+    private fun loadPokemonsRemote(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
         val isAdditional = offset > 0
 
         _state.value = if (isAdditional) {
@@ -70,7 +69,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         }
         viewModelScope.launch(dispatchers.main) {
             when (val pokemonsAsync =
-                pokemonListUseCase.getPokemonList(forceRefresh, offset, limit)) {
+                pokemonListUseCase.getAllPokemonRemote(forceRefresh, offset, limit)) {
                 is ResultWrapper.Success -> {
                     currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
                     _data.value = pokemonsAsync.value
@@ -101,15 +100,19 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     }
 
     fun loadPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonListByPattern(pattern)
+        _data.value = pokemonListUseCase.getPokemonListByPatternFilter(pattern)
+    }
+
+    fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
+        _data.value = pokemonListUseCase.getAllPokemonFilter()
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonFavorites()
+        _data.value = pokemonListUseCase.getPokemonFavoritesFilter()
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonCaught()
+        _data.value = pokemonListUseCase.getPokemonCaughtFilter()
     }
 
     private fun setNewPagingOffset(offset: Int) {
