@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
  * A simple [BaseViewModel] that provide the data and handle logic to communicate with the model
  * for [PokemonListFragment].
  */
-enum class FilterType {
-    ALL,
-    FAVORITES,
-    CAUGHT
+sealed class FilterType {
+    data class All(val pattern: String = ""): FilterType()
+    data class Favorites(val pattern: String = ""): FilterType()
+    data class Caught(val pattern: String =  ""): FilterType()
 }
 
 class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
@@ -28,17 +28,14 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     : BaseViewModel() {
 
     // FOR data
-    var dataFilter = MutableLiveData(FilterType.ALL)
-    val data : LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) { filterType ->
-        filterType?.run {
-            when (this) {
-                FilterType.ALL -> pokemonListUseCase.getAllPokemonFilter()
-                FilterType.FAVORITES -> pokemonListUseCase.getPokemonFavoritesFilter()
-                FilterType.CAUGHT -> pokemonListUseCase.getPokemonCaughtFilter()
-            }
+    var dataFilter = MutableLiveData<FilterType>(FilterType.All())
+    val data : LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) {
+        when (it) {
+            is FilterType.All -> pokemonListUseCase.getAllPokemonFilter(it.pattern)
+            is FilterType.Favorites -> pokemonListUseCase.getAllPokemonFavoritesFilter(it.pattern)
+            is FilterType.Caught -> pokemonListUseCase.getAllPokemonCaughtFilter(it.pattern)
         }
     }
-
 
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
@@ -116,19 +113,25 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     }
 
     fun loadPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
-        pokemonListUseCase.getPokemonListByPatternFilter(pattern)
+        dataFilter.value?.run {
+            dataFilter.value = when (this) {
+                is FilterType.All -> FilterType.All(pattern)
+                is FilterType.Favorites -> FilterType.Favorites(pattern)
+                is FilterType.Caught -> FilterType.Caught(pattern)
+            }
+        }
     }
 
     fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.ALL
+        dataFilter.value = FilterType.All()
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.FAVORITES
+        dataFilter.value = FilterType.Favorites()
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.CAUGHT
+        dataFilter.value = FilterType.Caught()
     }
 
     private fun setNewPagingOffset(offset: Int) {

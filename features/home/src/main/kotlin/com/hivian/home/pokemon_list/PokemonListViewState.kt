@@ -30,9 +30,19 @@ sealed class PokemonListViewState : BaseViewState {
     object AddLoading : PokemonListViewState()
 
     /**
-     * Empty characters list.
+     * Empty pokemon list.
      */
     object Empty : PokemonListViewState()
+
+    /**
+     * Empty pokemon favorites list.
+     */
+    object EmptyFavorites : PokemonListViewState()
+
+    /**
+     * Empty pokemon caught list.
+     */
+    object EmptyCaught : PokemonListViewState()
 
     /**
      * Error on loading characters list.

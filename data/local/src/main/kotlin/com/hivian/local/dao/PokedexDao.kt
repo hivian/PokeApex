@@ -13,6 +13,15 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
     abstract suspend fun getAllPokemon(): List<DbPokemon>
 
+    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonPatternLive(pattern: String): LiveData<List<DbPokemon>>
+
+    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' AND favorite = 1 ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonFavoritesPatternLive(pattern: String): LiveData<List<DbPokemon>>
+
+    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' AND caught = 1 ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonCaughtPatternLive(pattern: String): LiveData<List<DbPokemon>>
+
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
     abstract fun getAllPokemonLive(): LiveData<List<DbPokemon>>
 
@@ -27,9 +36,6 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
 
     @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
     abstract suspend fun getPokemonByName(name: String): DbPokemon
-
-    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' ORDER BY pokemonId ASC")
-    abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
 
     @Query("UPDATE DbPokemon SET favorite = :favorite WHERE pokemonId = :pokemonId")
     abstract suspend fun updatePokemonFavoriteStatus(pokemonId: Int, favorite: Boolean): Int

@@ -94,9 +94,9 @@ class PokedexDbTest {
         runBlocking {
             // Find by matching pattern
             pokedexDao.insert(fakeDataList)
-            var matchingPattern = pokedexDao.getPokemonListByPattern("Name")
+            var matchingPattern = pokedexDao.getAllPokemonPatternLive("Name")
             assertEquals(3, matchingPattern.size)
-            matchingPattern = pokedexDao.getPokemonListByPattern("Name_1")
+            matchingPattern = pokedexDao.getAllPokemonPatternLive("Name_1")
             assertEquals(1, matchingPattern.size)
         }
     }

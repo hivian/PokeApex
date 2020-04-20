@@ -18,16 +18,13 @@ class PokemonListUseCase(private val repository: PokedexRepository) {
         return repository.getPokemonListWithCacheRemote(forceRefresh, offset, limit)
     }
 
-    suspend fun getPokemonListByPatternFilter(pattern: String): List<Pokemon> =
-        repository.getPokemonListByPatternLocal(pattern)
+    fun getAllPokemonFilter(pattern: String): LiveData<List<Pokemon>> =
+        repository.getAllPokemonByPatternLocal(pattern)
 
-    fun getAllPokemonFilter(): LiveData<List<Pokemon>> =
-        repository.getAllPokemonLocal()
+    fun getAllPokemonFavoritesFilter(pattern: String): LiveData<List<Pokemon>> =
+        repository.getAllPokemonFavoritesByPatternLocal(pattern)
 
-    fun getPokemonFavoritesFilter(): LiveData<List<Pokemon>> =
-        repository.getPokemonFavoritesLocal()
-
-    fun getPokemonCaughtFilter(): LiveData<List<Pokemon>> =
-        repository.getPokemonCaughtLocal()
+    fun getAllPokemonCaughtFilter(pattern: String): LiveData<List<Pokemon>> =
+        repository.getAllPokemonCaughtByPatternLocal(pattern)
 
 }
