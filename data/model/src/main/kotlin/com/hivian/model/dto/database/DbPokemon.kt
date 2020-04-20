@@ -11,6 +11,9 @@ data class DbPokemon(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
+    /**
+     * Remote data
+     */
     var pokemonId: Int,
     var name: String,
     var imageUrl: String,
@@ -22,6 +25,9 @@ data class DbPokemon(
     var stats: List<DbPokemonStat> = emptyList(),
     var types: List<DbPokemonType> = emptyList(),
 
+    /**
+     * Local data
+     */
     var favorite: Boolean = false,
     var caught: Boolean = false,
     var generation: Int? = null,

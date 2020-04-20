@@ -27,7 +27,7 @@
             style="@style/AppTheme.SurfaceStyle" >
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/character_image"
+                android:id="@+id/pokemon_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pokemon_list_item_size"
                 android:adjustViewBounds="true"
@@ -40,6 +40,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pokemon_favorite"
+                android:layout_width="@dimen/icon_0"
+                android:layout_height="@dimen/icon_0"
+                android:layout_margin="@dimen/spacer_0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_favorite_active"
+                app:visible="@{pokemon.favorite}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pokemon_caught"
+                android:layout_width="@dimen/icon_0"
+                android:layout_height="@dimen/icon_0"
+                android:layout_margin="@dimen/spacer_0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_caught_active"
+                app:visible="@{pokemon.caught}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_name"
@@ -54,7 +74,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_ranking"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/character_image"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_image"
                 app:textCapitalized="@{pokemon.name}"
                 tools:text="Pokemon" />
 

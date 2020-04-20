@@ -40,7 +40,11 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     open suspend fun upsert(pokemon: DbPokemon) {
         val isPokemon = getPokemonByServerId(pokemon.pokemonId)
         isPokemon?.let {
-            update(pokemon.apply { id = isPokemon.id })
+            update(pokemon.apply {
+                id = isPokemon.id
+                favorite = isPokemon.favorite
+                caught = isPokemon.caught
+            })
         } ?: run {
             insert(pokemon)
         }

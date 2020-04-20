@@ -4,7 +4,7 @@
     <!--Primary colors-->
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#f3f3f3</color>
-    <color name="colorPrimaryLight">#e5e5e5</color>
+    <color name="colorPrimaryLight">#f2f2f2</color>
     <color name="colorAccent">#111111</color>
 
     <!--Text colors-->
