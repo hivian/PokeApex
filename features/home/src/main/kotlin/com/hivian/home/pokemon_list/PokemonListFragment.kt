@@ -123,6 +123,12 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         configureSearchView(menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        updateItemOptionsRefresh(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_display_all -> {
             item.isChecked = !item.isChecked
@@ -153,6 +159,14 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         }
         else -> {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun updateItemOptionsRefresh(menu: Menu) {
+        when (viewModel.dataFilter.value) {
+            FilterType.ALL -> menu.findItem(R.id.action_display_all).isChecked = true
+            FilterType.FAVORITES -> menu.findItem(R.id.action_display_favorites).isChecked = true
+            FilterType.CAUGHT -> menu.findItem(R.id.action_display_caught).isChecked = true
         }
     }
 

@@ -1,5 +1,6 @@
 package com.hivian.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
@@ -12,6 +13,15 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
     abstract suspend fun getAllPokemon(): List<DbPokemon>
 
+    @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonLive(): LiveData<List<DbPokemon>>
+
+    @Query("SELECT * FROM DbPokemon WHERE favorite = 1 ORDER BY pokemonId ASC")
+    abstract fun getPokemonFavoritesLive(): LiveData<List<DbPokemon>>
+
+    @Query("SELECT * FROM DbPokemon WHERE caught = 1 ORDER BY pokemonId ASC")
+    abstract fun getPokemonCaughtLive(): LiveData<List<DbPokemon>>
+
     @Query("SELECT * FROM DbPokemon WHERE pokemonId = :pokemonId LIMIT 1")
     abstract suspend fun getPokemonByServerId(pokemonId: Int): DbPokemon?
 
@@ -20,12 +30,6 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
 
     @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' ORDER BY pokemonId ASC")
     abstract suspend fun getPokemonListByPattern(pattern: String): List<DbPokemon>
-
-    @Query("SELECT * FROM DbPokemon WHERE favorite = 1 ORDER BY pokemonId ASC")
-    abstract suspend fun getPokemonFavorites(): List<DbPokemon>
-
-    @Query("SELECT * FROM DbPokemon WHERE caught = 1 ORDER BY pokemonId ASC")
-    abstract suspend fun getPokemonCaught(): List<DbPokemon>
 
     @Query("UPDATE DbPokemon SET favorite = :favorite WHERE pokemonId = :pokemonId")
     abstract suspend fun updatePokemonFavoriteStatus(pokemonId: Int, favorite: Boolean): Int

@@ -1,6 +1,8 @@
 package com.hivian.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
@@ -22,9 +24,9 @@ interface PokedexRepository {
     suspend fun getPokemonListByPatternLocal(pattern: String): List<Pokemon>
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
-    suspend fun getAllPokemonLocal(): List<Pokemon>
-    suspend fun getPokemonFavoritesLocal(): List<Pokemon>
-    suspend fun getPokemonCaughtLocal(): List<Pokemon>
+    fun getAllPokemonLocal(): LiveData<List<Pokemon>>
+    fun getPokemonFavoritesLocal(): LiveData<List<Pokemon>>
+    fun getPokemonCaughtLocal(): LiveData<List<Pokemon>>
 }
 
 class PokedexRepositoryImpl(
@@ -39,7 +41,7 @@ class PokedexRepositoryImpl(
         return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
-                    mapper.remoteToDbMapper.map(response)
+                mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: List<DbPokemon>) {
                 dao.save(result)
@@ -111,13 +113,25 @@ class PokedexRepositoryImpl(
         dao.updatePokemonCaughtStatus(pokemonId, caught)
     }
 
-    override suspend fun getAllPokemonLocal(): List<Pokemon> =
-        mapper.dbToDomainMapper.map(dao.getAllPokemon())
+    override fun getAllPokemonLocal(): LiveData<List<Pokemon>> =
+        Transformations.switchMap(dao.getAllPokemonLive()) {
+            mapDbToDomainLiveData(it)
+        }
 
-    override suspend fun getPokemonFavoritesLocal(): List<Pokemon> =
-        mapper.dbToDomainMapper.map(dao.getPokemonFavorites())
+    override fun getPokemonFavoritesLocal(): LiveData<List<Pokemon>> =
+        Transformations.switchMap(dao.getPokemonFavoritesLive()) {
+            mapDbToDomainLiveData(it)
+        }
 
-    override suspend fun getPokemonCaughtLocal(): List<Pokemon> =
-        mapper.dbToDomainMapper.map(dao.getPokemonCaught())
+    override fun getPokemonCaughtLocal(): LiveData<List<Pokemon>> =
+        Transformations.switchMap(dao.getPokemonCaughtLive()) {
+            mapDbToDomainLiveData(it)
+        }
 
+    private fun mapDbToDomainLiveData(input: List<DbPokemon>): LiveData<List<Pokemon>> {
+        val pokemonLiveData : MutableLiveData<List<Pokemon>> = MutableLiveData()
+        val pokemons = mapper.dbToDomainMapper.map(input)
+        pokemonLiveData.value = pokemons
+        return pokemonLiveData
+    }
 }

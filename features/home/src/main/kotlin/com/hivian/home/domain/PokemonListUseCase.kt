@@ -1,5 +1,6 @@
 package com.hivian.home.domain
 
+import androidx.lifecycle.LiveData
 import com.hivian.common.Constants
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.PokedexRepository
@@ -20,13 +21,13 @@ class PokemonListUseCase(private val repository: PokedexRepository) {
     suspend fun getPokemonListByPatternFilter(pattern: String): List<Pokemon> =
         repository.getPokemonListByPatternLocal(pattern)
 
-    suspend fun getAllPokemonFilter(): List<Pokemon> =
+    fun getAllPokemonFilter(): LiveData<List<Pokemon>> =
         repository.getAllPokemonLocal()
 
-    suspend fun getPokemonFavoritesFilter(): List<Pokemon> =
+    fun getPokemonFavoritesFilter(): LiveData<List<Pokemon>> =
         repository.getPokemonFavoritesLocal()
 
-    suspend fun getPokemonCaughtFilter(): List<Pokemon> =
+    fun getPokemonCaughtFilter(): LiveData<List<Pokemon>> =
         repository.getPokemonCaughtLocal()
 
 }

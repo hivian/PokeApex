@@ -2,6 +2,7 @@ package com.hivian.home.pokemon_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
@@ -16,13 +17,28 @@ import kotlinx.coroutines.launch
  * A simple [BaseViewModel] that provide the data and handle logic to communicate with the model
  * for [PokemonListFragment].
  */
+enum class FilterType {
+    ALL,
+    FAVORITES,
+    CAUGHT
+}
+
 class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                            private val dispatchers: AppDispatchers)
     : BaseViewModel() {
 
     // FOR data
-    private val _data = MutableLiveData<List<Pokemon>>()
-    val data : LiveData<List<Pokemon>> get() = _data
+    var dataFilter = MutableLiveData(FilterType.ALL)
+    val data : LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) { filterType ->
+        filterType?.run {
+            when (this) {
+                FilterType.ALL -> pokemonListUseCase.getAllPokemonFilter()
+                FilterType.FAVORITES -> pokemonListUseCase.getPokemonFavoritesFilter()
+                FilterType.CAUGHT -> pokemonListUseCase.getPokemonCaughtFilter()
+            }
+        }
+    }
+
 
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
@@ -72,7 +88,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                 pokemonListUseCase.getAllPokemonRemote(forceRefresh, offset, limit)) {
                 is ResultWrapper.Success -> {
                     currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
-                    _data.value = pokemonsAsync.value
+                    //_data.value = pokemonsAsync.value
                     _state.value = when {
                         isAdditional && pokemonsAsync.emptyResponse -> PokemonListViewState.NoMoreElements
                         pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
@@ -80,7 +96,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                     }
                 }
                 is ResultWrapper.GenericError -> {
-                    _data.value = pokemonsAsync.value
+//                    _data.value = pokemonsAsync.value
                     _state.value = when {
                         isAdditional -> PokemonListViewState.AddError
                         pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
@@ -88,7 +104,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                     }
                 }
                 is ResultWrapper.NetworkError -> {
-                    _data.value = pokemonsAsync.value
+//                    _data.value = pokemonsAsync.value
                     _state.value = when {
                         isAdditional -> PokemonListViewState.AddError
                         pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
@@ -100,19 +116,19 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     }
 
     fun loadPokemonListByPattern(pattern: String) = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonListByPatternFilter(pattern)
+        pokemonListUseCase.getPokemonListByPatternFilter(pattern)
     }
 
     fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getAllPokemonFilter()
+        dataFilter.value = FilterType.ALL
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonFavoritesFilter()
+        dataFilter.value = FilterType.FAVORITES
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
-        _data.value = pokemonListUseCase.getPokemonCaughtFilter()
+        dataFilter.value = FilterType.CAUGHT
     }
 
     private fun setNewPagingOffset(offset: Int) {
