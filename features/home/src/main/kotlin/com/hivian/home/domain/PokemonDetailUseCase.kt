@@ -1,8 +1,9 @@
 package com.hivian.home.domain
 
+import androidx.lifecycle.LiveData
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.PokedexRepository
-import com.hivian.repository.utils.ResultWrapper
+import com.hivian.repository.utils.NetworkWrapper
 
 
 /**
@@ -12,8 +13,11 @@ import com.hivian.repository.utils.ResultWrapper
  */
 class PokemonDetailUseCase(private val repository: PokedexRepository) {
 
-    suspend fun getDetailWithCache(name: String): ResultWrapper<Pokemon> =
+    suspend fun getDetailWithCache(name: String): NetworkWrapper<Pokemon> =
         repository.getPokemonDetailWithCacheRemote(name)
+
+    fun getPokemonDetailLive(name: String): LiveData<Pokemon> =
+        repository.getPokemonDetailLocalLive(name)
 
     suspend fun updateFavoriteStatus(id: Int, favorite: Boolean) {
         repository.updateFavoriteStatusLocal(id, favorite)

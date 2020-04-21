@@ -1,10 +1,10 @@
 package com.hivian.repository
 
+import com.hivian.common_test.datasets.FakeData
 import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokemonDbToDomainImpl
 import com.hivian.model.mapper.MapperPokemonRemoteToDbImpl
-import com.hivian.common_test.datasets.FakeData
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

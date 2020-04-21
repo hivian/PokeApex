@@ -25,6 +25,9 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
     abstract fun getAllPokemonLive(): LiveData<List<DbPokemon>>
 
+    @Query("SELECT * FROM DbPokemon WHERE name = :name LIMIT 1")
+    abstract fun getPokemonDetailLive(name: String): LiveData<DbPokemon>
+
     @Query("SELECT * FROM DbPokemon WHERE favorite = 1 ORDER BY pokemonId ASC")
     abstract fun getPokemonFavoritesLive(): LiveData<List<DbPokemon>>
 

@@ -14,5 +14,5 @@ val featureHomeModule = module {
     factory { PokemonListUseCase(get()) }
     factory { PokemonDetailUseCase(get()) }
     viewModel { PokemonListViewModel(get(), get()) }
-    viewModel { PokemonDetailViewModel(get(), get()) }
+    viewModel { (name : String) ->PokemonDetailViewModel(name, get(), get()) }
 }

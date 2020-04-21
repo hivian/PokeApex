@@ -2,7 +2,6 @@ package com.hivian.model.dto.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sun.org.apache.xpath.internal.operations.Bool
 import java.util.*
 import java.util.concurrent.TimeUnit
 

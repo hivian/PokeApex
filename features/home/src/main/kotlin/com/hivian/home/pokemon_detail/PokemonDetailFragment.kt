@@ -15,6 +15,7 @@ import com.hivian.common.ui.views.ProgressBarDialog
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonDetailFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, PokemonDetailViewModel>(
     layoutId = R.layout.pokemon_detail_fragment
@@ -27,7 +28,9 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
 
     override fun getViewModel(): BaseViewModel = viewModel
 
-    private val viewModel: PokemonDetailViewModel by viewModel()
+    private val viewModel: PokemonDetailViewModel by viewModel {
+        parametersOf(args.pokemonName)
+    }
     private val args: PokemonDetailFragmentArgs by navArgs()
     private val progressDialog: ProgressBarDialog by lazy {
         ProgressBarDialog(requireContext())
@@ -48,7 +51,7 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
         super.onActivityCreated(savedInstanceState)
         observe(viewModel.networkState, ::onViewStateChange)
         observe(viewModel.event, ::onViewEvent)
-        viewModel.loadPokemonDetail(args.pokemonName)
+        viewModel.loadPokemonDetail()
     }
 
     /**
@@ -64,8 +67,6 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
             }
             is PokemonNetworkViewState.Loading ->
                 progressDialog.show(R.string.pokemon_detail_dialog_loading_text)
-            is PokemonNetworkViewState.ErrorWithData ->
-                viewBinding.imageViewDetail.loadAnimator(R.animator.animator_pokemon_image)
             is PokemonNetworkViewState.Error ->
                 progressDialog.dismissWithErrorMessage(R.string.pokemon_detail_dialog_error_text)
         }
@@ -80,9 +81,7 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
         when (viewEvent) {
             is PokemonDetailViewEvent.DismissPokemonDetailView -> findNavController().navigateUp()
             is PokemonDetailViewEvent.AddedToFavorites -> requireContext().toast(R.string.toast_added_to_favorites)
-            is PokemonDetailViewEvent.RemovedFromFavorites -> requireContext().toast(R.string.toast_removed_from_favorites)
             is PokemonDetailViewEvent.AddedToCaught -> requireContext().toast(R.string.toast_added_to_caught)
-            is PokemonDetailViewEvent.RemovedFromCaught -> requireContext().toast(R.string.toast_removed_from_caught)
         }
     }
 

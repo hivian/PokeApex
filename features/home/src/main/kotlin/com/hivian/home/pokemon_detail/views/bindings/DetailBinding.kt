@@ -11,11 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.hivian.home.pokemon_detail.PokemonCaughtViewState
 import com.hivian.home.pokemon_detail.PokemonFavoriteViewState
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
+import java.util.*
 import com.hivian.common.R as RCommon
 import com.hivian.home.R as RHome
-import java.util.*
 
 
 @BindingAdapter("bgColorFromType")

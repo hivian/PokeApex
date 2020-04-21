@@ -1,8 +1,10 @@
 package com.hivian.home.pokemon_list
 
-import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.github.ajalt.timberkt.d

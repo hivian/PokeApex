@@ -10,7 +10,7 @@ import com.hivian.home.Constants
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
-import com.hivian.repository.utils.ResultWrapper
+import com.hivian.repository.utils.NetworkWrapper
 import kotlinx.coroutines.launch
 
 /**
@@ -85,28 +85,22 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         viewModelScope.launch(dispatchers.main) {
             when (val pokemonsAsync =
                 pokemonListUseCase.getAllPokemonRemote(forceRefresh, offset, limit)) {
-                is ResultWrapper.Success -> {
+                is NetworkWrapper.Success -> {
                     currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
-                    //_data.value = pokemonsAsync.value
                     _state.value = when {
-                        isAdditional && pokemonsAsync.emptyResponse -> PokemonListViewState.NoMoreElements
                         pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
                         else -> PokemonListViewState.Loaded
                     }
                 }
-                is ResultWrapper.GenericError -> {
-//                    _data.value = pokemonsAsync.value
+                is NetworkWrapper.GenericError -> {
                     _state.value = when {
                         isAdditional -> PokemonListViewState.AddError
-                        pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
                         else -> PokemonListViewState.Error
                     }
                 }
-                is ResultWrapper.NetworkError -> {
-//                    _data.value = pokemonsAsync.value
+                is NetworkWrapper.NetworkError -> {
                     _state.value = when {
                         isAdditional -> PokemonListViewState.AddError
-                        pokemonsAsync.value.isNotEmpty() -> PokemonListViewState.ErrorWithData
                         else -> PokemonListViewState.Error
                     }
                 }

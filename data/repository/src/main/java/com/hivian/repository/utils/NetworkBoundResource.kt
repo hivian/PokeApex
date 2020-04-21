@@ -2,7 +2,6 @@ package com.hivian.repository.utils
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
-import com.github.ajalt.timberkt.e
 import com.github.ajalt.timberkt.i
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
@@ -13,7 +12,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     private val supervisorJob = SupervisorJob()
 
-    suspend fun build(): ResultWrapper<Domain> {
+    suspend fun build(): NetworkWrapper<Domain> {
         return withContext(supervisorJob) {
             val dbResult = loadFromDb()
             if (shouldFetch(dbResult)) {
@@ -21,31 +20,31 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                     fetchFromNetwork(dbResult)
                 } catch (e: Exception) {
                     val value = when (e) {
-                        is IOException -> ResultWrapper.NetworkError(processData(dbResult))
+                        is IOException -> NetworkWrapper.NetworkError
                         is HttpException -> {
                             val code = e.code()
-                            ResultWrapper.GenericError(processData(dbResult), code, convertErrorBody(e))
+                            NetworkWrapper.GenericError(code, convertErrorBody(e))
                         }
-                        else -> ResultWrapper.GenericError(processData(dbResult),null, convertErrorBody(e))
+                        else -> NetworkWrapper.GenericError(null, convertErrorBody(e))
                     }
-                    e { "An error happened: $e" }
+                    i { "An error happened: $e" }
                     value
                 }
             } else {
                 i { "Return data from local database" }
-                ResultWrapper.Success(processData(dbResult))
+                NetworkWrapper.Success(processData(dbResult))
             }
         }
     }
 
     // ---
 
-    private suspend fun fetchFromNetwork(dbResult: Local) : ResultWrapper<Domain> {
+    private suspend fun fetchFromNetwork(dbResult: Local) : NetworkWrapper<Domain> {
         i { "Return data from local database" }
         val apiResponse = createCallAsync()
         i { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
-        return ResultWrapper.Success(processData(loadFromDb()), isEmptyResult(apiResponse))
+        return NetworkWrapper.Success(processData(loadFromDb()))
     }
 
     @WorkerThread
@@ -65,7 +64,4 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     @MainThread
     protected abstract suspend fun createCallAsync(): Remote
-
-    @MainThread
-    protected abstract suspend fun isEmptyResult(response: Remote): Boolean
 }

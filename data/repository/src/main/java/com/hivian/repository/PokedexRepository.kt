@@ -10,25 +10,27 @@ import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.remote.PokemonDatasource
 import com.hivian.repository.utils.NetworkBoundResource
-import com.hivian.repository.utils.ResultWrapper
+import com.hivian.repository.utils.NetworkWrapper
+
 
 interface PokedexRepository {
     suspend fun getPokemonListWithCacheRemote(
         forceRefresh: Boolean = false,
         offset: Int,
         limit: Int
-    ): ResultWrapper<List<Pokemon>>
+    ): NetworkWrapper<List<Pokemon>>
     suspend fun getPokemonDetailWithCacheRemote(
         name: String
-    ): ResultWrapper<Pokemon>
+    ): NetworkWrapper<Pokemon>
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
     fun getAllPokemonByPatternLocal(pattern: String): LiveData<List<Pokemon>>
     fun getAllPokemonFavoritesByPatternLocal(pattern: String): LiveData<List<Pokemon>>
     fun getAllPokemonCaughtByPatternLocal(pattern: String): LiveData<List<Pokemon>>
-    fun getAllPokemonLocal(): LiveData<List<Pokemon>>
-    fun getPokemonFavoritesLocal(): LiveData<List<Pokemon>>
-    fun getPokemonCaughtLocal(): LiveData<List<Pokemon>>
+    fun getAllPokemonLocalLive(): LiveData<List<Pokemon>>
+    fun getPokemonDetailLocalLive(name: String): LiveData<Pokemon>
+    fun getPokemonFavoritesLocalLive(): LiveData<List<Pokemon>>
+    fun getPokemonCaughtLocalLive(): LiveData<List<Pokemon>>
 }
 
 class PokedexRepositoryImpl(
@@ -39,7 +41,7 @@ class PokedexRepositoryImpl(
 
     val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
 
-    override suspend fun getPokemonListWithCacheRemote(forceRefresh: Boolean, offset: Int, limit: Int): ResultWrapper<List<Pokemon>> {
+    override suspend fun getPokemonListWithCacheRemote(forceRefresh: Boolean, offset: Int, limit: Int): NetworkWrapper<List<Pokemon>> {
         return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
@@ -66,9 +68,6 @@ class PokedexRepositoryImpl(
                 return mapper.networkToObjectImpl.map(results)
             }
 
-            override suspend fun isEmptyResult(response: List<NetworkPokemonObject>): Boolean =
-                response.isEmpty()
-
         }.build()
     }
 
@@ -77,7 +76,7 @@ class PokedexRepositoryImpl(
      * whether in cache (SQLite) or via network (API).
      * [NetworkBoundResource] is responsible to handle this behavior.
      */
-    override suspend fun getPokemonDetailWithCacheRemote(name: String): ResultWrapper<Pokemon> {
+    override suspend fun getPokemonDetailWithCacheRemote(name: String): NetworkWrapper<Pokemon> {
         return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =
@@ -100,7 +99,6 @@ class PokedexRepositoryImpl(
             override suspend fun createCallAsync(): NetworkPokemonObject =
                     datasource.fetchPokemonDetailAsync(name)
 
-            override suspend fun isEmptyResult(response: NetworkPokemonObject): Boolean = false
         }.build()
     }
 
@@ -127,17 +125,22 @@ class PokedexRepositoryImpl(
             mapDbToDomainLiveData(it)
         }
 
-    override fun getAllPokemonLocal(): LiveData<List<Pokemon>> =
+    override fun getAllPokemonLocalLive(): LiveData<List<Pokemon>> =
         Transformations.switchMap(dao.getAllPokemonLive()) {
             mapDbToDomainLiveData(it)
         }
 
-    override fun getPokemonFavoritesLocal(): LiveData<List<Pokemon>> =
+    override fun getPokemonDetailLocalLive(name: String): LiveData<Pokemon> =
+        Transformations.switchMap(dao.getPokemonDetailLive(name)) {
+            mapDbToDomainLiveData(it)
+        }
+
+    override fun getPokemonFavoritesLocalLive(): LiveData<List<Pokemon>> =
         Transformations.switchMap(dao.getPokemonFavoritesLive()) {
             mapDbToDomainLiveData(it)
         }
 
-    override fun getPokemonCaughtLocal(): LiveData<List<Pokemon>> =
+    override fun getPokemonCaughtLocalLive(): LiveData<List<Pokemon>> =
         Transformations.switchMap(dao.getPokemonCaughtLive()) {
             mapDbToDomainLiveData(it)
         }
@@ -146,6 +149,13 @@ class PokedexRepositoryImpl(
         val pokemonLiveData : MutableLiveData<List<Pokemon>> = MutableLiveData()
         val pokemons = mapper.dbToDomainMapper.map(input)
         pokemonLiveData.value = pokemons
+        return pokemonLiveData
+    }
+
+    private fun mapDbToDomainLiveData(input: DbPokemon): LiveData<Pokemon> {
+        val pokemonLiveData : MutableLiveData<Pokemon> = MutableLiveData()
+        val pokemon = mapper.dbToDomainMapper.map(input)
+        pokemonLiveData.value = pokemon
         return pokemonLiveData
     }
 }

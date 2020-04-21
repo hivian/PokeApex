@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.hivian.common.Constants
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.PokedexRepository
-import com.hivian.repository.utils.ResultWrapper
+import com.hivian.repository.utils.NetworkWrapper
 
 
 /**
@@ -14,7 +14,7 @@ import com.hivian.repository.utils.ResultWrapper
  */
 class PokemonListUseCase(private val repository: PokedexRepository) {
 
-    suspend fun getAllPokemonRemote(forceRefresh: Boolean = false, offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): ResultWrapper<List<Pokemon>> {
+    suspend fun getAllPokemonRemote(forceRefresh: Boolean = false, offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): NetworkWrapper<List<Pokemon>> {
         return repository.getPokemonListWithCacheRemote(forceRefresh, offset, limit)
     }
 
