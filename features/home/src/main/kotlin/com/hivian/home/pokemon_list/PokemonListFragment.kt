@@ -1,5 +1,6 @@
 package com.hivian.home.pokemon_list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -9,17 +10,13 @@ import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
-import com.hivian.common.extension.gridLayoutManager
-import com.hivian.common.extension.observe
-import com.hivian.common.extension.showCustomDialog
-import com.hivian.common.extension.showSnackbar
+import com.hivian.common.extension.*
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.security.acl.Group
 
 
 class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel> (
@@ -49,11 +46,6 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         observe(viewModel.event, ::onViewEvent)
         observe(viewModel.data, ::onViewDataChange)
         observe(viewModel.state, ::onViewStateChange)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        d { "TIMBER IS WORKING" }
     }
 
     /**
@@ -106,12 +98,14 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      */
     private fun onViewEvent(viewEvent: BaseViewEvent) {
         when (viewEvent) {
-            is PokemonListViewEvent.OpenPokemonDetailView ->
+            is PokemonListViewEvent.OpenPokemonDetailView -> {
+                hideKeyboard()
                 findNavController().navigate(
                     PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(
                         viewEvent.name
                     )
                 )
+            }
         }
     }
 
@@ -184,4 +178,5 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             }
         })
     }
+
 }

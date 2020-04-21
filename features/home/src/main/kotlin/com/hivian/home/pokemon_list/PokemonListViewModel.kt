@@ -37,6 +37,8 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         }
     }
 
+    var currentSearchPattern = ""
+
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
 
@@ -119,19 +121,20 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                 is FilterType.Favorites -> FilterType.Favorites(pattern)
                 is FilterType.Caught -> FilterType.Caught(pattern)
             }
+            currentSearchPattern = pattern
         }
     }
 
     fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.All()
+        dataFilter.value = FilterType.All(currentSearchPattern)
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.Favorites()
+        dataFilter.value = FilterType.Favorites(currentSearchPattern)
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.Caught()
+        dataFilter.value = FilterType.Caught(currentSearchPattern)
     }
 
     private fun setNewPagingOffset(offset: Int) {

@@ -3,6 +3,7 @@ package com.hivian.common.extension
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -65,4 +66,16 @@ private fun Toast.customize(context: Context) {
     view.findViewById<TextView>(android.R.id.message).apply {
         setTextColor(ContextCompat.getColor(context, R.color.textHeadline))
     }
+}
+
+/**
+ * CLear current focus and hide soft keyboard
+ */
+fun Fragment.hideKeyboard() {
+    // check if no view has focus:
+    val activity = requireActivity()
+    val view = activity.currentFocus
+    view?.clearFocus()
+    (activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow(view?.windowToken, 0)
 }
