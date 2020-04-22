@@ -37,7 +37,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         }
     }
 
-    var currentSearchPattern = ""
+    private var currentSearchPattern = ""
 
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
