@@ -1,19 +1,23 @@
 package com.hivian.local
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.hivian.common_test.datasets.FakeData
+import com.hivian.common_test.extensions.blockingObserve
 import com.hivian.local.dao.PokedexDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
+import java.util.concurrent.Executors
 
 
 @RunWith(AndroidJUnit4::class)
@@ -23,10 +27,14 @@ class PokedexDbTest {
     private lateinit var pokedexDatabase: PokedexDatabase
     private lateinit var pokedexDao: PokedexDao
 
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         pokedexDatabase = Room.inMemoryDatabaseBuilder(context, PokedexDatabase::class.java)
+            .setTransactionExecutor(Executors.newSingleThreadExecutor())
             .build()
         pokedexDao = pokedexDatabase.pokedexDao()
     }
@@ -80,7 +88,9 @@ class PokedexDbTest {
             // Find all
             val findAll = pokedexDao.getAllPokemonLive()
             assertNotNull(findAll)
-            assertEquals(fakeDataList.size, findAll.size)
+            val findAllLiveValue = findAll.blockingObserve()
+            assertNotNull(findAllLiveValue)
+            assertEquals(fakeDataList.size, findAllLiveValue!!.size)
 
             // Delete all
             val numberOfRowDeleted = pokedexDao.deleteAll()
@@ -95,9 +105,14 @@ class PokedexDbTest {
             // Find by matching pattern
             pokedexDao.insert(fakeDataList)
             var matchingPattern = pokedexDao.getAllPokemonPatternLive("Name")
-            assertEquals(3, matchingPattern.size)
+            assertNotNull(matchingPattern)
+            var matchingPatternValue = matchingPattern.blockingObserve()
+            assertNotNull(matchingPatternValue)
+            assertEquals(3, matchingPatternValue!!.size)
             matchingPattern = pokedexDao.getAllPokemonPatternLive("Name_1")
-            assertEquals(1, matchingPattern.size)
+            matchingPatternValue = matchingPattern.blockingObserve()
+            assertNotNull(matchingPatternValue)
+            assertEquals(1, matchingPatternValue!!.size)
         }
     }
 
@@ -111,7 +126,9 @@ class PokedexDbTest {
             }
             pokedexDao.upsert(newFakeDataList)
             val updatedData = pokedexDao.getAllPokemonLive()
-            updatedData.forEach {
+            val matchingPatternValue = updatedData.blockingObserve()
+            assertNotNull(matchingPatternValue)
+            matchingPatternValue!!.forEach {
                 assertTrue("Update" in it.name)
             }
         }
