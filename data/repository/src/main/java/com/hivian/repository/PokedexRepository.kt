@@ -48,7 +48,7 @@ class PokedexRepositoryImpl(
                 mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: List<DbPokemon>) {
-                dao.save(result)
+                dao.savePokemonPreview(result)
             }
 
             override fun shouldFetch(data: List<DbPokemon>?): Boolean =
@@ -83,7 +83,7 @@ class PokedexRepositoryImpl(
                     mapper.remoteToDbMapper.map(response)
 
             override suspend fun saveCallResult(result: DbPokemon) =
-                    dao.save(result)
+                    dao.savePokemonDetail(result)
 
             override fun shouldFetch(data: DbPokemon?): Boolean =
                     data == null ||

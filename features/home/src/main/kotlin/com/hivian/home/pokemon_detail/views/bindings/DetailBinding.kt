@@ -1,14 +1,19 @@
 package com.hivian.home.pokemon_detail.views.bindings
 
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.AnimatorRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.hivian.common.extension.loadAnimator
 import com.hivian.home.pokemon_detail.PokemonCaughtViewState
 import com.hivian.home.pokemon_detail.PokemonFavoriteViewState
 import org.jetbrains.anko.imageResource
@@ -74,4 +79,9 @@ fun srcState(view: ImageButton, state: PokemonCaughtViewState?) {
             PokemonCaughtViewState.RemovedFromCaught -> RHome.drawable.ic_caught_inactive
         }
     }
+}
+
+@BindingAdapter("animator")
+fun animator(view: ImageView,  anim: Animator) {
+    view.loadAnimator(anim)
 }

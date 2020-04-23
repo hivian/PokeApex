@@ -124,7 +124,7 @@ class PokedexDbTest {
             val newFakeDataList = fakeDataList.mapIndexed { index, item ->
                 item.apply { name = "Update_$index" }
             }
-            pokedexDao.upsert(newFakeDataList)
+            pokedexDao.upsertDetail(newFakeDataList)
             val updatedData = pokedexDao.getAllPokemonLive()
             val matchingPatternValue = updatedData.blockingObserve()
             assertNotNull(matchingPatternValue)

@@ -1,15 +1,18 @@
 package com.hivian.home.pokemon_list.views.bindings
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hivian.home.R
+import com.hivian.home.pokemon_list.PokemonListViewState
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
+import com.hivian.repository.utils.ErrorEntity
 import org.jetbrains.anko.textResource
 
-@BindingAdapter("app:imageUrlRounded")
+@BindingAdapter("imageUrlRounded")
 fun loadImageRounded(view: ImageView, url: String?) {
     Glide.with(view.context)
         .load(url)
@@ -19,7 +22,7 @@ fun loadImageRounded(view: ImageView, url: String?) {
         .apply(RequestOptions.circleCropTransform()).into(view)
 }
 
-@BindingAdapter("app:imageUrl")
+@BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String?) {
     Glide.with(view.context)
         .load(url)
@@ -30,11 +33,24 @@ fun loadImage(view: ImageView, url: String?) {
         .into(view)
 }
 
-@BindingAdapter("app:errorMessage")
+@BindingAdapter("errorMessage")
 fun loadImage(view: AppCompatTextView, state: PokemonListAdapterState) {
     view.textResource = if (state.isNoMore()) {
         R.string.pokemon_list_add_no_more_text
     } else {
         R.string.pokemon_list_add_error_text
+    }
+}
+
+@BindingAdapter("textError")
+fun textError(view: TextView, state: PokemonListViewState) {
+    if (state is PokemonListViewState.Error) {
+        view.textResource = when (state.error) {
+            ErrorEntity.Network -> R.string.network_error_text
+            ErrorEntity.NotFound -> R.string.not_found_error_text
+            ErrorEntity.AccessDenied -> R.string.denied_error_text
+            ErrorEntity.ServiceUnavailable -> R.string.unavailable_error_text
+            ErrorEntity.Unknown -> R.string.unknown_error_text
+        }
     }
 }

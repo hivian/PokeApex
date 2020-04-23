@@ -22,6 +22,14 @@
     <string name="pokemon_detail_added_to_favorite_message">Added to your favorite list</string>
     <string name="pokemon_detail_image_content_description">Image of the selected pokemon</string>
 
+    <!-- Generic error -->
+    <string name="network_error_text">No internet connection: data fetching failed</string>
+    <string name="unknown_error_text">Unknown error</string>
+    <string name="denied_error_text">Access denied</string>
+    <string name="not_found_error_text">Resource not found</string>
+    <string name="unavailable_error_text">Service temporary unavailable</string>
+    <string name="refresh_error_text">Pull to refresh</string>
+
     <string name="pokemon_detail_description_height_title">Height:</string>
     <string name="pokemon_detail_description_weight_title">Weight:</string>
     <string name="pokemon_detail_description_height_value">%1$.1f m</string>

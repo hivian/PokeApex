@@ -14,6 +14,7 @@ import com.hivian.common.ui.views.ProgressBarDialog
 
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonDetailFragmentBinding
+import com.hivian.repository.utils.ErrorEntity
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -61,14 +62,21 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
      */
     private fun onViewStateChange(viewState: BaseViewState) {
         when (viewState) {
-            is PokemonNetworkViewState.Loaded -> {
-                viewBinding.imageViewDetail.loadAnimator(R.animator.animator_pokemon_image)
+            is PokemonNetworkViewState.Loaded, PokemonNetworkViewState.ErrorWithData ->
                 progressDialog.dismiss()
-            }
             is PokemonNetworkViewState.Loading ->
                 progressDialog.show(R.string.pokemon_detail_dialog_loading_text)
-            is PokemonNetworkViewState.Error ->
-                progressDialog.dismissWithErrorMessage(R.string.pokemon_detail_dialog_error_text)
+            is PokemonNetworkViewState.Error -> {
+                progressDialog.dismissWithErrorMessage(
+                    when (viewState.error) {
+                        ErrorEntity.Network -> R.string.network_error_text
+                        ErrorEntity.NotFound -> R.string.not_found_error_text
+                        ErrorEntity.AccessDenied -> R.string.denied_error_text
+                        ErrorEntity.ServiceUnavailable -> R.string.unavailable_error_text
+                        ErrorEntity.Unknown -> R.string.unknown_error_text
+                    }
+                )
+            }
         }
     }
 

@@ -46,9 +46,6 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     private val _state = MutableLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
 
-    // FOR paging
-    private var currentOffset = 0
-
     init {
         loadPokemonsRemote(false)
     }
@@ -56,12 +53,6 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     // PUBLIC ACTIONS ---
 
     fun forceRefreshItems() = loadPokemonsRemote(true)
-
-    fun loadMoreItem() {
-        loadPokemonsRemote(forceRefresh = true,
-            offset = currentOffset + Constants.PAGE_SIZE,
-            limit = Constants.PAGE_SIZE)
-    }
 
     // ---
 
@@ -77,31 +68,21 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     private fun loadPokemonsRemote(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
         val isAdditional = offset > 0
 
-        _state.value = if (isAdditional) {
-            PokemonListViewState.AddLoading
-        } else {
-            PokemonListViewState.Loading
-        }
+        _state.value = PokemonListViewState.Loading
         viewModelScope.launch(dispatchers.main) {
-            when (val pokemonsAsync =
+            when (val result =
                 pokemonListUseCase.getAllPokemonRemote(forceRefresh, offset, limit)) {
                 is NetworkWrapper.Success -> {
-                    currentOffset = pokemonsAsync.value.size + Constants.PAGE_SIZE
                     _state.value = when {
-                        pokemonsAsync.value.isEmpty() -> PokemonListViewState.Empty
+                        data.value?.isEmpty() == true -> PokemonListViewState.Empty
                         else -> PokemonListViewState.Loaded
                     }
                 }
-                is NetworkWrapper.GenericError -> {
+                is NetworkWrapper.Error -> {
                     _state.value = when {
+                        data.value?.isNotEmpty() == true -> PokemonListViewState.ErrorWithData
                         isAdditional -> PokemonListViewState.AddError
-                        else -> PokemonListViewState.Error
-                    }
-                }
-                is NetworkWrapper.NetworkError -> {
-                    _state.value = when {
-                        isAdditional -> PokemonListViewState.AddError
-                        else -> PokemonListViewState.Error
+                        else -> PokemonListViewState.Error(result.error)
                     }
                 }
             }
@@ -129,10 +110,6 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
         dataFilter.value = FilterType.Caught(currentSearchPattern)
-    }
-
-    private fun setNewPagingOffset(offset: Int) {
-        currentOffset = offset
     }
 
 }

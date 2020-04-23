@@ -50,7 +50,26 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     abstract suspend fun deleteAll() : Int
 
     @Transaction
-    open suspend fun upsert(pokemon: DbPokemon) {
+    open suspend fun upsertPreview(pokemon: DbPokemon) {
+        val isPokemon = getPokemonByServerId(pokemon.pokemonId)
+        isPokemon?.let {
+            update(isPokemon.apply {
+                pokemonId = pokemon.pokemonId
+                name = pokemon.name
+                imageUrl = pokemon.imageUrl
+            })
+        } ?: run {
+            insert(pokemon)
+        }
+    }
+
+    @Transaction
+    open suspend fun upsertPreview(pokemons: List<DbPokemon>) {
+        pokemons.forEach { upsertPreview(it) }
+    }
+
+    @Transaction
+    open suspend fun upsertDetail(pokemon: DbPokemon) {
         val isPokemon = getPokemonByServerId(pokemon.pokemonId)
         isPokemon?.let {
             update(pokemon.apply {
@@ -64,8 +83,8 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     }
 
     @Transaction
-    open suspend fun upsert(pokemons: List<DbPokemon>) {
-        pokemons.forEach { upsert(it) }
+    open suspend fun upsertDetail(pokemons: List<DbPokemon>) {
+        pokemons.forEach { upsertDetail(it) }
     }
 
     // ---
@@ -75,11 +94,20 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
      * This allows us to know when we have to refresh its data
      */
 
-    suspend fun save(pokemon: DbPokemon) {
-        upsert(pokemon.apply { lastRefreshed = Date() })
+    suspend fun savePokemonPreview(pokemon: DbPokemon) {
+        upsertPreview(pokemon.apply { lastRefreshed = Date() })
     }
 
-    suspend fun save(pokemons: List<DbPokemon>) {
-        upsert(pokemons.apply { forEach { it.lastRefreshed = Date() } })
+    suspend fun savePokemonPreview(pokemons: List<DbPokemon>) {
+        upsertPreview(pokemons.apply { forEach { it.lastRefreshed = Date() } })
     }
+
+    suspend fun savePokemonDetail(pokemon: DbPokemon) {
+        upsertDetail(pokemon.apply { lastRefreshed = Date() })
+    }
+
+    suspend fun savePokemonDetail(pokemons: List<DbPokemon>) {
+        upsertDetail(pokemons.apply { forEach { it.lastRefreshed = Date() } })
+    }
+    
 }

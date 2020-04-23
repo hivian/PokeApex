@@ -36,7 +36,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/pokemon_list_item_error_button_top_margin"
             android:text="@string/pokemon_list_add_retry_button"
-            android:onClick="@{() -> viewModel.loadMoreItem()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_msg"

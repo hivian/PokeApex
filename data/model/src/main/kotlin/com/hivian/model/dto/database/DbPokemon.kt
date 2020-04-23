@@ -37,6 +37,6 @@ data class DbPokemon(
      * we fetched it was more than 10 minutes
      */
     fun haveToRefreshFromNetwork() : Boolean =
-        TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 30
+        TimeUnit.MILLISECONDS.toMinutes(Date().time - lastRefreshed.time) >= 1
 }
 

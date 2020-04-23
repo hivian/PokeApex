@@ -29,7 +29,7 @@ class PokemonDetailViewModel(private val name: String,
         favoriteToViewState(it.favorite)
     }
 
-    val caughtState: LiveData<PokemonCaughtViewState> get() = Transformations.map(data) {
+    val caughtState: LiveData<PokemonCaughtViewState> = Transformations.map(data) {
         caughtToViewState(it.caught)
     }
 
@@ -49,11 +49,12 @@ class PokemonDetailViewModel(private val name: String,
                 is NetworkWrapper.Success -> {
                     _networkState.value = PokemonNetworkViewState.Loaded
                 }
-                is NetworkWrapper.GenericError -> {
-                    _networkState.value = PokemonNetworkViewState.Error
-                }
-                is NetworkWrapper.NetworkError -> {
-                    _networkState.value = PokemonNetworkViewState.Error
+                is NetworkWrapper.Error -> {
+                    _networkState.value = if (data.value?.moves?.isNotEmpty() == true) {
+                        PokemonNetworkViewState.ErrorWithData
+                    } else {
+                        PokemonNetworkViewState.Error(result.error)
+                    }
                 }
             }
         }

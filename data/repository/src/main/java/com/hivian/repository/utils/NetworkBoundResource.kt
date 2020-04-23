@@ -17,21 +17,11 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
             val dbResult = loadFromDb()
             if (shouldFetch(dbResult)) {
                 try {
-                    fetchFromNetwork(dbResult)
-                } catch (e: Exception) {
-                    val value = when (e) {
-                        is IOException -> NetworkWrapper.NetworkError
-                        is HttpException -> {
-                            val code = e.code()
-                            NetworkWrapper.GenericError(code, convertErrorBody(e))
-                        }
-                        else -> NetworkWrapper.GenericError(null, convertErrorBody(e))
-                    }
-                    i { "An error happened: $e" }
-                    value
+                    fetchFromNetwork()
+                } catch (throwable: Throwable) {
+                    NetworkWrapper.Error(GeneralErrorHandlerImpl.getError(throwable))
                 }
             } else {
-                i { "Return data from local database" }
                 NetworkWrapper.Success(processData(dbResult))
             }
         }
@@ -39,10 +29,8 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     // ---
 
-    private suspend fun fetchFromNetwork(dbResult: Local) : NetworkWrapper<Domain> {
-        i { "Return data from local database" }
+    private suspend fun fetchFromNetwork() : NetworkWrapper<Domain> {
         val apiResponse = createCallAsync()
-        i { "Data fetched from network" }
         saveCallResult(processResponse(apiResponse))
         return NetworkWrapper.Success(processData(loadFromDb()))
     }

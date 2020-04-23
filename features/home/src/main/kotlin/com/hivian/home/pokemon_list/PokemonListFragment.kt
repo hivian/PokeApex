@@ -18,6 +18,7 @@ import com.hivian.home.databinding.PokemonListFragmentBinding
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.model.domain.Pokemon
+import com.hivian.repository.utils.ErrorEntity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -88,8 +89,17 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                 viewAdapter.submitState(PokemonListAdapterState.AddError)
             is PokemonListViewState.NoMoreElements ->
                 viewAdapter.submitState(PokemonListAdapterState.NoMore)
-            is PokemonListViewState.ErrorWithData ->
-                showSnackbar(R.string.pokemon_list_error_text)
+            is PokemonListViewState.Error -> {
+                when (viewState.error) {
+                    ErrorEntity.Network -> showSnackbar(R.string.network_error_text)
+                    ErrorEntity.NotFound -> showSnackbar(R.string.not_found_error_text)
+                    ErrorEntity.AccessDenied -> showSnackbar(R.string.denied_error_text)
+                    ErrorEntity.ServiceUnavailable -> showSnackbar(R.string.unavailable_error_text)
+                    ErrorEntity.Unknown -> showSnackbar(R.string.unknown_error_text)
+                }
+            }
+            //is PokemonListViewState.ErrorWithData ->
+              //  showSnackbar(R.string.pokemon_list_error_text)
         }
     }
 

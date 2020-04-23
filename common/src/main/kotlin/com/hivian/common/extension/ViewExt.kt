@@ -1,6 +1,8 @@
 package com.hivian.common.extension
 
+import android.animation.Animator
 import android.animation.AnimatorInflater
+import android.media.Image
 import android.widget.ImageView
 import androidx.annotation.AnimatorRes
 import androidx.annotation.StringRes
@@ -40,4 +42,15 @@ fun ImageView.loadAnimator(@AnimatorRes animatorRes: Int) {
             setTarget(this@loadAnimator)
             start()
         }
+}
+
+/**
+ * Load a custom animator into [ImageView]
+ * @param animator Animator object
+ */
+fun ImageView.loadAnimator(animator: Animator) {
+    animator.run {
+        setTarget(this@loadAnimator)
+        start()
+    }
 }

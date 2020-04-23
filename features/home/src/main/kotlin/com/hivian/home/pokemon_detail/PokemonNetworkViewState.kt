@@ -1,6 +1,7 @@
 package com.hivian.home.pokemon_detail
 
 import com.hivian.common.base.BaseViewState
+import com.hivian.repository.utils.ErrorEntity
 
 
 /**
@@ -23,7 +24,7 @@ sealed class PokemonNetworkViewState : BaseViewState {
     /**
      * Error on loading pokemon detail info.
      */
-    object Error : PokemonNetworkViewState()
+    data class Error(val error: ErrorEntity) : PokemonNetworkViewState()
 
     /**
      * Error on loading pokemons list with local in db.

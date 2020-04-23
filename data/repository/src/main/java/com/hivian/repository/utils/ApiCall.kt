@@ -12,17 +12,7 @@ suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend ()
         try {
             NetworkWrapper.Success(apiCall.invoke())
         } catch (throwable: Throwable) {
-            when (throwable) {
-                is IOException -> NetworkWrapper.NetworkError
-                is HttpException -> {
-                    val code = throwable.code()
-                    val errorResponse = convertErrorBody(throwable)
-                    NetworkWrapper.GenericError(code, errorResponse)
-                }
-                else -> {
-                    NetworkWrapper.GenericError(null, convertErrorBody(throwable))
-                }
-            }
+            NetworkWrapper.Error(GeneralErrorHandlerImpl.getError(throwable))
         }
     }
 }

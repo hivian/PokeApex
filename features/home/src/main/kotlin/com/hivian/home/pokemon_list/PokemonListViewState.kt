@@ -1,6 +1,7 @@
 package com.hivian.home.pokemon_list
 
 import com.hivian.common.base.BaseViewState
+import com.hivian.repository.utils.ErrorEntity
 
 
 /**
@@ -47,7 +48,7 @@ sealed class PokemonListViewState : BaseViewState {
     /**
      * Error on loading characters list.
      */
-    object Error : PokemonListViewState()
+    data class Error(val error: ErrorEntity) : PokemonListViewState()
 
     /**
      * Error on loading characters list with local in db.
