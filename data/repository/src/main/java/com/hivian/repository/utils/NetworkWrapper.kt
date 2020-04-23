@@ -28,7 +28,7 @@ interface ErrorHandler {
     fun getError(throwable: Throwable): ErrorEntity
 }
 
-object GeneralErrorHandlerImpl : ErrorHandler {
+object ErrorHandlerImpl : ErrorHandler {
 
     override fun getError(throwable: Throwable): ErrorEntity {
         return when(throwable) {

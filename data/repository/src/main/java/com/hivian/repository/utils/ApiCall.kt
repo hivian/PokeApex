@@ -5,14 +5,13 @@ import com.hivian.common.generic.fromJson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.io.IOException
 
 suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): NetworkWrapper<T> {
     return withContext(dispatcher) {
         try {
             NetworkWrapper.Success(apiCall.invoke())
         } catch (throwable: Throwable) {
-            NetworkWrapper.Error(GeneralErrorHandlerImpl.getError(throwable))
+            NetworkWrapper.Error(ErrorHandlerImpl.getError(throwable))
         }
     }
 }

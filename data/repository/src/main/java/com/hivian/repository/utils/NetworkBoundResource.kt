@@ -2,11 +2,8 @@ package com.hivian.repository.utils
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
-import com.github.ajalt.timberkt.i
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 abstract class NetworkBoundResource<Remote, Local, Domain> {
 
@@ -19,7 +16,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
                 try {
                     fetchFromNetwork()
                 } catch (throwable: Throwable) {
-                    NetworkWrapper.Error(GeneralErrorHandlerImpl.getError(throwable))
+                    NetworkWrapper.Error(ErrorHandlerImpl.getError(throwable))
                 }
             } else {
                 NetworkWrapper.Success(processData(dbResult))
