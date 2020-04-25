@@ -1,12 +1,12 @@
 # Pokedex sample app
-A Pokedex app built with Kotlin for Android
+A Pokedex Android app built with Kotlin
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/9741252/80282910-5b5ae280-8714-11ea-9448-8bbfe7bc0435.png" width="200" />
   <img src="https://user-images.githubusercontent.com/9741252/80282918-6ada2b80-8714-11ea-8bdb-72964fafcf2e.png" width="200" /> 
 </p>
 
-## Development Roadmap
+## Development tools
 
 - [x] [Kotlin](https://kotlinlang.org/)
 - [x] [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
@@ -24,13 +24,12 @@ A Pokedex app built with Kotlin for Android
 - [x] Modularization
 - [x] MVVM design
 - [x] Fragment transition Animations
-- [x] Dark mode
 - [x] [PokeAPI](https://pokeapi.co/)
-- [x] Animated image preview in Pokemon Detail
 - [ ] Master-Detail view with Navigation Components
 
 ## Features
 
+- [x] Dark mode
 - [x] List 7 generations of pokemons
 - [ ] Pokemon Home - Filter pokemons by generation
 - [x] Pokemon Home - Scroll to top
@@ -42,6 +41,7 @@ A Pokedex app built with Kotlin for Android
 - [x] Pokemon Detail - Add to Favorites
 - [x] Pokemon Detail - Add to Caught checklist
 - [ ] Pokemon Detail - Moves
+- [x] PokemonDetail - Animated image preview
 - [ ] French translation
 
 ## Download
