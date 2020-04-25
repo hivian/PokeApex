@@ -6,16 +6,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): NetworkWrapper<T> {
+@Suppress("unused")
+suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): NetworkWrapper {
     return withContext(dispatcher) {
         try {
-            NetworkWrapper.Success(apiCall.invoke())
+            NetworkWrapper.Success(/*apiCall.invoke()*/false)
         } catch (throwable: Throwable) {
             NetworkWrapper.Error(ErrorHandlerImpl.getError(throwable))
         }
     }
 }
 
+@Suppress("unused")
 fun convertErrorBody(throwable: Throwable): ErrorResponse? {
     if (throwable is HttpException) {
         return try {

@@ -1,6 +1,7 @@
 package com.hivian.common.extension
 
 import android.content.Context
+import androidx.annotation.DimenRes
 import androidx.annotation.StringRes
 
 /**
@@ -15,3 +16,10 @@ fun Context.getString(@StringRes resId: Int?) =
     } ?: run {
         ""
     }
+
+/**
+ * Retrieve pixel size rounded to integer from dimensions resource id
+ * @param dimenRes Resource dimension value
+ */
+fun Context.getDimenPx(@DimenRes dimenRes: Int) =
+    resources.getDimensionPixelSize(dimenRes)

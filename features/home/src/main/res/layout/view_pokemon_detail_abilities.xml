@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hivian.home.pokemon_detail.PokemonDetailViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/cardview_corner_radius"
+        app:cardElevation="@dimen/cardview_item_elevation"
+        app:cardBackgroundColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/AppTheme.SurfaceStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacer_2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ability_title"
+                style="@style/TextAppearance.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:text="@{@string/pokemon_detail_abilities_title}"
+                tools:text="@string/pokemon_detail_abilities_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewAppearance.PokemonElement.Ability"
+                android:id="@+id/pokemon_ability_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacer_2"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_ability_or"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_ability_title"
+                app:bgColorFromType="@{viewModel.data.types.slot1}"
+                app:textCapitalized="@{viewModel.data.abilities.slot1}"
+                tools:text="Shield Dust" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ability_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacer_1"
+                android:layout_marginEnd="@dimen/spacer_1"
+                android:text="@string/pokemon_detail_or_ability"
+                app:visible="@{!viewModel.data.abilities.slot2.isEmpty()}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_ability_1"
+                app:layout_constraintTop_toTopOf="@id/pokemon_ability_1"
+                app:layout_constraintBottom_toBottomOf="@id/pokemon_ability_1"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_ability_2"
+                app:layout_constraintStart_toEndOf="@id/pokemon_ability_1"
+                tools:text="Or" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewAppearance.PokemonElement.Ability"
+                android:id="@+id/pokemon_ability_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:visible="@{!viewModel.data.abilities.slot2.isEmpty()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_ability_or"
+                app:layout_constraintTop_toTopOf="@id/pokemon_ability_1"
+                app:layout_constraintBottom_toBottomOf="@id/pokemon_ability_1"
+                app:textCapitalized="@{viewModel.data.abilities.slot2}"
+                app:bgColorFromType="@{viewModel.data.types.slot1}"
+                tools:text="Tinted Lens" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ability_hidden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pokemon_detail_hidden_ability"
+                android:layout_marginEnd="@dimen/spacer_1"
+                app:layout_constraintBaseline_toBaselineOf="@+id/pokemon_ability_3"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_ability_3"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Hidden" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_ability_3"
+                style="@style/TextViewAppearance.PokemonElement.Ability.Hidden"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacer_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_ability_hidden"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_ability_1"
+                app:textCapitalized="@{viewModel.data.abilities.slot3}"
+                app:bgStrokeColorFromType="@{viewModel.data.types.slot1}"
+                app:textColorFromType="@{viewModel.data.types.slot1}"
+                tools:text="Wonder Skin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

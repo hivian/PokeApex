@@ -5,9 +5,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-private const val DATABASE = "DATABASE"
+private const val DATABASE = "pokedex.db"
 
 val localModule = module {
-    single(named(DATABASE)) { PokedexDatabase.buildDatabase(androidContext()) }
+    single(named(DATABASE)) { PokedexDatabase.buildDatabase(androidContext(), DATABASE) }
     factory { (get(named(DATABASE)) as PokedexDatabase).pokedexDao() }
 }

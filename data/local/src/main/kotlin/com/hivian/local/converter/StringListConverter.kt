@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.hivian.common.generic.fromJson
 import com.hivian.common.generic.toJson
 
-class ListStringConverter {
+class StringListConverter {
 
     @TypeConverter
     fun listToJson(value: List<String>): String {

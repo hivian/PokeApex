@@ -2,21 +2,21 @@ package com.hivian.home.pokemon_detail.views.bindings
 
 
 import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.AnimatorRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.hivian.common.extension.getDimenPx
 import com.hivian.common.extension.loadAnimator
 import com.hivian.home.pokemon_detail.PokemonCaughtViewState
 import com.hivian.home.pokemon_detail.PokemonFavoriteViewState
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.textColorResource
 import java.util.*
 import com.hivian.common.R as RCommon
 import com.hivian.home.R as RHome
@@ -24,22 +24,46 @@ import com.hivian.home.R as RHome
 
 @BindingAdapter("bgColorFromType")
 fun bgColorFromType(view: TextView, type: String?) {
-    val colorRes = when (type?.toLowerCase(Locale.getDefault())) {
-        "grass", "bug" -> RCommon.color.lightTeal
-        "fire" -> RCommon.color.lightRed
-        "water", "fighting", "normal" -> RCommon.color.lightBlue
-        "electric", "psychic" -> RCommon.color.lightYellow
-        "poison", "ghost" -> RCommon.color.lightPurple
-        "ground", "rock" -> RCommon.color.lightBrown
-        "dark" -> RCommon.color.black
-        else -> RCommon.color.lightBlue
-    }
+    val colorRes = colorResFromType(type)
+    val mutateDrawable = mutateBackground(view)
+    mutateDrawable.setColor(convertColor(colorRes, view.context))
+}
+
+@BindingAdapter("bgStrokeColorFromType")
+fun bgStrokeColorFromType(view: TextView, type: String?) {
+    val colorRes = colorResFromType(type)
+    val mutateDrawable = mutateBackground(view)
+    mutateDrawable.setStroke(
+        view.context.getDimenPx(RCommon.dimen.stroke),
+        convertColor(colorRes, view.context))
+}
+
+@BindingAdapter("textColorFromType")
+fun textColorFromType(view: TextView, type: String?) {
+    view.textColorResource = colorResFromType(type)
+}
+
+private fun colorResFromType(type: String?) : Int = when (type?.toLowerCase(Locale.getDefault())) {
+    "grass", "bug" -> RCommon.color.lightTeal
+    "fire" -> RCommon.color.lightRed
+    "water", "fighting", "normal" -> RCommon.color.lightBlue
+    "electric", "psychic" -> RCommon.color.lightYellow
+    "poison", "ghost" -> RCommon.color.lightPurple
+    "ground", "rock" -> RCommon.color.lightBrown
+    "dark" -> RCommon.color.black
+    else -> RCommon.color.lightBlue
+}
+
+/**
+ * A mutable drawable is guaranteed to not share its state with any other drawable
+ */
+private fun mutateBackground(view: TextView) : GradientDrawable {
     val bg = view.background as GradientDrawable
-    bg.setColor(convertColor(colorRes, view.context))
+    return bg.mutate() as GradientDrawable
 }
 
 @ColorInt
-fun convertColor(@ColorRes color: Int, context: Context): Int {
+private fun convertColor(@ColorRes color: Int, context: Context): Int {
     return ContextCompat.getColor(context, color)
 }
 

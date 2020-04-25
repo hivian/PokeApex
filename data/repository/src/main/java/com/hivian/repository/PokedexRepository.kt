@@ -9,19 +9,19 @@ import com.hivian.model.dto.database.DbPokemon
 import com.hivian.model.dto.network.NetworkPokemonObject
 import com.hivian.model.mapper.MapperPokedexRepository
 import com.hivian.remote.PokemonDatasource
-import com.hivian.repository.utils.NetworkBoundResource
+import com.hivian.repository.utils.NetworkResource
 import com.hivian.repository.utils.NetworkWrapper
 
 
 interface PokedexRepository {
-    suspend fun getPokemonListWithCacheRemote(
+    suspend fun allPokemonApiCall(
         forceRefresh: Boolean = false,
         offset: Int,
         limit: Int
-    ): NetworkWrapper<List<Pokemon>>
-    suspend fun getPokemonDetailWithCacheRemote(
+    ): NetworkWrapper
+    suspend fun pokemonDetailApiCall(
         name: String
-    ): NetworkWrapper<Pokemon>
+    ): NetworkWrapper
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
     fun getAllPokemonByPatternLocal(pattern: String): LiveData<List<Pokemon>>
@@ -41,8 +41,8 @@ class PokedexRepositoryImpl(
 
     val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
 
-    override suspend fun getPokemonListWithCacheRemote(forceRefresh: Boolean, offset: Int, limit: Int): NetworkWrapper<List<Pokemon>> {
-        return object : NetworkBoundResource<List<NetworkPokemonObject>, List<DbPokemon>, List<Pokemon>>() {
+    override suspend fun allPokemonApiCall(forceRefresh: Boolean, offset: Int, limit: Int): NetworkWrapper {
+        return object : NetworkResource<List<NetworkPokemonObject>, List<DbPokemon>>() {
 
             override fun processResponse(response: List<NetworkPokemonObject>): List<DbPokemon> =
                 mapper.remoteToDbMapper.map(response)
@@ -60,8 +60,8 @@ class PokedexRepositoryImpl(
             override suspend fun loadFromDb(): List<DbPokemon> =
                     dao.getAllPokemon()
 
-            override suspend fun processData(data: List<DbPokemon>): List<Pokemon> =
-                    mapper.dbToDomainMapper.map(data)
+            override suspend fun processData(data: List<DbPokemon>): Boolean =
+                    data.isEmpty()
 
             override suspend fun createCallAsync(): List<NetworkPokemonObject> {
                 val results = datasource.fetchTopPokemonsAsync(offset, limit).results
@@ -74,10 +74,10 @@ class PokedexRepositoryImpl(
     /**
      * Suspended function that will get details of a [Pokemon]
      * whether in cache (SQLite) or via network (API).
-     * [NetworkBoundResource] is responsible to handle this behavior.
+     * [NetworkResource] is responsible to handle this behavior.
      */
-    override suspend fun getPokemonDetailWithCacheRemote(name: String): NetworkWrapper<Pokemon> {
-        return object : NetworkBoundResource<NetworkPokemonObject, DbPokemon, Pokemon>() {
+    override suspend fun pokemonDetailApiCall(name: String): NetworkWrapper {
+        return object : NetworkResource<NetworkPokemonObject, DbPokemon>() {
 
             override fun processResponse(response: NetworkPokemonObject): DbPokemon =
                     mapper.remoteToDbMapper.map(response)
@@ -93,8 +93,8 @@ class PokedexRepositoryImpl(
             override suspend fun loadFromDb(): DbPokemon =
                     dao.getPokemonByName(name)
 
-            override suspend fun processData(data: DbPokemon): Pokemon =
-                    mapper.dbToDomainMapper.map(data)
+            override suspend fun processData(data: DbPokemon): Boolean =
+                    false
 
             override suspend fun createCallAsync(): NetworkPokemonObject =
                     datasource.fetchPokemonDetailAsync(name)

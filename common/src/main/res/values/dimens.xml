@@ -38,4 +38,6 @@
     <dimen name="icon_9">168dp</dimen>
     <dimen name="icon_10">220dp</dimen>
 
+    <dimen name="stroke">2dp</dimen>
+
 </resources>

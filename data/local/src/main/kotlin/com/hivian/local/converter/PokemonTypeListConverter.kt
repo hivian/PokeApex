@@ -5,7 +5,7 @@ import com.hivian.common.generic.fromJson
 import com.hivian.common.generic.toJson
 import com.hivian.model.dto.database.DbPokemonType
 
-class PokemonTypeConverter {
+class PokemonTypeListConverter {
 
     @TypeConverter
     fun objectToJson(value: List<DbPokemonType>): String {

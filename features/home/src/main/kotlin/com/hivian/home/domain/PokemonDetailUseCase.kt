@@ -13,8 +13,8 @@ import com.hivian.repository.utils.NetworkWrapper
  */
 class PokemonDetailUseCase(private val repository: PokedexRepository) {
 
-    suspend fun getDetailWithCache(name: String): NetworkWrapper<Pokemon> =
-        repository.getPokemonDetailWithCacheRemote(name)
+    suspend fun pokemonDetailApiCall(name: String): NetworkWrapper =
+        repository.pokemonDetailApiCall(name)
 
     fun getPokemonDetailLive(name: String): LiveData<Pokemon> =
         repository.getPokemonDetailLocalLive(name)

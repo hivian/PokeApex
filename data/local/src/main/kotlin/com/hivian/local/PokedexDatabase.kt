@@ -11,10 +11,11 @@ import com.hivian.model.dto.database.DbPokemon
 
 @Database(entities = [DbPokemon::class], version = 1, exportSchema = false)
 @TypeConverters(
-    ListStringConverter::class,
+    StringListConverter::class,
     PokemonSpriteConverter::class,
-    PokemonStatConverter::class,
-    PokemonTypeConverter::class,
+    PokemonStatListConverter::class,
+    PokemonTypeListConverter::class,
+    PokemonAbilityListConverter::class,
     DateConverter::class)
 abstract class PokedexDatabase: RoomDatabase() {
 
@@ -23,8 +24,8 @@ abstract class PokedexDatabase: RoomDatabase() {
 
     companion object {
 
-        fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext, PokedexDatabase::class.java, "pokedex.db")
+        fun buildDatabase(context: Context, dbName: String) =
+            Room.databaseBuilder(context.applicationContext, PokedexDatabase::class.java, dbName)
                 .build()
 
     }

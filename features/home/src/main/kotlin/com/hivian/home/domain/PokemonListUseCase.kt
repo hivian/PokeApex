@@ -14,8 +14,8 @@ import com.hivian.repository.utils.NetworkWrapper
  */
 class PokemonListUseCase(private val repository: PokedexRepository) {
 
-    suspend fun getAllPokemonRemote(forceRefresh: Boolean = false, offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): NetworkWrapper<List<Pokemon>> {
-        return repository.getPokemonListWithCacheRemote(forceRefresh, offset, limit)
+    suspend fun allPokemonApiCall(forceRefresh: Boolean = false, offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): NetworkWrapper {
+        return repository.allPokemonApiCall(forceRefresh, offset, limit)
     }
 
     fun getAllPokemonFilter(pattern: String): LiveData<List<Pokemon>> =

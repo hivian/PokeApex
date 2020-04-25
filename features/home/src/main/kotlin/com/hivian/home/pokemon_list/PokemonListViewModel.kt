@@ -6,7 +6,6 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.Constants
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
@@ -71,10 +70,10 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         _state.value = PokemonListViewState.Loading
         viewModelScope.launch(dispatchers.main) {
             when (val result =
-                pokemonListUseCase.getAllPokemonRemote(forceRefresh, offset, limit)) {
+                pokemonListUseCase.allPokemonApiCall(forceRefresh, offset, limit)) {
                 is NetworkWrapper.Success -> {
                     _state.value = when {
-                        data.value?.isEmpty() == true -> PokemonListViewState.Empty
+                        result.isEmpty -> PokemonListViewState.Empty
                         else -> PokemonListViewState.Loaded
                     }
                 }

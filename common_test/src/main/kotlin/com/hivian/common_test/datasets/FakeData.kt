@@ -1,9 +1,11 @@
 package com.hivian.common_test.datasets
 
 import com.hivian.model.domain.Pokemon
+import com.hivian.model.domain.PokemonAbilities
 import com.hivian.model.domain.PokemonStats
 import com.hivian.model.domain.PokemonTypes
 import com.hivian.model.dto.database.DbPokemon
+import com.hivian.model.dto.database.DbPokemonAbility
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
 import com.hivian.model.dto.network.*
@@ -38,8 +40,9 @@ object FakeData {
             )),
             types = arrayListOf(
                 NetworkPokemonTypeObject(
-                slot = 0,
-                type = NetworkPokemonType(name = "Water")
+                    slot = 0,
+                    isHidden = false,
+                    type = NetworkPokemonType(name = "Water")
             ))
         )
     }
@@ -57,7 +60,11 @@ object FakeData {
             name = "Name_$id",
             height = 100, weight = 200,
             generation = 1,
-            abilities = arrayListOf( "Fireball"),
+            abilities = arrayListOf(DbPokemonAbility(
+                slot = 0,
+                hidden = false,
+                name ="Fireball"
+            )),
             forms = arrayListOf("Circle"),
             moves = arrayListOf("Run"),
             imageUrl = "https://",
@@ -82,7 +89,7 @@ object FakeData {
 
     fun createFakePokemonDomain(id: Int = 0): Pokemon {
         return Pokemon(pokemonId = id, name="pokemon_$id",
-            height = 50, weight = 100, abilities = listOf("ability$id"),
+            height = 50, weight = 100, abilities = PokemonAbilities(),
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
             stats = PokemonStats(),
             types = PokemonTypes())

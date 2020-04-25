@@ -6,7 +6,7 @@ data class Pokemon(
     var imageUrl: String,
     var height: Int = 0,
     var weight: Int = 0,
-    var abilities: List<String> = emptyList(),
+    var abilities: PokemonAbilities = PokemonAbilities(),
     var forms: List<String> = emptyList(),
     var moves: List<String> = emptyList(),
     var stats: PokemonStats = PokemonStats(),

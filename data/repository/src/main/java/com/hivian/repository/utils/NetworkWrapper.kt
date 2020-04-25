@@ -5,9 +5,9 @@ import java.io.IOException
 import java.net.HttpURLConnection
 
 
-sealed class NetworkWrapper<out T> {
-    data class Success<out T>(val value: T): NetworkWrapper<T>()
-    data class Error(val error: ErrorEntity): NetworkWrapper<Nothing>()
+sealed class NetworkWrapper {
+    data class Success(var isEmpty: Boolean): NetworkWrapper()
+    data class Error(val error: ErrorEntity): NetworkWrapper()
 }
 
 sealed class ErrorEntity {

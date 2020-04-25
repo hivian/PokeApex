@@ -1,9 +1,11 @@
 package com.hivian.model.mapper
 
 import com.hivian.model.domain.Pokemon
+import com.hivian.model.domain.PokemonAbilities
 import com.hivian.model.domain.PokemonStats
 import com.hivian.model.domain.PokemonTypes
 import com.hivian.model.dto.database.DbPokemon
+import com.hivian.model.dto.database.DbPokemonAbility
 import com.hivian.model.dto.database.DbPokemonStat
 import com.hivian.model.dto.database.DbPokemonType
 import com.hivian.model.dto.network.NetworkPokemon
@@ -34,7 +36,15 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             height = input.height,
             weight = input.weight,
             generation = input.generation,
-            abilities = input.abilities,
+            abilities = PokemonAbilities().apply {
+                input.abilities.map {
+                    when (it.slot) {
+                        1 -> slot1 = it.name
+                        2 -> slot2 = it.name
+                        3 -> slot3 = it.name
+                    }
+                }
+            },
             forms = input.forms,
             moves = input.moves,
             imageUrl = input.imageUrl,
@@ -53,8 +63,8 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             types = PokemonTypes().apply {
                 input.types.map {
                     when (it.slot) {
-                        1 -> { slot1 = it.name }
-                        2 -> { slot2 = it.name }
+                        1 -> slot1 = it.name
+                        2 -> slot2 = it.name
                     }
                 }
             },
@@ -72,7 +82,11 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             height = input.height,
             weight = input.weight,
             generation = Generations.from(input.id),
-            abilities = input.abilities.map { it.ability.name },
+            abilities = input.abilities.map { DbPokemonAbility(
+                it.slot,
+                it.isHidden,
+                it.ability.name)
+            },
             forms = input.forms.map { it.name },
             moves = input.moves.map { it.move.name },
             // High resolution image source.

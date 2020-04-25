@@ -33,25 +33,13 @@
                 app:text="@{@string/pokemon_detail_base_stat_title}"
                 tools:text="@string/pokemon_detail_base_stat_title" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/pokemon_description"
-                style="@style/TextAppearance.Body"
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pokemon_stat_title"
-                tools:text="Description" />
-
             <include
                 android:id="@+id/view_stat_hp"
                 layout="@layout/view_base_stat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pokemon_detail_content_description_margin_top_big"
-                app:layout_constraintTop_toBottomOf="@+id/pokemon_description"
+                android:layout_marginTop="@dimen/spacer_2"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_stat_title"
                 app:title="@{@string/pokemon_detail_base_stat_hp}"
                 app:value="@{viewModel.data.stats.hp}"
                 app:progressValue="@{viewModel.data.stats.hpPercent()}" />

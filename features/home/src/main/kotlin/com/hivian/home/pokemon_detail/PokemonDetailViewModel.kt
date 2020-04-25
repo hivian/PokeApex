@@ -45,7 +45,7 @@ class PokemonDetailViewModel(private val name: String,
     fun loadPokemonDetail() {
         _networkState.postValue(PokemonNetworkViewState.Loading)
         viewModelScope.launch(dispatchers.main) {
-            when (val result = pokemonDetailUseCase.getDetailWithCache(name)) {
+            when (val result = pokemonDetailUseCase.pokemonDetailApiCall(name)) {
                 is NetworkWrapper.Success -> {
                     _networkState.value = PokemonNetworkViewState.Loaded
                 }

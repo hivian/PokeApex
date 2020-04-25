@@ -5,11 +5,11 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
 
-abstract class NetworkBoundResource<Remote, Local, Domain> {
+abstract class NetworkResource<Remote, Local> {
 
     private val supervisorJob = SupervisorJob()
 
-    suspend fun build(): NetworkWrapper<Domain> {
+    suspend fun build(): NetworkWrapper {
         return withContext(supervisorJob) {
             val dbResult = loadFromDb()
             if (shouldFetch(dbResult)) {
@@ -26,7 +26,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
 
     // ---
 
-    private suspend fun fetchFromNetwork() : NetworkWrapper<Domain> {
+    private suspend fun fetchFromNetwork() : NetworkWrapper {
         val apiResponse = createCallAsync()
         saveCallResult(processResponse(apiResponse))
         return NetworkWrapper.Success(processData(loadFromDb()))

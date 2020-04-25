@@ -75,6 +75,14 @@
                     app:viewModel="@{viewModel}"/>
 
                 <include
+                    android:id="@+id/include_abilities_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacer_2"
+                    layout="@layout/view_pokemon_detail_abilities"
+                    app:viewModel="@{viewModel}"/>
+
+                <include
                     android:id="@+id/include_detail_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

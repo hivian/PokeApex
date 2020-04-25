@@ -18,7 +18,7 @@ data class DbPokemon(
     var imageUrl: String,
     var height: Int = 0,
     var weight: Int = 0,
-    var abilities: List<String> = emptyList(),
+    var abilities: List<DbPokemonAbility> = emptyList(),
     var forms: List<String> = emptyList(),
     var moves: List<String> = emptyList(),
     var stats: List<DbPokemonStat> = emptyList(),

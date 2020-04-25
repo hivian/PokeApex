@@ -17,7 +17,6 @@
     <dimen name="pokemon_detail_floating_button_margin">16dp</dimen>
     <dimen name="pokemon_detail_content_padding_top">8dp</dimen>
     <dimen name="pokemon_detail_content_padding_horizontal">16dp</dimen>
-    <dimen name="pokemon_detail_content_description_margin_top">12dp</dimen>
-    <dimen name="pokemon_detail_content_description_margin_top_big">18dp</dimen>
+    <dimen name="pokemon_detail_element_box_width">75sp</dimen>
 
 </resources>

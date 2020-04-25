@@ -2,7 +2,6 @@ package com.hivian.common.extension
 
 import android.animation.Animator
 import android.animation.AnimatorInflater
-import android.media.Image
 import android.widget.ImageView
 import androidx.annotation.AnimatorRes
 import androidx.annotation.StringRes

@@ -7,11 +7,9 @@ import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
-import com.hivian.common.extension.loadAnimator
 import com.hivian.common.extension.observe
 import com.hivian.common.extension.toast
 import com.hivian.common.ui.views.ProgressBarDialog
-
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonDetailFragmentBinding
 import com.hivian.repository.utils.ErrorEntity

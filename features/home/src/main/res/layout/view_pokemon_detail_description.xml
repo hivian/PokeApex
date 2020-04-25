@@ -49,8 +49,9 @@
                 tools:text="#001" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextViewAppearance.PokemonType"
+                style="@style/TextViewAppearance.PokemonElement"
                 android:id="@+id/pokemon_type_1"
+                android:layout_width="@dimen/pokemon_detail_element_box_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacer_2"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_type_2"
@@ -62,8 +63,9 @@
                 tools:text="Fire" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextViewAppearance.PokemonType"
+                style="@style/TextViewAppearance.PokemonElement"
                 android:id="@+id/pokemon_type_2"
+                android:layout_width="@dimen/pokemon_detail_element_box_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacer_2"
                 app:visible="@{!viewModel.data.types.slot2.isEmpty()}"
@@ -122,10 +124,9 @@
                 android:layout_height="@dimen/icon_1"
                 android:onClick="@{() -> viewModel.toggleFavoriteStatus()}"
                 app:srcState="@{viewModel.favoriteState}"
-                app:layout_constraintHorizontal_bias="0.8"
+                android:layout_marginEnd="@dimen/spacer_2"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_owned"
                 app:layout_constraintEnd_toStartOf="@+id/icon_owned"
-                app:layout_constraintStart_toEndOf="@+id/pokemon_type_2"
                 app:layout_constraintTop_toTopOf="@+id/icon_owned" />
 
             <androidx.appcompat.widget.AppCompatImageButton
