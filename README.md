@@ -23,7 +23,6 @@ A Pokedex Android app built with Kotlin
 - [x] Clean Architecture
 - [x] Modularization
 - [x] MVVM design
-- [x] Fragment transition Animations
 - [x] [PokeAPI](https://pokeapi.co/)
 - [ ] Master-Detail view with Navigation Components
 
