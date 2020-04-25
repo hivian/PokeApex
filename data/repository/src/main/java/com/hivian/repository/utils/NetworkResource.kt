@@ -45,7 +45,7 @@ abstract class NetworkBoundResource<Remote, Local, Domain> {
     protected abstract suspend fun loadFromDb(): Local
 
     @MainThread
-    protected abstract suspend fun processData(data: Local) : Domain
+    protected abstract suspend fun processData(data: Local) : Boolean
 
     @MainThread
     protected abstract suspend fun createCallAsync(): Remote
