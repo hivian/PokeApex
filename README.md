@@ -1,5 +1,5 @@
 # Pokedex sample app
-A Pokedex Android app built with Kotlin
+A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/9741252/80282910-5b5ae280-8714-11ea-9448-8bbfe7bc0435.png" width="200" />
