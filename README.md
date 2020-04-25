@@ -42,6 +42,7 @@ A Pokedex app built with Kotlin for Android
 - [x] Pokemon Detail - Add to Favorites
 - [x] Pokemon Detail - Add to Caught checklist
 - [ ] Pokemon Detail - Moves
+- [ ] French translation
 
 ## Download
 
