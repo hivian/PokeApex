@@ -1,7 +1,7 @@
 # Pokedex sample app
-A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource
+A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource.
 
-<p align="center">
+<p align="left">
   <img src="https://user-images.githubusercontent.com/9741252/80282910-5b5ae280-8714-11ea-9448-8bbfe7bc0435.png" width="200" />
   <img src="https://user-images.githubusercontent.com/9741252/80282918-6ada2b80-8714-11ea-8bdb-72964fafcf2e.png" width="200" /> 
 </p>
@@ -29,6 +29,7 @@ A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) da
 ## Features
 
 - [x] Dark mode
+- [x] Offline mode
 - [x] List 7 generations of pokemons
 - [ ] Pokemon Home - Filter pokemons by generation
 - [x] Pokemon Home - Scroll to top
