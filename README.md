@@ -2,7 +2,7 @@
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.3.71-blue)](https://blog.jetbrains.com/kotlin/2020/03/kotlin-1-3-70-released/)
 [![Gradle](https://img.shields.io/badge/gradle-6.3-blue)](https://docs.gradle.org/6.3/release-notes.html)
 [![API](https://img.shields.io/badge/API-23%2B-blue)](https://android-arsenal.com/api?level=23)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE.md)
 
 A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource.
 
