@@ -1,6 +1,7 @@
 package com.hivian.home
 
 import com.hivian.home.pokemon_list.PokemonListViewState
+import com.hivian.repository.utils.ErrorEntity
 import org.junit.Assert
 import org.junit.Test
 
@@ -43,7 +44,7 @@ class PokemonListViewStateTest {
 
     @Test
     fun `set state as error should be settled`() {
-        state = PokemonListViewState.Error
+        state = PokemonListViewState.Error(ErrorEntity.Unknown)
 
         Assert.assertTrue(state.isError())
         Assert.assertFalse(state.isLoaded())

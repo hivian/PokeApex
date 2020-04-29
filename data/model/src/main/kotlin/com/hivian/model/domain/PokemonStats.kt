@@ -1,12 +1,12 @@
 package com.hivian.model.domain
 
 data class PokemonStats(
-    var hp: Int = 0,
-    var attack: Int = 0,
-    var defense: Int = 0,
-    var specialAttack: Int = 0,
-    var specialDefense: Int = 0,
-    var speed: Int = 0
+    var hp: Int,
+    var attack: Int,
+    var defense: Int,
+    var specialAttack: Int,
+    var specialDefense: Int,
+    var speed: Int
 ) {
     fun hpPercent() = hp.statToPercent()
     fun attackPercent() = attack.statToPercent()
@@ -20,4 +20,8 @@ data class PokemonStats(
 
     private fun Int.statToPercent() = 100 * this / 255
     private fun Int.sumToPercent() = 100 * this / 600
+
+    companion object {
+        val EMPTY = PokemonStats(0, 0, 0, 0, 0, 0)
+    }
 }

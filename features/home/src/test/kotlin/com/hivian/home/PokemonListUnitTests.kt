@@ -3,6 +3,7 @@ package com.hivian.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
+import com.hivian.common.extension.toLiveData
 import com.hivian.common_test.datasets.FakeData
 import com.hivian.common_test.extensions.blockingObserve
 import com.hivian.home.domain.PokemonListUseCase
@@ -43,19 +44,19 @@ class PokemonListUnitTests {
 
     @Test
     fun `Pokemons requested when ViewModel is created`() {
+        val fakeDataSet = FakeData.createFakePokemonsDomain(3)
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
         val filterObserver = mockk<Observer<FilterType>>(relaxed = true)
-        val result = NetworkWrapper.Success(FakeData.createFakePokemonsDomain(3))
+        val result = NetworkWrapper.Success(false)
         coEvery { pokemonListUseCase.allPokemonApiCall(false) } returns result
-        coEvery { pokemonListUseCase.getAllPokemonFilter("") } returns result.value.toLiveData()
+        coEvery { pokemonListUseCase.getAllPokemonFilter("") } returns fakeDataSet.toLiveData()
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.dataFilter.observeForever(filterObserver)
-        pokemonListViewModel.data.observeForever(observer)
 
         verify {
             filterObserver.onChanged(FilterType.All())
-            observer.onChanged(result.value)
+            observer.onChanged(fakeDataSet)
         }
 
         confirmVerified(filterObserver, observer)
@@ -84,7 +85,7 @@ class PokemonListUnitTests {
     fun `Pokemon clicks on item on RecyclerView`() {
         val fakeDataSet = FakeData.createFakePokemonsDomain(3)
         val event = PokemonListViewEvent.OpenPokemonDetailView(fakeDataSet.first().name)
-        coEvery { pokemonListUseCase.allPokemonApiCall(false) } returns NetworkWrapper.Success(fakeDataSet)
+        coEvery { pokemonListUseCase.allPokemonApiCall(false) } returns NetworkWrapper.Success(false)
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.openPokemonDetail(fakeDataSet.first().name)

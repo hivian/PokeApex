@@ -36,7 +36,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             height = input.height,
             weight = input.weight,
             generation = input.generation,
-            abilities = PokemonAbilities().apply {
+            abilities = PokemonAbilities.EMPTY.apply {
                 input.abilities.map {
                     when (it.slot) {
                         1 -> slot1 = it.name
@@ -48,7 +48,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
             forms = input.forms,
             moves = input.moves,
             imageUrl = input.imageUrl,
-            stats = PokemonStats().apply {
+            stats = PokemonStats.EMPTY.apply {
                 input.stats.map {
                     when (it.name) {
                         "hp" -> hp = it.baseStat
@@ -60,7 +60,7 @@ class MapperPokemonDbToDomainImpl : Mapper<DbPokemon, Pokemon>() {
                     }
                 }
             },
-            types = PokemonTypes().apply {
+            types = PokemonTypes.EMPTY.apply {
                 input.types.map {
                     when (it.slot) {
                         1 -> slot1 = it.name

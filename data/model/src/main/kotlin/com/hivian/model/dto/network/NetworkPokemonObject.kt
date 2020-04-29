@@ -3,6 +3,7 @@ package com.hivian.model.dto.network
 import com.google.gson.annotations.SerializedName
 
 data class NetworkPokemonObject(
+
     @SerializedName("id")
     var id: Int = 0,
 

@@ -67,13 +67,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      * @param viewData Paged list of characters.
      */
     private fun onViewDataChange(viewData: List<Pokemon>) {
-        val data = mutableListOf<Pokemon?>()
-        d { "=> onView Data Change - ${viewData.size}:" }
-        viewData.forEach {
-            data.add(it)
-            d { "=> ${it.name}" }
-        }
-        viewAdapter.submitList(data)
+        viewAdapter.submitList(viewData)
     }
 
     /**

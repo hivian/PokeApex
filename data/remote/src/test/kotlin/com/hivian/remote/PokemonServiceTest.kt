@@ -10,7 +10,7 @@ import java.net.HttpURLConnection
 class UserServiceTest: BaseTest() {
 
     @Test
-    fun `search top pokemons by name`() {
+    fun `search pokemon list by name`() {
         mockHttpResponse(mockServer, "search_pokemons.json", HttpURLConnection.HTTP_OK)
         runBlocking {
             val pokemons = pokemonApiService.fetchTopPokemonsAsync(0, 20)
@@ -22,7 +22,7 @@ class UserServiceTest: BaseTest() {
     }
 
     @Test(expected = HttpException::class)
-    fun `search top pokemons by name and fail`() {
+    fun `search pokemon list by name and fail`() {
         mockHttpResponse(mockServer,"search_pokemons.json", HttpURLConnection.HTTP_FORBIDDEN)
         runBlocking {
             pokemonApiService.fetchTopPokemonsAsync(0, 20)

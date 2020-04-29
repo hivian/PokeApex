@@ -89,10 +89,10 @@ object FakeData {
 
     fun createFakePokemonDomain(id: Int = 0): Pokemon {
         return Pokemon(pokemonId = id, name="pokemon_$id",
-            height = 50, weight = 100, abilities = PokemonAbilities(),
+            height = 50, weight = 100, abilities = PokemonAbilities.EMPTY,
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
-            stats = PokemonStats(),
-            types = PokemonTypes())
+            stats = PokemonStats.EMPTY,
+            types = PokemonTypes.EMPTY)
     }
 
     private val DATE_REFRESH: Date = GregorianCalendar(2018, 5, 12).time
