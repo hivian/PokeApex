@@ -12,7 +12,7 @@ suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend ()
         try {
             NetworkWrapper.Success(/*apiCall.invoke()*/false)
         } catch (throwable: Throwable) {
-            NetworkWrapper.Error(ErrorHandlerImpl.getError(throwable))
+            NetworkWrapper.Error(ErrorHandlerImpl().invoke(throwable))
         }
     }
 }
