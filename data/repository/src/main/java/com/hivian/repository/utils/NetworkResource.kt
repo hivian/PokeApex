@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 abstract class NetworkResource<Remote, Local> {
 
     private val supervisorJob = SupervisorJob()
+    private val errorHandlerImpl = ErrorHandlerImpl()
 
     suspend fun build(): NetworkWrapper {
         return withContext(supervisorJob) {
@@ -16,7 +17,7 @@ abstract class NetworkResource<Remote, Local> {
                 try {
                     fetchFromNetwork()
                 } catch (throwable: Throwable) {
-                    NetworkWrapper.Error(ErrorHandlerImpl.getError(throwable))
+                    NetworkWrapper.Error(errorHandlerImpl(throwable))
                 }
             } else {
                 NetworkWrapper.Success(processData(dbResult))

@@ -23,15 +23,15 @@ sealed class ErrorEntity {
     object Unknown : ErrorEntity()
 }
 
-interface ErrorHandler {
+interface ErrorHandler<in T, out R> {
 
-    fun getError(throwable: Throwable): ErrorEntity
+    operator fun invoke(throwable: T): R
 }
 
-object ErrorHandlerImpl : ErrorHandler {
+class ErrorHandlerImpl : ErrorHandler<Throwable, ErrorEntity> {
 
-    override fun getError(throwable: Throwable): ErrorEntity {
-        return when(throwable) {
+    override operator fun invoke(throwable: Throwable): ErrorEntity {
+        return when (throwable) {
             is IOException -> ErrorEntity.Network
             is HttpException -> {
                 when (throwable.code()) {
