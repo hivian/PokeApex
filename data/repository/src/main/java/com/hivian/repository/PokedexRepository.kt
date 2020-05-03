@@ -3,6 +3,7 @@ package com.hivian.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.hivian.common.Constants
 import com.hivian.local.dao.PokedexDao
 import com.hivian.model.domain.Pokemon
 import com.hivian.model.dto.database.DbPokemon
@@ -16,8 +17,8 @@ import com.hivian.repository.utils.NetworkWrapper
 interface PokedexRepository {
     suspend fun allPokemonApiCall(
         forceRefresh: Boolean = false,
-        offset: Int,
-        limit: Int
+        offset: Int = 0,
+        limit: Int = Constants.POKEMON_LIST_SIZE
     ): NetworkWrapper
     suspend fun pokemonDetailApiCall(
         name: String

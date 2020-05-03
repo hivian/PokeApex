@@ -51,7 +51,7 @@ abstract class BaseTest: KoinTest {
             .setBody(getJson(fileName)))
 
     private fun getJson(path : String) : String {
-        val uri = this.javaClass.classLoader.getResource(path)
+        val uri = this.javaClass.classLoader!!.getResource(path)
         val file = File(uri!!.path)
         return String(file.readBytes())
     }

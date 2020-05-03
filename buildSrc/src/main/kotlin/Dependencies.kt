@@ -66,7 +66,7 @@ object Versions {
     val mockwebserver = "4.4.0"
     val archCoreTest = "2.1.0"
     val androidJunit = "1.1.1"
-    val mockk = "1.9.3"
+    val mockk = "1.10.0"
     val fragmentTest = "1.2.4"
     val databinding = "3.3.2"
     val roboelectric = "4.3.1"

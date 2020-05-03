@@ -49,7 +49,7 @@ class PokemonItemMapperTest {
         dbToDomainMapper.map(dbPokemonObject).first().run {
             assertEquals("Name_0", name)
             assertEquals("Circle", forms.first())
-            assertEquals("Fireball", abilities.first())
+            assertEquals("Fireball", abilities.slot1)
             assertEquals("https://", imageUrl)
             assertEquals(0, stats.hp)
         }

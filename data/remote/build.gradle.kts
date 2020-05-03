@@ -1,8 +1,10 @@
 plugins {
-    id(Plugins.kotlin)
+    id(Plugins.androidLibraryCommon)
 }
 
 dependencies {
+    // MODULES
+    implementation(project(Modules.common))
     // KOTLIN
     implementation(KotlinLibraries.kotlin)
     // NETWORK
