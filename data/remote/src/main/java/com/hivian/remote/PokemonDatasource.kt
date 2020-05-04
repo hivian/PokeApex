@@ -7,7 +7,7 @@ import com.hivian.model.dto.network.NetworkPokemonObject
 
 class PokemonDatasource(private val pokemonApiService: PokemonApiService) {
 
-    suspend fun fetchTopPokemonsAsync(offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): ApiResult<NetworkPokemon>
+    suspend fun fetchAllPokemonAsync(offset: Int = 0, limit: Int = Constants.POKEMON_LIST_SIZE): ApiResult<NetworkPokemon>
             = pokemonApiService.fetchTopPokemonsAsync(offset, limit)
 
     suspend fun fetchPokemonDetailAsync(name: String): NetworkPokemonObject

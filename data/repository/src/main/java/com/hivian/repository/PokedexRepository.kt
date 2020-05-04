@@ -65,7 +65,7 @@ class PokedexRepositoryImpl(
                     data.isEmpty()
 
             override suspend fun createCallAsync(): List<NetworkPokemonObject> {
-                val results = datasource.fetchTopPokemonsAsync(offset, limit).results
+                val results = datasource.fetchAllPokemonAsync(offset, limit).results
                 return mapper.networkToObjectImpl.map(results)
             }
 
