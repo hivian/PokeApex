@@ -28,7 +28,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 @ExperimentalCoroutinesApi
 @SmallTest
-class PokemonListUnitTests {
+class PokemonListViewModelTest {
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
