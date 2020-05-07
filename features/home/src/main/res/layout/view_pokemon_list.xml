@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:visible="@{viewState.isLoading || viewState.isLoaded|| viewState.addLoading || viewState.addError || viewState.isNoMoreElements || viewState.errorWithData}">
-        <!---->
+        app:visible="@{viewState.isLoading || viewState.isLoaded || viewState.isNoMoreElements || viewState.errorWithData}">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pokemon_list"
             android:layout_width="match_parent"

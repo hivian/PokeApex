@@ -8,17 +8,17 @@ import com.hivian.common.base.BaseViewState
  *
  * @see BaseViewState
  */
-sealed class PokemonCaughtViewState : BaseViewState {
+sealed class PokemonDetailCaughtViewState : BaseViewState {
 
     /**
      * Added current character to caught list.
      */
-    object AddedToCaught : PokemonCaughtViewState()
+    object AddedToCaught : PokemonDetailCaughtViewState()
 
     /**
      * Removed current pokemon to caught list.
      */
-    object RemovedFromCaught : PokemonCaughtViewState()
+    object RemovedFromCaught : PokemonDetailCaughtViewState()
 
     // ============================================================================================
     //  Public helpers methods

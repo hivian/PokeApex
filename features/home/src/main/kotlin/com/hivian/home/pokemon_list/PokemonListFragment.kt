@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
-import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
@@ -51,6 +50,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         observe(viewModel.event, ::onViewEvent)
         observe(viewModel.data, ::onViewDataChange)
         observe(viewModel.state, ::onViewStateChange)
+        viewModel.loadPokemonsRemote()
     }
 
     /**

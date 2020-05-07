@@ -1,11 +1,10 @@
-package com.hivian.home
+package com.hivian.home.list_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.hivian.common.extension.toLiveData
 import com.hivian.common_test.datasets.FakeData
 import com.hivian.home.domain.PokemonListUseCase
-import com.hivian.home.pokemon_list.PokemonListViewModel
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.PokedexRepository
 import com.hivian.repository.utils.ErrorEntity
@@ -14,7 +13,6 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -45,10 +45,6 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     private val _state = MutableLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
 
-    init {
-        loadPokemonsRemote(false)
-    }
-
     // PUBLIC ACTIONS ---
 
     fun forceRefreshItems() = loadPokemonsRemote(true)
@@ -64,9 +60,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    private fun loadPokemonsRemote(forceRefresh: Boolean, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
-        val isAdditional = offset > 0
-
+    fun loadPokemonsRemote(forceRefresh: Boolean = false, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
         _state.value = PokemonListViewState.Loading
         viewModelScope.launch(dispatchers.main) {
             when (val result =
@@ -80,7 +74,6 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
                 is NetworkWrapper.Error -> {
                     _state.value = when {
                         data.value?.isNotEmpty() == true -> PokemonListViewState.ErrorWithData
-                        isAdditional -> PokemonListViewState.AddError
                         else -> PokemonListViewState.Error(result.error)
                     }
                 }
