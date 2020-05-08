@@ -72,7 +72,7 @@ class PokemonDetailViewModel(private val name: String,
      */
     fun toggleFavoriteStatus() {
         data.value?.run {
-            viewModelScope.launch {
+            viewModelScope.launch(dispatchers.main) {
                 val newFavorite = !favorite
                 pokemonDetailUseCase.updateFavoriteStatus(pokemonId, newFavorite)
                 event.value = if (newFavorite) {
@@ -90,7 +90,7 @@ class PokemonDetailViewModel(private val name: String,
      */
     fun toggleCaughtStatus() {
         data.value?.run {
-            viewModelScope.launch {
+            viewModelScope.launch(dispatchers.main) {
                 val newCaught = !caught
                 pokemonDetailUseCase.updateCaughtStatus(pokemonId, newCaught)
                 event.value = if (newCaught) {
