@@ -12,10 +12,6 @@ import com.hivian.repository.utils.ErrorEntity
 sealed class PokemonListViewState : BaseViewState {
 
     /**
-     * Refreshing characters list.
-     */
-    object Refreshing : PokemonListViewState()
-    /**
      * Loaded characters list.
      */
     object Loaded : PokemonListViewState()
@@ -34,16 +30,6 @@ sealed class PokemonListViewState : BaseViewState {
      * Empty pokemon list.
      */
     object Empty : PokemonListViewState()
-
-    /**
-     * Empty pokemon favorites list.
-     */
-    object EmptyFavorites : PokemonListViewState()
-
-    /**
-     * Empty pokemon caught list.
-     */
-    object EmptyCaught : PokemonListViewState()
 
     /**
      * Error on loading characters list.
@@ -70,13 +56,6 @@ sealed class PokemonListViewState : BaseViewState {
     // ============================================================================================
 
     /**
-     * Check if current view state is [Refreshing].
-     *
-     * @return True if is refreshing state, otherwise false.
-     */
-    fun isRefreshing() = this is Refreshing
-
-    /**
      * Check if current view state is [Loaded].
      *
      * @return True if is loaded state, otherwise false.
@@ -89,13 +68,6 @@ sealed class PokemonListViewState : BaseViewState {
      * @return True if is loading state, otherwise false.
      */
     fun isLoading() = this is Loading
-
-    /**
-     * Check if current view state is [AddLoading].
-     *
-     * @return True if is add loading state, otherwise false.
-     */
-    fun isAddLoading() = this is AddLoading
 
     /**
      * Check if current view state is [Empty].

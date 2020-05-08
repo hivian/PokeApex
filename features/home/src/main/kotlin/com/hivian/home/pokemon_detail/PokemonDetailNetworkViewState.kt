@@ -9,37 +9,27 @@ import com.hivian.repository.utils.ErrorEntity
  *
  * @see BaseViewState
  */
-sealed class PokemonNetworkViewState : BaseViewState {
+sealed class PokemonDetailNetworkViewState : BaseViewState {
 
     /**
      * Loaded pokemon detail info.
      */
-    object Loaded : PokemonNetworkViewState()
+    object Loaded : PokemonDetailNetworkViewState()
 
     /**
      * Loading pokemon detail info.
      */
-    object Loading : PokemonNetworkViewState()
+    object Loading : PokemonDetailNetworkViewState()
 
     /**
      * Error on loading pokemon detail info.
      */
-    data class Error(val error: ErrorEntity) : PokemonNetworkViewState()
+    data class Error(val error: ErrorEntity) : PokemonDetailNetworkViewState()
 
     /**
      * Error on loading pokemons list with local in db.
      */
-    object ErrorWithData : PokemonNetworkViewState()
-
-    /**
-     * Added current character to caught list.
-     */
-    object AddedToCaught : PokemonNetworkViewState()
-
-    /**
-     * Removed current pokemon to caught list.
-     */
-    object RemovedFromCaught : PokemonNetworkViewState()
+    object ErrorWithData : PokemonDetailNetworkViewState()
 
     // ============================================================================================
     //  Public helpers methods
@@ -72,18 +62,4 @@ sealed class PokemonNetworkViewState : BaseViewState {
      * @return True if is error state, otherwise false.
      */
     fun isErrorWithData() = this is ErrorWithData
-
-    /**
-     * Check if current view state is [AddedToCaught].
-     *
-     * @return True if add to caught state, otherwise false.
-     */
-    fun isAddedToCaught() = this is AddedToCaught
-
-    /**
-     * Check if current view state is [RemovedFromCaught].
-     *
-     * @return True if remove caught state, otherwise false.
-     */
-    fun isRemovedFromCaught() = this is RemovedFromCaught
 }

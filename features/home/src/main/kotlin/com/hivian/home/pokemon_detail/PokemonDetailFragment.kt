@@ -54,17 +54,17 @@ class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, Pokemon
     }
 
     /**
-     * Observer view state change on [PokemonNetworkViewState].
+     * Observer view state change on [PokemonDetailNetworkViewState].
      *
      * @param viewState State of pokemon detail.
      */
     private fun onViewStateChange(viewState: BaseViewState) {
         when (viewState) {
-            is PokemonNetworkViewState.Loaded, PokemonNetworkViewState.ErrorWithData ->
+            is PokemonDetailNetworkViewState.Loaded, PokemonDetailNetworkViewState.ErrorWithData ->
                 progressDialog.dismiss()
-            is PokemonNetworkViewState.Loading ->
+            is PokemonDetailNetworkViewState.Loading ->
                 progressDialog.show(R.string.pokemon_detail_dialog_loading_text)
-            is PokemonNetworkViewState.Error -> {
+            is PokemonDetailNetworkViewState.Error -> {
                 progressDialog.dismissWithErrorMessage(
                     when (viewState.error) {
                         ErrorEntity.Network -> R.string.network_error_text

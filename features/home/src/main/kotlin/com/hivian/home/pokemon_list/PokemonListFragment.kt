@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
-import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
@@ -45,6 +44,11 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     override fun getViewModel(): BaseViewModel = viewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.loadPokemonsRemote()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

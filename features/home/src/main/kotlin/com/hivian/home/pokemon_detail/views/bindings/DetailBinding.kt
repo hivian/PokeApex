@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.hivian.common.extension.getDimenPx
 import com.hivian.common.extension.loadAnimator
-import com.hivian.home.pokemon_detail.PokemonCaughtViewState
-import com.hivian.home.pokemon_detail.PokemonFavoriteViewState
+import com.hivian.home.pokemon_detail.PokemonDetailCaughtViewState
+import com.hivian.home.pokemon_detail.PokemonDetailFavoriteViewState
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.textColorResource
 import java.util.*
@@ -86,21 +86,21 @@ fun weightKg(view : TextView, weight: Int) {
 }
 
 @BindingAdapter("srcState")
-fun srcState(view: ImageButton, state: PokemonFavoriteViewState?) {
+fun srcState(view: ImageButton, state: PokemonDetailFavoriteViewState?) {
     state?.let {
         view.imageResource = when (state) {
-            PokemonFavoriteViewState.AddedToFavorite -> RHome.drawable.ic_favorite_active
-            PokemonFavoriteViewState.RemovedFromFavorite -> RHome.drawable.ic_favorite_inactive
+            PokemonDetailFavoriteViewState.AddedToFavorite -> RHome.drawable.ic_favorite_active
+            PokemonDetailFavoriteViewState.RemovedFromFavorite -> RHome.drawable.ic_favorite_inactive
         }
     }
 }
 
 @BindingAdapter("srcState")
-fun srcState(view: ImageButton, state: PokemonCaughtViewState?) {
+fun srcState(view: ImageButton, state: PokemonDetailCaughtViewState?) {
     state?.let {
         view.imageResource = when (state) {
-            PokemonCaughtViewState.AddedToCaught -> RHome.drawable.ic_caught_active
-            PokemonCaughtViewState.RemovedFromCaught -> RHome.drawable.ic_caught_inactive
+            PokemonDetailCaughtViewState.AddedToCaught -> RHome.drawable.ic_caught_active
+            PokemonDetailCaughtViewState.RemovedFromCaught -> RHome.drawable.ic_caught_inactive
         }
     }
 }

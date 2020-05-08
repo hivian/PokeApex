@@ -92,7 +92,9 @@ object FakeData {
             height = 50, weight = 100, abilities = PokemonAbilities.EMPTY,
             forms =  listOf("form$id"), moves = listOf("moves$id"), imageUrl = "http://",
             stats = PokemonStats.EMPTY,
-            types = PokemonTypes.EMPTY)
+            types = PokemonTypes.EMPTY,
+            favorite = id % 2 == 0,
+            caught = id % 2 == 1)
     }
 
     private val DATE_REFRESH: Date = GregorianCalendar(2018, 5, 12).time

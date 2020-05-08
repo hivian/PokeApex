@@ -1,4 +1,4 @@
-package com.hivian.home
+package com.hivian.home.list_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -28,7 +28,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 @ExperimentalCoroutinesApi
 @SmallTest
-class PokemonListUnitTests {
+class PokemonListViewModelTest {
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -45,7 +45,8 @@ class PokemonListUnitTests {
     @Test
     fun `Pokemons requested when ViewModel is created`() {
         val fakeDataSet = FakeData.createFakePokemonsDomain(3)
-        val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
+        val dataObserver = mockk<Observer<List<Pokemon>>>(relaxed = true)
+        val stateObserver = mockk<Observer<PokemonListViewState>>(relaxed = true)
         val filterObserver = mockk<Observer<FilterType>>(relaxed = true)
         val result = NetworkWrapper.Success(false)
         coEvery { pokemonListUseCase.allPokemonApiCall(false) } returns result
@@ -53,13 +54,16 @@ class PokemonListUnitTests {
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.dataFilter.observeForever(filterObserver)
+        pokemonListViewModel.state.observeForever(stateObserver)
+        pokemonListViewModel.data.observeForever(dataObserver)
+        pokemonListViewModel.loadPokemonsRemote()
 
         verify {
             filterObserver.onChanged(FilterType.All())
-            observer.onChanged(fakeDataSet)
+            dataObserver.onChanged(fakeDataSet)
+            stateObserver.onChanged(PokemonListViewState.Loading)
+            stateObserver.onChanged(PokemonListViewState.Loaded)
         }
-
-        confirmVerified(filterObserver, observer)
     }
 
     @Test
@@ -72,12 +76,13 @@ class PokemonListUnitTests {
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.dataFilter.observeForever(filterObserver)
         pokemonListViewModel.state.observeForever(observerState)
+        pokemonListViewModel.loadPokemonsRemote()
 
-        verifySequence {
+        verify {
             filterObserver.onChanged(FilterType.All(""))
+            observerState.onChanged(PokemonListViewState.Loading)
             observerState.onChanged(PokemonListViewState.Error(ErrorEntity.Unknown))
         }
-
         confirmVerified(filterObserver, observerState)
     }
 

@@ -22,14 +22,14 @@ class PokemonDetailViewModel(private val name: String,
     val event = SingleLiveData<PokemonDetailViewEvent>()
 
     // FOR state
-    private val _networkState = MutableLiveData<PokemonNetworkViewState>()
-    val networkState: LiveData<PokemonNetworkViewState> get() = _networkState
+    private val _networkState = MutableLiveData<PokemonDetailNetworkViewState>()
+    val networkState: LiveData<PokemonDetailNetworkViewState> get() = _networkState
 
-    val favoriteState: LiveData<PokemonFavoriteViewState> = Transformations.map(data) {
+    val favoriteState: LiveData<PokemonDetailFavoriteViewState> = Transformations.map(data) {
         favoriteToViewState(it.favorite)
     }
 
-    val caughtState: LiveData<PokemonCaughtViewState> = Transformations.map(data) {
+    val caughtState: LiveData<PokemonDetailCaughtViewState> = Transformations.map(data) {
         caughtToViewState(it.caught)
     }
 
@@ -43,17 +43,17 @@ class PokemonDetailViewModel(private val name: String,
      *
      */
     fun loadPokemonDetail() {
-        _networkState.postValue(PokemonNetworkViewState.Loading)
+        _networkState.value = PokemonDetailNetworkViewState.Loading
         viewModelScope.launch(dispatchers.main) {
             when (val result = pokemonDetailUseCase.pokemonDetailApiCall(name)) {
                 is NetworkWrapper.Success -> {
-                    _networkState.value = PokemonNetworkViewState.Loaded
+                    _networkState.value = PokemonDetailNetworkViewState.Loaded
                 }
                 is NetworkWrapper.Error -> {
                     _networkState.value = if (data.value?.moves?.isNotEmpty() == true) {
-                        PokemonNetworkViewState.ErrorWithData
+                        PokemonDetailNetworkViewState.ErrorWithData
                     } else {
-                        PokemonNetworkViewState.Error(result.error)
+                        PokemonDetailNetworkViewState.Error(result.error)
                     }
                 }
             }
@@ -72,7 +72,7 @@ class PokemonDetailViewModel(private val name: String,
      */
     fun toggleFavoriteStatus() {
         data.value?.run {
-            viewModelScope.launch {
+            viewModelScope.launch(dispatchers.main) {
                 val newFavorite = !favorite
                 pokemonDetailUseCase.updateFavoriteStatus(pokemonId, newFavorite)
                 event.value = if (newFavorite) {
@@ -90,7 +90,7 @@ class PokemonDetailViewModel(private val name: String,
      */
     fun toggleCaughtStatus() {
         data.value?.run {
-            viewModelScope.launch {
+            viewModelScope.launch(dispatchers.main) {
                 val newCaught = !caught
                 pokemonDetailUseCase.updateCaughtStatus(pokemonId, newCaught)
                 event.value = if (newCaught) {
@@ -103,14 +103,14 @@ class PokemonDetailViewModel(private val name: String,
     }
 
     private fun favoriteToViewState(favorite: Boolean) = if (favorite) {
-        PokemonFavoriteViewState.AddedToFavorite
+        PokemonDetailFavoriteViewState.AddedToFavorite
     } else {
-        PokemonFavoriteViewState.RemovedFromFavorite
+        PokemonDetailFavoriteViewState.RemovedFromFavorite
     }
 
     private fun caughtToViewState(caught: Boolean) = if (caught) {
-        PokemonCaughtViewState.AddedToCaught
+        PokemonDetailCaughtViewState.AddedToCaught
     } else {
-        PokemonCaughtViewState.RemovedFromCaught
+        PokemonDetailCaughtViewState.RemovedFromCaught
     }
 }
