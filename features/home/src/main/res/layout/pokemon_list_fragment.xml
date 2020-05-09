@@ -55,6 +55,16 @@
                     app:viewState="@{viewModel.state}"/>
 
                 <include
+                    android:id="@+id/include_list_empty_favorite"
+                    layout="@layout/view_pokemon_list_empty_favorite"
+                    app:viewState="@{viewModel.state}"/>
+
+                <include
+                    android:id="@+id/include_list_empty_caught"
+                    layout="@layout/view_pokemon_list_empty_caught"
+                    app:viewState="@{viewModel.state}"/>
+
+                <include
                     android:id="@+id/include_list_error"
                     layout="@layout/view_pokemon_list_error"
                     app:viewState="@{viewModel.state}"/>

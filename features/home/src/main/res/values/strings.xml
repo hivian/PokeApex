@@ -10,6 +10,10 @@
     <string name="pokemon_list_title">Pokedex</string>
     <string name="pokemon_list_search_hint">Search…</string>
     <string name="pokemon_list_empty_text">Empty pokemon list</string>
+    <string name="pokemon_list_empty_favorite_text">You did not mark any Pokemon as favorite.\n
+        Mark a Pokemon as favorite by tapping the star icon in the detail screen.</string>
+    <string name="pokemon_list_empty_caught_text">You did not mark any Pokemon as caught.\n<br/>
+        Mark a Pokemon as caught by tapping the square icon in the detail screen.</string>
     <string name="pokemon_list_error_text">Ups… an error occurred on obtain pokemon list, please try again</string>
     <string name="pokemon_list_loading_text">Updating pokemon list. It can take a few seconds.</string>
     <string name="pokemon_list_add_error_text">Error on fetch more pokemon</string>

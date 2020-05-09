@@ -26,8 +26,8 @@ interface PokedexRepository {
     suspend fun updateFavoriteStatusLocal(pokemonId: Int, favorite: Boolean)
     suspend fun updateCaughtStatusLocal(pokemonId: Int, caught: Boolean)
     fun getAllPokemonByPatternLocal(pattern: String): LiveData<List<Pokemon>>
-    fun getAllPokemonFavoritesByPatternLocal(pattern: String): LiveData<List<Pokemon>>
-    fun getAllPokemonCaughtByPatternLocal(pattern: String): LiveData<List<Pokemon>>
+    fun getAllPokemonFavoritesByPatternLocal(): LiveData<List<Pokemon>>
+    fun getAllPokemonCaughtByPatternLocal(): LiveData<List<Pokemon>>
     fun getAllPokemonLocalLive(): LiveData<List<Pokemon>>
     fun getPokemonDetailLocalLive(name: String): LiveData<Pokemon>
     fun getPokemonFavoritesLocalLive(): LiveData<List<Pokemon>>
@@ -116,13 +116,13 @@ class PokedexRepositoryImpl(
             mapDbToDomainLiveData(it)
         }
 
-    override fun getAllPokemonFavoritesByPatternLocal(pattern: String): LiveData<List<Pokemon>> =
-        Transformations.switchMap(dao.getAllPokemonFavoritesPatternLive(pattern)) {
+    override fun getAllPokemonFavoritesByPatternLocal(): LiveData<List<Pokemon>> =
+        Transformations.switchMap(dao.getAllPokemonFavoritesPatternLive()) {
             mapDbToDomainLiveData(it)
         }
 
-    override fun getAllPokemonCaughtByPatternLocal(pattern: String): LiveData<List<Pokemon>> =
-        Transformations.switchMap(dao.getAllPokemonCaughtPatternLive(pattern)) {
+    override fun getAllPokemonCaughtByPatternLocal(): LiveData<List<Pokemon>> =
+        Transformations.switchMap(dao.getAllPokemonCaughtPatternLive()) {
             mapDbToDomainLiveData(it)
         }
 

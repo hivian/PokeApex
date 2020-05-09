@@ -21,10 +21,10 @@ class PokemonListUseCase(private val repository: PokedexRepository) {
     fun getAllPokemonFilter(pattern: String): LiveData<List<Pokemon>> =
         repository.getAllPokemonByPatternLocal(pattern)
 
-    fun getAllPokemonFavoritesFilter(pattern: String): LiveData<List<Pokemon>> =
-        repository.getAllPokemonFavoritesByPatternLocal(pattern)
+    fun getAllPokemonFavoritesFilter(): LiveData<List<Pokemon>> =
+        repository.getAllPokemonFavoritesByPatternLocal()
 
-    fun getAllPokemonCaughtFilter(pattern: String): LiveData<List<Pokemon>> =
-        repository.getAllPokemonCaughtByPatternLocal(pattern)
+    fun getAllPokemonCaughtFilter(): LiveData<List<Pokemon>> =
+        repository.getAllPokemonCaughtByPatternLocal()
 
 }
