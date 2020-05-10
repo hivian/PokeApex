@@ -1,6 +1,7 @@
 package com.hivian.home.list_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.hivian.common.extension.toLiveData
@@ -72,6 +73,7 @@ class PokemonListViewModelTest {
         val observerState = mockk<Observer<PokemonListViewState>>(relaxed = true)
         val result = NetworkWrapper.Error(ErrorEntity.Unknown)
         coEvery { pokemonListUseCase.allPokemonApiCall(any()) } returns result
+        coEvery { pokemonListUseCase.getAllPokemonFilter("") } returns mockk(relaxed = true)
 
         pokemonListViewModel = PokemonListViewModel(pokemonListUseCase, appDispatchers)
         pokemonListViewModel.dataFilter.observeForever(filterObserver)
@@ -83,7 +85,6 @@ class PokemonListViewModelTest {
             observerState.onChanged(PokemonListViewState.Loading)
             observerState.onChanged(PokemonListViewState.Error(ErrorEntity.Unknown))
         }
-        confirmVerified(filterObserver, observerState)
     }
 
     @Test
