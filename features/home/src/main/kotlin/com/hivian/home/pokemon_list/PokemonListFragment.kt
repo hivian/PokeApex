@@ -160,7 +160,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     private fun updateItemOptionsRefresh(menu: Menu) {
         when (viewModel.dataFilter.value) {
             is FilterType.All -> menu.findItem(R.id.action_display_all).isChecked = true
-            is FilterType.Favorites -> menu.findItem(R.id.action_display_favorites).isChecked = true
+            is FilterType.Favorite -> menu.findItem(R.id.action_display_favorites).isChecked = true
             is FilterType.Caught -> menu.findItem(R.id.action_display_caught).isChecked = true
         }
     }

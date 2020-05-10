@@ -16,6 +16,8 @@ class PokemonListViewStateTest {
         assertTrue(state.isLoaded())
         assertFalse(state.isLoading())
         assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
         assertFalse(state.isError())
         assertFalse(state.isErrorWithData())
         assertFalse(state.isAddError())
@@ -29,6 +31,8 @@ class PokemonListViewStateTest {
         assertTrue(state.isLoading())
         assertFalse(state.isLoaded())
         assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
         assertFalse(state.isError())
         assertFalse(state.isErrorWithData())
         assertFalse(state.isAddError())
@@ -41,6 +45,38 @@ class PokemonListViewStateTest {
 
         assertTrue(state.isEmpty())
         assertFalse(state.isLoaded())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
+        assertFalse(state.isError())
+        assertFalse(state.isErrorWithData())
+        assertFalse(state.isAddError())
+        assertFalse(state.isNoMoreElements())
+    }
+
+    @Test
+    fun `set state as empty favorite should be settled`() {
+        state = PokemonListViewState.EmptyFavorite
+
+        assertTrue(state.isEmptyFavorite())
+        assertFalse(state.isEmpty())
+        assertFalse(state.isLoaded())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
+        assertFalse(state.isError())
+        assertFalse(state.isErrorWithData())
+        assertFalse(state.isAddError())
+        assertFalse(state.isNoMoreElements())
+    }
+
+    @Test
+    fun `set state as empty caught should be settled`() {
+        state = PokemonListViewState.EmptyCaught
+
+        assertTrue(state.isEmptyCaught())
+        assertFalse(state.isEmpty())
+        assertFalse(state.isLoaded())
+        assertFalse(state.isEmptyFavorite())
         assertFalse(state.isLoading())
         assertFalse(state.isError())
         assertFalse(state.isErrorWithData())
@@ -54,8 +90,10 @@ class PokemonListViewStateTest {
 
         assertTrue(state.isError())
         assertFalse(state.isLoaded())
-        assertFalse(state.isLoading())
         assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
         assertFalse(state.isErrorWithData())
         assertFalse(state.isAddError())
         assertFalse(state.isNoMoreElements())
@@ -68,8 +106,10 @@ class PokemonListViewStateTest {
         assertTrue(state.isErrorWithData())
         assertFalse(state.isError())
         assertFalse(state.isLoaded())
-        assertFalse(state.isLoading())
         assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
         assertFalse(state.isAddError())
         assertFalse(state.isNoMoreElements())
     }
@@ -82,8 +122,10 @@ class PokemonListViewStateTest {
         assertFalse(state.isErrorWithData())
         assertFalse(state.isError())
         assertFalse(state.isLoaded())
-        assertFalse(state.isLoading())
         assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
         assertFalse(state.isNoMoreElements())
     }
 
@@ -92,10 +134,13 @@ class PokemonListViewStateTest {
         state = PokemonListViewState.NoMoreElements
 
         assertTrue(state.isNoMoreElements())
-        assertFalse(state.isLoaded())
-        assertFalse(state.isLoading())
-        assertFalse(state.isEmpty())
         assertFalse(state.isError())
+        assertFalse(state.isAddError())
+        assertFalse(state.isLoaded())
+        assertFalse(state.isEmpty())
+        assertFalse(state.isEmptyFavorite())
+        assertFalse(state.isEmptyCaught())
+        assertFalse(state.isLoading())
         assertFalse(state.isErrorWithData())
     }
 

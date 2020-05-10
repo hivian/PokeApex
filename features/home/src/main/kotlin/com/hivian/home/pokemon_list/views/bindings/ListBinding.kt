@@ -4,9 +4,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hivian.home.R
+import com.hivian.home.pokemon_list.FilterType
 import com.hivian.home.pokemon_list.PokemonListViewState
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
 import com.hivian.repository.utils.ErrorEntity
@@ -52,5 +54,13 @@ fun textError(view: TextView, state: PokemonListViewState) {
             ErrorEntity.ServiceUnavailable -> R.string.unavailable_error_text
             ErrorEntity.Unknown -> R.string.unknown_error_text
         }
+    }
+}
+
+@BindingAdapter("listRefreshEnabled")
+fun listRefreshEnabled(view: SwipeRefreshLayout, filter: FilterType) {
+    when (filter) {
+        is FilterType.All -> view.isEnabled = true
+        is FilterType.Favorite, FilterType.Caught -> view.isEnabled = false
     }
 }

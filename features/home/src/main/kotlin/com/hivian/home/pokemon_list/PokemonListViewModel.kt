@@ -1,9 +1,6 @@
 package com.hivian.home.pokemon_list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.domain.PokemonListUseCase
@@ -18,8 +15,8 @@ import kotlinx.coroutines.launch
  */
 sealed class FilterType {
     data class All(val pattern: String = ""): FilterType()
-    data class Favorites(val pattern: String = ""): FilterType()
-    data class Caught(val pattern: String =  ""): FilterType()
+    object Favorite: FilterType()
+    object Caught: FilterType()
 }
 
 class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
@@ -31,19 +28,40 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     val data : LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) {
         when (it) {
             is FilterType.All -> pokemonListUseCase.getAllPokemonFilter(it.pattern)
-            is FilterType.Favorites -> pokemonListUseCase.getAllPokemonFavoritesFilter(it.pattern)
-            is FilterType.Caught -> pokemonListUseCase.getAllPokemonCaughtFilter(it.pattern)
+            is FilterType.Favorite -> pokemonListUseCase.getAllPokemonFavoritesFilter()
+            is FilterType.Caught -> pokemonListUseCase.getAllPokemonCaughtFilter()
         }
     }
-
-    private var currentSearchPattern = ""
 
     // FOR event
     val event = SingleLiveData<PokemonListViewEvent>()
 
     // FOR state
-    private val _state = MutableLiveData<PokemonListViewState>()
+    private val _regularState = MutableLiveData<PokemonListViewState>()
+    private val _actionFilterEmpty = Transformations.map(data) { data ->
+        if (data != null && data.isEmpty()) {
+            when (dataFilter.value) {
+                is FilterType.Favorite -> PokemonListViewState.EmptyFavorite
+                is FilterType.Caught -> PokemonListViewState.EmptyCaught
+                is FilterType.All -> PokemonListViewState.Empty
+                else -> null
+            }
+        } else {
+            PokemonListViewState.Loaded
+        }
+    }
+
+    private val _state = MediatorLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
+
+    init {
+        _state.addSource(_regularState) {
+            _state.value = it
+        }
+        _state.addSource(_actionFilterEmpty) {
+            it?.run { _state.value = this }
+        }
+    }
 
     // PUBLIC ACTIONS ---
 
@@ -85,23 +103,21 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         dataFilter.value?.run {
             dataFilter.value = when (this) {
                 is FilterType.All -> FilterType.All(pattern)
-                is FilterType.Favorites -> FilterType.Favorites(pattern)
-                is FilterType.Caught -> FilterType.Caught(pattern)
+                is FilterType.Favorite -> FilterType.Favorite
+                is FilterType.Caught -> FilterType.Caught
             }
-            currentSearchPattern = pattern
         }
     }
 
     fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.All(currentSearchPattern)
+        dataFilter.value = FilterType.All("")
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.Favorites(currentSearchPattern)
+        dataFilter.value = FilterType.Favorite
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
-        dataFilter.value = FilterType.Caught(currentSearchPattern)
+        dataFilter.value = FilterType.Caught
     }
-
 }

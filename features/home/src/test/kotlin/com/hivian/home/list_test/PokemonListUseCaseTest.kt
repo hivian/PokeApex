@@ -103,8 +103,8 @@ class PokemonListUseCaseTest {
     fun `getAllPokemonFavoritesFilter returns all data`() {
         val fakeDataSet = FakeData.createFakePokemonsDomain(3)
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
-        every { repository.getAllPokemonFavoritesByPatternLocal("") } returns fakeDataSet.toLiveData()
-        pokemonListUseCase.getAllPokemonFavoritesFilter("").observeForever(observer)
+        every { repository.getAllPokemonFavoritesByPatternLocal() } returns fakeDataSet.toLiveData()
+        pokemonListUseCase.getAllPokemonFavoritesFilter().observeForever(observer)
 
         verify {
             observer.onChanged(fakeDataSet)
@@ -116,8 +116,8 @@ class PokemonListUseCaseTest {
     fun `getAllPokemonCaughtFilter returns all data`() {
         val fakeDataSet = FakeData.createFakePokemonsDomain(3)
         val observer = mockk<Observer<List<Pokemon>>>(relaxed = true)
-        every { repository.getAllPokemonCaughtByPatternLocal("") } returns fakeDataSet.toLiveData()
-        pokemonListUseCase.getAllPokemonCaughtFilter("").observeForever(observer)
+        every { repository.getAllPokemonCaughtByPatternLocal() } returns fakeDataSet.toLiveData()
+        pokemonListUseCase.getAllPokemonCaughtFilter().observeForever(observer)
 
         verify {
             observer.onChanged(fakeDataSet)

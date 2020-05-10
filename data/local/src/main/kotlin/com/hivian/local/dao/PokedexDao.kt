@@ -16,11 +16,11 @@ abstract class PokedexDao : BaseDao<DbPokemon> {
     @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' ORDER BY pokemonId ASC")
     abstract fun getAllPokemonPatternLive(pattern: String): LiveData<List<DbPokemon>>
 
-    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' AND favorite = 1 ORDER BY pokemonId ASC")
-    abstract fun getAllPokemonFavoritesPatternLive(pattern: String): LiveData<List<DbPokemon>>
+    @Query("SELECT * FROM DbPokemon WHERE favorite = 1 ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonFavoritesPatternLive(): LiveData<List<DbPokemon>>
 
-    @Query("SELECT * FROM DbPokemon WHERE name LIKE '%' || :pattern || '%' AND caught = 1 ORDER BY pokemonId ASC")
-    abstract fun getAllPokemonCaughtPatternLive(pattern: String): LiveData<List<DbPokemon>>
+    @Query("SELECT * FROM DbPokemon WHERE caught = 1 ORDER BY pokemonId ASC")
+    abstract fun getAllPokemonCaughtPatternLive(): LiveData<List<DbPokemon>>
 
     @Query("SELECT * FROM DbPokemon ORDER BY pokemonId ASC")
     abstract fun getAllPokemonLive(): LiveData<List<DbPokemon>>

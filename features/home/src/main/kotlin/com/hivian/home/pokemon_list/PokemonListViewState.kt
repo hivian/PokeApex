@@ -32,6 +32,16 @@ sealed class PokemonListViewState : BaseViewState {
     object Empty : PokemonListViewState()
 
     /**
+     * Empty pokemon favorite list.
+     */
+    object EmptyFavorite : PokemonListViewState()
+
+    /**
+     * Empty pokemon caught list.
+     */
+    object EmptyCaught : PokemonListViewState()
+
+    /**
      * Error on loading characters list.
      */
     data class Error(val error: ErrorEntity) : PokemonListViewState()
@@ -75,6 +85,20 @@ sealed class PokemonListViewState : BaseViewState {
      * @return True if is empty state, otherwise false.
      */
     fun isEmpty() = this is Empty
+
+    /**
+     * Check if current view state is [EmptyFavorite].
+     *
+     * @return True if is empty favorite state, otherwise false.
+     */
+    fun isEmptyFavorite() = this is EmptyFavorite
+
+    /**
+     * Check if current view state is [EmptyCaught].
+     *
+     * @return True if is empty caught state, otherwise false.
+     */
+    fun isEmptyCaught() = this is EmptyCaught
 
     /**
      * Check if current view state is [Error].
