@@ -38,27 +38,33 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
 
     // FOR state
     private val _regularState = MutableLiveData<PokemonListViewState>()
-    private val _actionFilterEmpty = Transformations.map(data) { data ->
-        if (data != null && data.isEmpty()) {
-            when (dataFilter.value) {
-                is FilterType.Favorite -> PokemonListViewState.EmptyFavorite
-                is FilterType.Caught -> PokemonListViewState.EmptyCaught
-                is FilterType.All -> PokemonListViewState.Empty
-                else -> null
+    private val _actionFilterState = Transformations.map(data) { data ->
+        if (filterAction) {
+            filterAction = false
+            if (data != null && data.isEmpty()) {
+                when (dataFilter.value) {
+                    is FilterType.Favorite -> PokemonListViewState.EmptyFavorite
+                    is FilterType.Caught -> PokemonListViewState.EmptyCaught
+                    is FilterType.All -> PokemonListViewState.Empty
+                    else -> null
+                }
+            } else {
+                PokemonListViewState.Loaded
             }
         } else {
-            PokemonListViewState.Loaded
+            null
         }
     }
 
     private val _state = MediatorLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
+    private var filterAction: Boolean = false
 
     init {
         _state.addSource(_regularState) {
             _state.value = it
         }
-        _state.addSource(_actionFilterEmpty) {
+        _state.addSource(_actionFilterState) {
             it?.run { _state.value = this }
         }
     }
@@ -110,14 +116,17 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     }
 
     fun loadAllPokemons() = viewModelScope.launch(dispatchers.main) {
+        filterAction = true
         dataFilter.value = FilterType.All("")
     }
 
     fun loadPokemonFavorites() = viewModelScope.launch(dispatchers.main) {
+        filterAction = true
         dataFilter.value = FilterType.Favorite
     }
 
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
+        filterAction = true
         dataFilter.value = FilterType.Caught
     }
 }

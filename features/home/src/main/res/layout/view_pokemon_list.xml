@@ -21,6 +21,8 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="@integer/characters_list_spans"
+            android:clipToPadding="false"
+            android:padding="@{@dimen/pokemon_list_item_padding / 2}"
             app:itemDecorationSpacing="@{@dimen/pokemon_list_item_padding}"
             tools:listitem="@layout/list_item_pokemon" />
 

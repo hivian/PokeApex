@@ -31,13 +31,14 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     private val viewAdapter: PokemonListAdapter by lazy {
         PokemonListAdapter(viewModel)
     }
+    private var menu: Menu? = null
 
     override fun onInitDataBinding() {
         viewBinding.viewModel = viewModel
-        viewBinding.includeList.pokemonList.apply {
+        with(viewBinding.includeList.pokemonList) {
             adapter = viewAdapter
-            gridLayoutManager?.let {
-                it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
+            gridLayoutManager?.run {
+                spanSizeLookup = viewAdapter.getSpanSizeLookup()
             }
         }
         setupToolbar()
@@ -52,6 +53,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observe(viewModel.dataFilter, ::onFilterEvent)
         observe(viewModel.event, ::onViewEvent)
         observe(viewModel.data, ::onViewDataChange)
         observe(viewModel.state, ::onViewStateChange)
@@ -63,6 +65,18 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     private fun setupToolbar() {
         setHasOptionsMenu(true)
         requireCompatActivity().setSupportActionBar(viewBinding.toolbar)
+    }
+
+    /**
+     * Observer view event change on [FilterType].
+     *
+     * @param filterType Event on characters list.
+     */
+    private fun onFilterEvent(filterType: FilterType) {
+        when (filterType) {
+            is FilterType.All -> {}
+            is FilterType.Favorite, FilterType.Caught -> hideKeyboard()
+        }
     }
 
     /**
@@ -115,6 +129,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
         inflater.inflate(R.menu.menu_pokemon_list, menu)
 
+        this.menu = menu
         configureSearchView(menu)
     }
 

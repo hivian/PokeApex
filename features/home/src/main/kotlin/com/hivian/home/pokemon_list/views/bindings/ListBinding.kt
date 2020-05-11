@@ -1,12 +1,16 @@
 package com.hivian.home.pokemon_list.views.bindings
 
+import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.hivian.common.extension.hideKeyboard
 import com.hivian.home.R
 import com.hivian.home.pokemon_list.FilterType
 import com.hivian.home.pokemon_list.PokemonListViewState
@@ -62,5 +66,17 @@ fun listRefreshEnabled(view: SwipeRefreshLayout, filter: FilterType) {
     when (filter) {
         is FilterType.All -> view.isEnabled = true
         is FilterType.Favorite, FilterType.Caught -> view.isEnabled = false
+    }
+}
+
+@BindingAdapter("actionViewVisibility")
+fun actionViewVisibility(view: Toolbar, filter: FilterType) {
+    val searchItem = view.menu.findItem(R.id.action_search)
+    when (filter) {
+        is FilterType.All -> searchItem?.isVisible = true
+        is FilterType.Favorite, FilterType.Caught -> {
+            searchItem?.isVisible = false
+            searchItem?.collapseActionView()
+        }
     }
 }
