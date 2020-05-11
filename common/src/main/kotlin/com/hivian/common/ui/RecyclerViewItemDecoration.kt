@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.ceil
 
+
 class RecyclerViewItemDecoration(
     private val spacingPx: Int
 ) : RecyclerView.ItemDecoration() {
@@ -28,16 +29,13 @@ class RecyclerViewItemDecoration(
     ) {
         when (val layoutManager = parent.layoutManager) {
             is GridLayoutManager -> configSpacingForGridLayoutManager(
-                outRect = outRect,
-                layoutManager = layoutManager,
-                position = parent.getChildViewHolder(view).adapterPosition,
-                itemCount = state.itemCount
+                outRect = outRect
             )
             is LinearLayoutManager -> configSpacingForLinearLayoutManager(
                 outRect = outRect,
                 layoutManager = layoutManager,
-                position = parent.getChildViewHolder(view).adapterPosition,
-                itemCount = state.itemCount
+                position = parent.getChildAdapterPosition(view),
+                itemCount = parent.adapter!!.itemCount
             )
         }
     }
@@ -53,8 +51,11 @@ class RecyclerViewItemDecoration(
      * @param layoutManager The currently responsible for layout policy.
      * @param position Position of the item represented by this ViewHolder.
      * @param itemCount The total number of items that can be laid out.
+     *
+     * Note: Working, but seems to cause display issues when updating list content.
      */
-    private fun configSpacingForGridLayoutManager(
+    @Suppress("unused")
+    private fun configSpacingForGridLayoutManagerBug(
         outRect: Rect,
         layoutManager: GridLayoutManager,
         position: Int,
@@ -63,10 +64,29 @@ class RecyclerViewItemDecoration(
         val cols = layoutManager.spanCount
         val rows = ceil(itemCount / cols.toDouble()).toInt()
 
-        outRect.top = spacingPx
-        outRect.left = if (position % cols == cols - 1) spacingPx / 2 else spacingPx
-        outRect.right = if (position % cols == cols - 1) spacingPx else spacingPx / 2
-        outRect.bottom = if (position / cols == rows - 1) spacingPx else 0
+        with(outRect) {
+            top = spacingPx
+            left = if (position % cols == cols - 1) spacingPx / 2 else spacingPx
+            right = if (position % cols == cols - 1) spacingPx else spacingPx / 2
+            bottom = if (position / cols == rows - 1) spacingPx else 0
+        }
+    }
+
+    /**
+     * Configure spacing for grid layout, given a rectangle.
+     *
+     * @param outRect Rect to modify.
+     *
+     * Note: Best way to avoid items display issues when updating list with [GridLayoutManager]
+     */
+    private fun configSpacingForGridLayoutManager(outRect: Rect) {
+        val noEdgeSpacing = spacingPx / 2
+        with(outRect) {
+            top = noEdgeSpacing
+            left = noEdgeSpacing
+            right = noEdgeSpacing
+            bottom = noEdgeSpacing
+        }
     }
 
     /**
@@ -83,14 +103,16 @@ class RecyclerViewItemDecoration(
         position: Int,
         itemCount: Int
     ) {
-        outRect.top = spacingPx
-        outRect.left = spacingPx
-        if (layoutManager.canScrollHorizontally()) {
-            outRect.right = if (position == itemCount - 1) spacingPx else 0
-            outRect.bottom = spacingPx
-        } else if (layoutManager.canScrollVertically()) {
-            outRect.right = spacingPx
-            outRect.bottom = if (position == itemCount - 1) spacingPx else 0
+        with(outRect) {
+            top = spacingPx
+            left = spacingPx
+            if (layoutManager.canScrollHorizontally()) {
+                right = if (position == itemCount - 1) spacingPx else 0
+                bottom = spacingPx
+            } else if (layoutManager.canScrollVertically()) {
+                right = spacingPx
+                bottom = if (position == itemCount - 1) spacingPx else 0
+            }
         }
     }
 }

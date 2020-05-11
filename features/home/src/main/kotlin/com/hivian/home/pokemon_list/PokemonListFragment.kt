@@ -35,10 +35,10 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     override fun onInitDataBinding() {
         viewBinding.viewModel = viewModel
-        viewBinding.includeList.pokemonList.apply {
+        with(viewBinding.includeList.pokemonList) {
             adapter = viewAdapter
-            gridLayoutManager?.let {
-                it.spanSizeLookup = viewAdapter.getSpanSizeLookup()
+            gridLayoutManager?.run {
+                spanSizeLookup = viewAdapter.getSpanSizeLookup()
             }
         }
         setupToolbar()
