@@ -1,7 +1,7 @@
 <p align="center">
     <img src="https://user-images.githubusercontent.com/9741252/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png" width="250" />
  </p>
- <h1 align="center">Pokedex for Android</h1>
+ <h1 align="center">Android Pokedex</h1>
 
 <p align="center">
   <a href="https://blog.jetbrains.com/kotlin/2020/03/kotlin-1-3-70-released/">
