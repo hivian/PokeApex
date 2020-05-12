@@ -1,8 +1,24 @@
-## Pokedex sample app
-[![Kotlin Version](https://img.shields.io/badge/kotlin-1.3.71-blue)](https://blog.jetbrains.com/kotlin/2020/03/kotlin-1-3-70-released/)
-[![Gradle](https://img.shields.io/badge/gradle-6.3-blue)](https://docs.gradle.org/6.3/release-notes.html)
-[![API](https://img.shields.io/badge/API-23%2B-blue)](https://android-arsenal.com/api?level=23)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE.md)
+<h1 align="center">
+<br>
+    <img src="https://user-images.githubusercontent.com/9741252/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png" width="250" />
+ </br>
+Pokedex for Android
+ </h1>
+
+<p align="center">
+  <a href="https://blog.jetbrains.com/kotlin/2020/03/kotlin-1-3-70-released/">
+    <img src="https://img.shields.io/badge/kotlin-1.3.71-blue" alt="Kotlin Version">
+  </a>
+  <a href="https://docs.gradle.org/6.3/release-notes.html">
+    <img src="https://img.shields.io/badge/gradle-6.3-blue" alt="Gradle">
+  </a>
+  <a href="https://android-arsenal.com/api?level=23">
+    <img src="https://img.shields.io/badge/API-23%2B-blue" alt="API">
+  </a>
+  <a href="https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE.md">
+    <img src="https://img.shields.io/badge/License-MIT-lightgrey" alt="License">
+  </a>
+</p>
 
 A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource.
 
