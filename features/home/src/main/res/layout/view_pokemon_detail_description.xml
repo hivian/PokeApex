@@ -84,7 +84,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_height_value"
                 android:text="@string/pokemon_detail_description_height_title"
-                tools:text="Height:" />
+                tools:text="@string/pokemon_detail_description_height_title" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextAppearance.Body.Light"
@@ -95,7 +95,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/pokemon_height_title"
                 app:layout_constraintEnd_toStartOf="@id/pokemon_weight_value"
                 android:text="@string/pokemon_detail_description_weight_title"
-                tools:text="Weight:" />
+                tools:text="@string/pokemon_detail_description_weight_title" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextAppearance.Body.Secondary.Small"
@@ -127,7 +127,8 @@
                 android:layout_marginEnd="@dimen/spacer_2"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_owned"
                 app:layout_constraintEnd_toStartOf="@+id/icon_owned"
-                app:layout_constraintTop_toTopOf="@+id/icon_owned" />
+                app:layout_constraintTop_toTopOf="@+id/icon_owned"
+                tools:srcCompat="@drawable/ic_favorite_active" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 style="@style/AppTheme.ImageButton"
@@ -141,7 +142,8 @@
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/pokemon_type_2"
                 app:layout_constraintTop_toBottomOf="@+id/pokemon_weight_value"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"
+                tools:srcCompat="@drawable/ic_caught_active" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

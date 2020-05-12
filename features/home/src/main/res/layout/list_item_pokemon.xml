@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="favoriteState"
+            type="com.hivian.home.common.PokemonHomeFavoriteViewState" />
+        <variable
+            name="caughtState"
+            type="com.hivian.home.common.PokemonHomeCaughtViewState" />
         <variable
             name="pokemon"
             type="com.hivian.model.domain.Pokemon" />
-
         <variable
             name="viewModel"
             type="com.hivian.home.pokemon_list.PokemonListViewModel" />
@@ -41,25 +45,29 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
+                style="@style/AppTheme.ImageButton"
                 android:id="@+id/pokemon_favorite"
                 android:layout_width="@dimen/icon_0"
                 android:layout_height="@dimen/icon_0"
                 android:layout_margin="@dimen/spacer_0"
+                android:onClick="@{() -> viewModel.toggleFavorite(pokemon)}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_favorite_active"
-                app:visible="@{pokemon.favorite}" />
+                app:srcState="@{favoriteState}"
+                tools:srcCompat="@drawable/ic_favorite_active" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
+                style="@style/AppTheme.ImageButton"
                 android:id="@+id/pokemon_caught"
                 android:layout_width="@dimen/icon_0"
                 android:layout_height="@dimen/icon_0"
                 android:layout_margin="@dimen/spacer_0"
+                android:onClick="@{() -> viewModel.toggleCaught(pokemon)}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_caught_active"
-                app:visible="@{pokemon.caught}" />
+                app:srcState="@{caughtState}"
+                tools:srcCompat="@drawable/ic_caught_active" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_name"

@@ -6,15 +6,14 @@ import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.hivian.common.extension.toLiveData
 import com.hivian.common_test.datasets.FakeData
-import com.hivian.common_test.extensions.blockingObserve
+import com.hivian.home.common.PokemonHomeFavoriteViewState
+import com.hivian.home.common.PokemonHomeCaughtViewState
 import com.hivian.home.domain.PokemonDetailUseCase
-import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.home.pokemon_detail.*
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ErrorEntity
 import com.hivian.repository.utils.NetworkWrapper
-import com.nhaarman.mockitokotlin2.any
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
@@ -52,8 +51,8 @@ class PokemonDetailViewModelTest {
         }
         val dataObserver = mockk<Observer<Pokemon>>(relaxed = true)
         val networkStateObserver = mockk<Observer<PokemonDetailNetworkViewState>>(relaxed = true)
-        val favoriteStateObserver = mockk<Observer<PokemonDetailFavoriteViewState>>(relaxed = true)
-        val caughtStateObserver = mockk<Observer<PokemonDetailCaughtViewState>>(relaxed = true)
+        val favoriteStateObserver = mockk<Observer<PokemonHomeFavoriteViewState>>(relaxed = true)
+        val caughtStateObserver = mockk<Observer<PokemonHomeCaughtViewState>>(relaxed = true)
         val result = NetworkWrapper.Success(false)
         coEvery { pokemonDetailUseCase.pokemonDetailApiCall(fakeData.name) } returns result
         coEvery { pokemonDetailUseCase.getPokemonDetailLive(fakeData.name) } returns fakeData.toLiveData()
@@ -69,8 +68,8 @@ class PokemonDetailViewModelTest {
             dataObserver.onChanged(fakeData)
             networkStateObserver.onChanged(PokemonDetailNetworkViewState.Loading)
             networkStateObserver.onChanged(PokemonDetailNetworkViewState.Loaded)
-            favoriteStateObserver.onChanged(PokemonDetailFavoriteViewState.AddedToFavorite)
-            caughtStateObserver.onChanged(PokemonDetailCaughtViewState.RemovedFromCaught)
+            favoriteStateObserver.onChanged(PokemonHomeFavoriteViewState.AddedToFavorite)
+            caughtStateObserver.onChanged(PokemonHomeCaughtViewState.RemovedFromCaught)
         }
     }
 

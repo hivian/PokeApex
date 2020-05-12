@@ -3,6 +3,9 @@ package com.hivian.home.pokemon_list
 import androidx.lifecycle.*
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
+import com.hivian.home.common.CommonStateHandler
+import com.hivian.home.common.PokemonHomeFavoriteViewState
+import com.hivian.home.common.PokemonHomeCaughtViewState
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
@@ -55,9 +58,10 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
             null
         }
     }
-
     private val _state = MediatorLiveData<PokemonListViewState>()
     val state: LiveData<PokemonListViewState> get() = _state
+
+    // FOR user action
     private var filterAction: Boolean = false
 
     init {
@@ -128,5 +132,25 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
     fun loadPokemonCaught() = viewModelScope.launch(dispatchers.main) {
         filterAction = true
         dataFilter.value = FilterType.Caught
+    }
+
+    /**
+     * Toggle [Pokemon.favorite].
+     */
+    fun toggleFavorite(pokemon: Pokemon) {
+        viewModelScope.launch(dispatchers.main) {
+            val newFavorite = !pokemon.favorite
+            pokemonListUseCase.updateFavoriteStatus(pokemon.pokemonId, newFavorite)
+        }
+    }
+
+    /**
+     * Toggle [Pokemon.caught].
+     */
+    fun toggleCaught(pokemon: Pokemon) {
+        viewModelScope.launch(dispatchers.main) {
+            val newCaught = !pokemon.caught
+            pokemonListUseCase.updateCaughtStatus(pokemon.pokemonId, newCaught)
+        }
     }
 }

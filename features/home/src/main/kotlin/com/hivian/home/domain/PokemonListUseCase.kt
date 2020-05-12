@@ -27,4 +27,12 @@ class PokemonListUseCase(private val repository: PokedexRepository) {
     fun getAllPokemonCaughtFilter(): LiveData<List<Pokemon>> =
         repository.getAllPokemonCaughtByPatternLocal()
 
+    suspend fun updateFavoriteStatus(id: Int, favorite: Boolean) {
+        repository.updateFavoriteStatusLocal(id, favorite)
+    }
+
+    suspend fun updateCaughtStatus(id: Int, caught: Boolean) {
+        repository.updateCaughtStatusLocal(id, caught)
+    }
+
 }

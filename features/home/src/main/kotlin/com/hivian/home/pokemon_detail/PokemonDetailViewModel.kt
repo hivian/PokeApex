@@ -6,6 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
+import com.hivian.home.common.PokemonHomeFavoriteViewState
+import com.hivian.home.common.PokemonHomeCaughtViewState
 import com.hivian.home.domain.PokemonDetailUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
@@ -25,11 +27,11 @@ class PokemonDetailViewModel(private val name: String,
     private val _networkState = MutableLiveData<PokemonDetailNetworkViewState>()
     val networkState: LiveData<PokemonDetailNetworkViewState> get() = _networkState
 
-    val favoriteState: LiveData<PokemonDetailFavoriteViewState> = Transformations.map(data) {
+    val favoriteState: LiveData<PokemonHomeFavoriteViewState> = Transformations.map(data) {
         favoriteToViewState(it.favorite)
     }
 
-    val caughtState: LiveData<PokemonDetailCaughtViewState> = Transformations.map(data) {
+    val caughtState: LiveData<PokemonHomeCaughtViewState> = Transformations.map(data) {
         caughtToViewState(it.caught)
     }
 
@@ -82,7 +84,6 @@ class PokemonDetailViewModel(private val name: String,
                 }
             }
         }
-
     }
 
     /**
@@ -103,14 +104,14 @@ class PokemonDetailViewModel(private val name: String,
     }
 
     private fun favoriteToViewState(favorite: Boolean) = if (favorite) {
-        PokemonDetailFavoriteViewState.AddedToFavorite
+        PokemonHomeFavoriteViewState.AddedToFavorite
     } else {
-        PokemonDetailFavoriteViewState.RemovedFromFavorite
+        PokemonHomeFavoriteViewState.RemovedFromFavorite
     }
 
     private fun caughtToViewState(caught: Boolean) = if (caught) {
-        PokemonDetailCaughtViewState.AddedToCaught
+        PokemonHomeCaughtViewState.AddedToCaught
     } else {
-        PokemonDetailCaughtViewState.RemovedFromCaught
+        PokemonHomeCaughtViewState.RemovedFromCaught
     }
 }
