@@ -14,7 +14,9 @@
     <color name="textBodySecondary">#1f1f1f</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
     <color name="black">#303943</color>
+    <color name="black_50">#80000000</color>
     <color name="blue">#429BED</color>
     <color name="brown">#B1736C</color>
     <color name="grey">#303943</color>
@@ -31,5 +33,10 @@
     <color name="red">#FA6555</color>
     <color name="teal">#4FC1A6</color>
     <color name="yellow">#F6C747</color>
+    <color name="colorPrimary_50">@color/white_50</color>
+
+    <color name="blueGrey">#78909C</color>
+    <color name="darkBlueGrey">#768b94</color>
+    <color name="lightBlueGrey">#869CAE</color>
 
 </resources>

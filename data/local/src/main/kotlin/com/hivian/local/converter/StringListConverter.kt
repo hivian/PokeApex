@@ -7,12 +7,9 @@ import com.hivian.common.generic.toJson
 class StringListConverter {
 
     @TypeConverter
-    fun listToJson(value: List<String>): String {
-        return toJson(value)
-    }
+    fun listToJson(value: List<String>): String = toJson(value)
 
     @TypeConverter
-    fun jsonToList(value: String): List<String> {
-        return fromJson<List<String>>(value)
-    }
+    fun jsonToList(value: String): List<String> = fromJson<List<String>>(value)
+
 }

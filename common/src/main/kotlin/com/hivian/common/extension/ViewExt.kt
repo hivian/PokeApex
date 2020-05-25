@@ -2,7 +2,11 @@ package com.hivian.common.extension
 
 import android.animation.Animator
 import android.animation.AnimatorInflater
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -35,7 +39,7 @@ fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveDa
  * Load a custom animator into [ImageView]
  * @param animatorRes Animator resource Id
  */
-fun ImageView.loadAnimator(@AnimatorRes animatorRes: Int) {
+fun View.loadAnimator(@AnimatorRes animatorRes: Int) {
     AnimatorInflater.loadAnimator(context, animatorRes)
         .apply {
             setTarget(this@loadAnimator)
@@ -45,11 +49,19 @@ fun ImageView.loadAnimator(@AnimatorRes animatorRes: Int) {
 
 /**
  * Load a custom animator into [ImageView]
- * @param animator Animator object
+ * @param animator [Animator] object
  */
-fun ImageView.loadAnimator(animator: Animator) {
+fun View.loadAnimator(animator: Animator) {
     animator.run {
         setTarget(this@loadAnimator)
         start()
     }
+}
+
+/**
+ * Load a custom anim into [ImageView]
+ * @param anim [Animation] object
+ */
+fun View.loadAnim(anim: Animation) {
+    startAnimation(anim)
 }

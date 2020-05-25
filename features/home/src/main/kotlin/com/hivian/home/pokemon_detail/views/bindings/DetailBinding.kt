@@ -4,6 +4,8 @@ package com.hivian.home.pokemon_detail.views.bindings
 import android.animation.Animator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.view.View
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -11,6 +13,7 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.hivian.common.extension.getDimenPx
+import com.hivian.common.extension.loadAnim
 import com.hivian.common.extension.loadAnimator
 import org.jetbrains.anko.textColorResource
 import java.util.*
@@ -82,6 +85,12 @@ fun weightKg(view : TextView, weight: Int) {
 }
 
 @BindingAdapter("animator")
-fun animator(view: ImageView,  anim: Animator) {
+fun animator(view: View,  anim: Animator) {
     view.loadAnimator(anim)
+}
+
+@BindingAdapter("anim", "animStart")
+fun anim(view: View, anim: Animation, animStart: Boolean) {
+    if (animStart)
+        view.loadAnim(anim)
 }

@@ -8,7 +8,11 @@
 
     <!--Pokemon list-->
     <string name="pokemon_list_title">Pokedex</string>
+    <string name="pokemon_list_favorite_title">Favorites</string>
+    <string name="pokemon_list_caught_title">Caught</string>
     <string name="pokemon_list_search_hint">Search…</string>
+    <string name="pokemon_list_caught_percentage">%1$.1f %%</string>
+    <string name="pokemon_list_caught_ratio">(%1$d/%2$d)</string>
     <string name="pokemon_list_empty_text">Empty pokemon list</string>
     <string name="pokemon_list_empty_favorite_text">You did not mark any Pokemon as favorite.\n
         Mark a Pokemon as favorite by tapping the star icon in the detail screen.</string>

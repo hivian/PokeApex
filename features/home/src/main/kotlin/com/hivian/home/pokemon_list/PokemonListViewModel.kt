@@ -1,11 +1,10 @@
 package com.hivian.home.pokemon_list
 
 import androidx.lifecycle.*
+import com.hivian.common.Constants
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.common.CommonStateHandler
-import com.hivian.home.common.PokemonHomeFavoriteViewState
-import com.hivian.home.common.PokemonHomeCaughtViewState
+import com.hivian.common.utils.percent
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
@@ -20,6 +19,10 @@ sealed class FilterType {
     data class All(val pattern: String = ""): FilterType()
     object Favorite: FilterType()
     object Caught: FilterType()
+
+    fun isAll() = this is All
+    fun isFavorite() = this is Favorite
+    fun isCaught() = this is Caught
 }
 
 class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
@@ -28,11 +31,25 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
 
     // FOR data
     var dataFilter = MutableLiveData<FilterType>(FilterType.All())
-    val data : LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) {
+    val data: LiveData<List<Pokemon>> = Transformations.switchMap(dataFilter) {
         when (it) {
             is FilterType.All -> pokemonListUseCase.getAllPokemonFilter(it.pattern)
             is FilterType.Favorite -> pokemonListUseCase.getAllPokemonFavoritesFilter()
             is FilterType.Caught -> pokemonListUseCase.getAllPokemonCaughtFilter()
+        }
+    }
+    val caughtStat: LiveData<Float> = Transformations.map(data) {
+        if (dataFilter.value == FilterType.Caught) {
+            percent(it.size, Constants.POKEMON_LIST_SIZE)
+        } else {
+            null
+        }
+    }
+    val caughtRatio: LiveData<Int> = Transformations.map(data) {
+        if (dataFilter.value == FilterType.Caught) {
+            it.size
+        } else {
+            null
         }
     }
 
