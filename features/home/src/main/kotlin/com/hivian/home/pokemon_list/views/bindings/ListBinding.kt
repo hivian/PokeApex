@@ -69,11 +69,13 @@ fun listRefreshEnabled(view: SwipeRefreshLayout, filter: FilterType) {
 @BindingAdapter("actionViewVisibility")
 fun actionViewVisibility(view: Toolbar, filter: FilterType) {
     val searchItem = view.menu.findItem(R.id.action_search)
-    when (filter) {
-        is FilterType.All -> searchItem?.isVisible = true
-        is FilterType.Favorite, FilterType.Caught -> {
-            searchItem?.isVisible = false
-            searchItem?.collapseActionView()
+    searchItem?.let { search ->
+        when (filter) {
+            is FilterType.All -> search.isVisible = true
+            is FilterType.Favorite, FilterType.Caught -> {
+                search.isVisible = false
+                search.collapseActionView()
+            }
         }
     }
 }
