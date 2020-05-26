@@ -1,16 +1,13 @@
 package com.hivian.home.pokemon_list.views.bindings
 
-import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.hivian.common.extension.hideKeyboard
 import com.hivian.home.R
 import com.hivian.home.pokemon_list.FilterType
 import com.hivian.home.pokemon_list.PokemonListViewState

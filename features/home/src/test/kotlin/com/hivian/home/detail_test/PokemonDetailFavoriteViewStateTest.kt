@@ -1,7 +1,8 @@
 package com.hivian.home.detail_test
 
 import com.hivian.home.common.PokemonHomeFavoriteViewState
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class PokemonDetailFavoriteViewStateTest {

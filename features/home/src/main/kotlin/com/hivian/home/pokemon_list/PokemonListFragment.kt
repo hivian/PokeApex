@@ -12,11 +12,15 @@ import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.base.BaseViewState
-import com.hivian.common.extension.*
+import com.hivian.common.extension.gridLayoutManager
+import com.hivian.common.extension.hideKeyboard
+import com.hivian.common.extension.observe
+import com.hivian.common.extension.showCustomDialog
 import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
+import com.hivian.home.pokemon_list.views.bindings.actionViewVisibility
 import com.hivian.model.domain.Pokemon
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -138,6 +142,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
         this.menu = menu
         setToolbarTitle(null)
+        enableActionView(viewModel.dataFilter.value)
         configureSearchView(menu)
     }
 
@@ -208,6 +213,12 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
             viewBinding.toolbar.setTitle(this)
         } ?: run {
             viewBinding.toolbar.title = ""
+        }
+    }
+
+    private fun enableActionView(filterType: FilterType?) {
+        filterType?.run {
+            actionViewVisibility(viewBinding.toolbar, this)
         }
     }
 

@@ -11,7 +11,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockkClass
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

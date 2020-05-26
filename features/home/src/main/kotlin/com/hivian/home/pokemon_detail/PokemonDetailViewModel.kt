@@ -6,8 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
-import com.hivian.home.common.PokemonHomeFavoriteViewState
 import com.hivian.home.common.PokemonHomeCaughtViewState
+import com.hivian.home.common.PokemonHomeFavoriteViewState
 import com.hivian.home.domain.PokemonDetailUseCase
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers

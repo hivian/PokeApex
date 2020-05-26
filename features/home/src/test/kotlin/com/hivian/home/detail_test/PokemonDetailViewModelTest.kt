@@ -6,10 +6,12 @@ import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.hivian.common.extension.toLiveData
 import com.hivian.common_test.datasets.FakeData
-import com.hivian.home.common.PokemonHomeFavoriteViewState
 import com.hivian.home.common.PokemonHomeCaughtViewState
+import com.hivian.home.common.PokemonHomeFavoriteViewState
 import com.hivian.home.domain.PokemonDetailUseCase
-import com.hivian.home.pokemon_detail.*
+import com.hivian.home.pokemon_detail.PokemonDetailNetworkViewState
+import com.hivian.home.pokemon_detail.PokemonDetailViewEvent
+import com.hivian.home.pokemon_detail.PokemonDetailViewModel
 import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ErrorEntity

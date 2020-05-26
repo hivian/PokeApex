@@ -3,8 +3,8 @@ package com.hivian.home.common.view.binding
 import android.widget.ImageButton
 import androidx.databinding.BindingAdapter
 import com.hivian.home.R
-import com.hivian.home.common.PokemonHomeFavoriteViewState
 import com.hivian.home.common.PokemonHomeCaughtViewState
+import com.hivian.home.common.PokemonHomeFavoriteViewState
 import org.jetbrains.anko.imageResource
 
 @BindingAdapter("srcState")

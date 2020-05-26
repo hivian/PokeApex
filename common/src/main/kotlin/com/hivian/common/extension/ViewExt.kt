@@ -4,9 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.view.View
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
