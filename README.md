@@ -59,7 +59,7 @@ A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) da
 - [x] Pokemon Home - Dynamic search with autocomplete list refresh
 - [x] Pokemon Home - Filter by Favorites and by Caught
 - [ ] Pokemon Home - Display percentage completion for Caught list
-- [ ] Pokemon Home - Change favorite/caught status in list item directly.
+- [x] Pokemon Home - Change favorite/caught status in list item directly.
 - [x] Pokemon Detail - Description
 - [x] Pokemon Detail - Abilities
 - [x] Pokemon Detail - Base Stats
