@@ -6,6 +6,6 @@ data class PokemonAbilities(
     var slot3: String
 ) {
     companion object {
-        val EMPTY = PokemonAbilities("", "", "")
+        fun empty(): PokemonAbilities = PokemonAbilities("", "", "")
     }
 }

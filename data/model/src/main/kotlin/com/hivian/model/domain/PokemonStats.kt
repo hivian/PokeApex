@@ -22,6 +22,6 @@ data class PokemonStats(
     private fun Int.sumToPercent() = 100 * this / 600
 
     companion object {
-        val EMPTY = PokemonStats(0, 0, 0, 0, 0, 0)
+        fun empty(): PokemonStats = PokemonStats(0, 0, 0, 0, 0, 0)
     }
 }
