@@ -23,8 +23,8 @@ A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) da
 <p align="left">
   <!--<img src="https://user-images.githubusercontent.com/9741252/80282910-5b5ae280-8714-11ea-9448-8bbfe7bc0435.png" width="200" />
   <img src="https://user-images.githubusercontent.com/9741252/80282918-6ada2b80-8714-11ea-8bdb-72964fafcf2e.png" width="200" />-->
-    <img src="https://user-images.githubusercontent.com/9741252/82906602-ce4eb780-9f65-11ea-85f7-19830e149435.jpg" width="200" /> 
-    <img src="https://user-images.githubusercontent.com/9741252/82922732-44f5b000-9f7a-11ea-90b3-543fa0dc435c.jpg" width="200" />
+    <img src="https://user-images.githubusercontent.com/9741252/82924051-1547a780-9f7c-11ea-9572-34a86be95202.jpg" width="200" /> 
+    <img src="https://user-images.githubusercontent.com/9741252/82924064-1973c500-9f7c-11ea-9a41-07258738dd54.jpg" width="200" />
     <img src="https://user-images.githubusercontent.com/9741252/82922763-4f17ae80-9f7a-11ea-9c72-d698ef231042.jpg" width="200" /> 
     <img src="https://user-images.githubusercontent.com/9741252/82922785-58a11680-9f7a-11ea-8c7f-2b8dcfaf33af.jpg" width="200" /> 
 </p>
