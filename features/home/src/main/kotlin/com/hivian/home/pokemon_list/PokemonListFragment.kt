@@ -218,7 +218,7 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     private fun enableActionView(filterType: FilterType?) {
         filterType?.run {
-            actionViewVisibility(viewBinding.toolbar, this)
+            actionViewVisibility(viewBinding.toolbar, filterType)
         }
     }
 

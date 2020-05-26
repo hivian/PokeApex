@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.github.ajalt.timberkt.d
 import com.hivian.common.base.BaseViewModel
 import com.hivian.common.livedata.SingleLiveData
 import com.hivian.home.common.PokemonHomeCaughtViewState

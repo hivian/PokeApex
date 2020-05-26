@@ -40,8 +40,6 @@ class PokedexRepositoryImpl(
     private val mapper: MapperPokedexRepository
 ): PokedexRepository {
 
-    val data: MutableLiveData<List<Pokemon>> = MutableLiveData()
-
     override suspend fun allPokemonApiCall(forceRefresh: Boolean, offset: Int, limit: Int): NetworkWrapper {
         return object : NetworkResource<List<NetworkPokemonObject>, List<DbPokemon>>() {
 
