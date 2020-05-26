@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.hivian.common.base.BaseFragment
@@ -19,6 +20,7 @@ import com.hivian.home.R
 import com.hivian.home.databinding.PokemonListFragmentBinding
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
+import com.hivian.home.pokemon_list.views.bindings.actionViewVisibility
 import com.hivian.model.domain.Pokemon
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -74,8 +76,17 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
      */
     private fun onFilterEvent(filterType: FilterType) {
         when (filterType) {
-            is FilterType.All -> {}
-            is FilterType.Favorite, FilterType.Caught -> hideKeyboard()
+            is FilterType.All -> {
+                setToolbarTitle(null)
+            }
+            is FilterType.Favorite -> {
+                setToolbarTitle(R.string.pokemon_list_favorite_title)
+                hideKeyboard()
+            }
+            is FilterType.Caught -> {
+                setToolbarTitle(R.string.pokemon_list_caught_title)
+                hideKeyboard()
+            }
         }
     }
 
@@ -130,6 +141,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         inflater.inflate(R.menu.menu_pokemon_list, menu)
 
         this.menu = menu
+        setToolbarTitle(null)
+        enableActionView(viewModel.dataFilter.value)
         configureSearchView(menu)
     }
 
@@ -193,6 +206,20 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                 return true
             }
         })
+    }
+
+    private fun setToolbarTitle(@StringRes title: Int?) {
+        title?.run {
+            viewBinding.toolbar.setTitle(this)
+        } ?: run {
+            viewBinding.toolbar.title = ""
+        }
+    }
+
+    private fun enableActionView(filterType: FilterType?) {
+        filterType?.run {
+            actionViewVisibility(viewBinding.toolbar, this)
+        }
     }
 
 }

@@ -1,16 +1,17 @@
 package com.hivian.home.detail_test
 
-import com.hivian.home.pokemon_detail.PokemonDetailFavoriteViewState
-import org.junit.Assert.*
+import com.hivian.home.common.PokemonHomeFavoriteViewState
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class PokemonDetailFavoriteViewStateTest {
 
-    private lateinit var state: PokemonDetailFavoriteViewState
+    private lateinit var state: PokemonHomeFavoriteViewState
 
     @Test
     fun `set state as AddedToFavorite should be settled`() {
-        state = PokemonDetailFavoriteViewState.AddedToFavorite
+        state = PokemonHomeFavoriteViewState.AddedToFavorite
 
         assertTrue(state.isAddedToFavorite())
         assertFalse(state.isRemovedFromFavorite())
@@ -18,7 +19,7 @@ class PokemonDetailFavoriteViewStateTest {
 
     @Test
     fun `set state as RemovedFromFavorite should be settled`() {
-        state = PokemonDetailFavoriteViewState.RemovedFromFavorite
+        state = PokemonHomeFavoriteViewState.RemovedFromFavorite
 
         assertTrue(state.isRemovedFromFavorite())
         assertFalse(state.isAddedToFavorite())

@@ -1,4 +1,4 @@
-package com.hivian.home.pokemon_detail
+package com.hivian.home.common
 
 import com.hivian.common.base.BaseViewState
 
@@ -8,16 +8,16 @@ import com.hivian.common.base.BaseViewState
  *
  * @see BaseViewState
  */
-sealed class PokemonDetailFavoriteViewState : BaseViewState {
+sealed class PokemonHomeFavoriteViewState : BaseViewState {
     /**
      * Added current pokemo  to favorite list.
      */
-    object AddedToFavorite : PokemonDetailFavoriteViewState()
+    object AddedToFavorite : PokemonHomeFavoriteViewState()
 
     /**
      * Removed current pokemon to favorite list.
      */
-    object RemovedFromFavorite : PokemonDetailFavoriteViewState()
+    object RemovedFromFavorite : PokemonHomeFavoriteViewState()
 
 
     // ============================================================================================

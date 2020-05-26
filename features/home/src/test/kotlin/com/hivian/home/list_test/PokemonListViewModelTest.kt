@@ -1,7 +1,6 @@
 package com.hivian.home.list_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.hivian.common.extension.toLiveData
@@ -16,7 +15,9 @@ import com.hivian.model.domain.Pokemon
 import com.hivian.repository.AppDispatchers
 import com.hivian.repository.utils.ErrorEntity
 import com.hivian.repository.utils.NetworkWrapper
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert

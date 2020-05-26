@@ -2,7 +2,8 @@ package com.hivian.home.list_test
 
 import com.hivian.home.pokemon_list.PokemonListViewState
 import com.hivian.repository.utils.ErrorEntity
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class PokemonListViewStateTest {

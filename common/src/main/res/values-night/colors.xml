@@ -30,5 +30,10 @@
     <color name="red">#c1322b</color>
     <color name="teal">#019077</color>
     <color name="yellow">#FFCE4B</color>
+    <color name="colorPrimary_50">#801d1d1d</color>
+
+    <color name="blueGrey">#78909C</color>
+    <color name="darkBlueGrey">#3a4d55</color>
+    <color name="lightBlueGrey">#869CAE</color>
 
 </resources>

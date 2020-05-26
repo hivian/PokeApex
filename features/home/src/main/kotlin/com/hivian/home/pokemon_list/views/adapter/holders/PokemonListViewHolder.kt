@@ -3,6 +3,7 @@ package com.hivian.home.pokemon_list.views.adapter.holders
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.hivian.common.base.BaseViewHolder
+import com.hivian.home.common.CommonStateHandler
 import com.hivian.home.databinding.ListItemPokemonBinding
 import com.hivian.home.pokemon_list.PokemonListViewModel
 import com.hivian.model.domain.Pokemon
@@ -28,6 +29,8 @@ class PokemonListViewHolder(
     fun bind(viewModel: PokemonListViewModel, item: Pokemon) {
         binding.viewModel = viewModel
         binding.pokemon = item
+        binding.favoriteState = CommonStateHandler.favoriteToViewState(item.favorite)
+        binding.caughtState = CommonStateHandler.caughtToViewState(item.caught)
         binding.executePendingBindings()
     }
 }

@@ -23,4 +23,8 @@
         <item name="android:background">@drawable/background_pokemon_element_hidden</item>
     </style>
 
+    <style name="CaughtStatBackground">
+        <item name="android:background">@drawable/background_gradient_caught_percentage</item>
+    </style>
+
 </resources>
