@@ -7,6 +7,7 @@
     <string name="pokemon_rank">#%1$03d</string>
 
     <!--Pokemon list-->
+    <string name="pokemon_home_title">Home</string>
     <string name="pokemon_list_title">Pokedex</string>
     <string name="pokemon_list_favorite_title">Favorites</string>
     <string name="pokemon_list_caught_title">Caught</string>

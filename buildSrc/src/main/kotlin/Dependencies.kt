@@ -40,6 +40,7 @@ object Versions {
     val detekt = "1.6.0"
     val anko = "0.10.8"
     val appCompat = "1.1.0"
+    val fragment= "1.3.0-alpha05"
     val coreKtx = "1.2.0"
     val swipeRefreshLayout = "1.0.0"
     val paging = "2.1.2"
@@ -114,6 +115,7 @@ object AndroidLibraries {
     // ANDROID
     val material = "com.google.android.material:material:${Versions.material}"
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+    val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
     val paging = "androidx.paging:paging-runtime-ktx:${Versions.paging}"

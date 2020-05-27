@@ -9,7 +9,7 @@
         android:id="@+id/pokemonListFragment"
         android:name="com.hivian.home.pokemon_list.PokemonListFragment"
         android:label="@string/pokemon_list_title"
-        tools:layout="@layout/pokemon_list_fragment" >
+        tools:layout="@layout/fragment_pokemon_list" >
         <action
             android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"
             app:destination="@id/pokemonDetailFragment"
@@ -22,7 +22,7 @@
         android:id="@+id/pokemonDetailFragment"
         android:name="com.hivian.home.pokemon_detail.PokemonDetailFragment"
         android:label="detail_fragment"
-        tools:layout="@layout/pokemon_detail_fragment" >
+        tools:layout="@layout/fragment_pokemon_detail" >
         <argument
             android:name="pokemonName"
             app:argType="string" />
