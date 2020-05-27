@@ -11,13 +11,13 @@ import com.hivian.common.extension.observe
 import com.hivian.common.extension.toast
 import com.hivian.common.ui.views.ProgressBarDialog
 import com.hivian.home.R
-import com.hivian.home.databinding.PokemonDetailFragmentBinding
+import com.hivian.home.databinding.FragmentPokemonDetailBinding
 import com.hivian.repository.utils.ErrorEntity
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class PokemonDetailFragment : BaseFragment<PokemonDetailFragmentBinding, PokemonDetailViewModel>(
-    layoutId = R.layout.pokemon_detail_fragment
+class PokemonDetailFragment : BaseFragment<FragmentPokemonDetailBinding, PokemonDetailViewModel>(
+    layoutId = R.layout.fragment_pokemon_detail
 ) {
 
     override fun onInitDataBinding() {

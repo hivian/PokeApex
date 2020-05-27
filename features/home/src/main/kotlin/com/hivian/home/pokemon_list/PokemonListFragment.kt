@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.hivian.common.base.BaseFragment
 import com.hivian.common.base.BaseViewEvent
@@ -17,16 +18,15 @@ import com.hivian.common.extension.hideKeyboard
 import com.hivian.common.extension.observe
 import com.hivian.common.extension.showCustomDialog
 import com.hivian.home.R
-import com.hivian.home.databinding.PokemonListFragmentBinding
+import com.hivian.home.databinding.FragmentPokemonListBinding
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapter
 import com.hivian.home.pokemon_list.views.adapter.PokemonListAdapterState
-import com.hivian.home.pokemon_list.views.bindings.actionViewVisibility
 import com.hivian.model.domain.Pokemon
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonListViewModel> (
-    layoutId = R.layout.pokemon_list_fragment
+class PokemonListFragment : BaseFragment<FragmentPokemonListBinding, PokemonListViewModel> (
+    layoutId = R.layout.fragment_pokemon_list
 ) {
 
     private val viewModel: PokemonListViewModel by viewModel()
@@ -34,6 +34,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         PokemonListAdapter(viewModel)
     }
     private var menu: Menu? = null
+    private lateinit var parentToolbar: Toolbar
+
 
     override fun onInitDataBinding() {
         viewBinding.viewModel = viewModel
@@ -43,14 +45,15 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
                 spanSizeLookup = viewAdapter.getSpanSizeLookup()
             }
         }
-        setupToolbar()
     }
 
     override fun getViewModel(): BaseViewModel = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         viewModel.loadPokemonsRemote()
+        parentToolbar = requireCompatActivity().findViewById(R.id.toolbar)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,14 +65,6 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
     }
 
     /**
-     * Configure app custom support action bar.
-     */
-    private fun setupToolbar() {
-        setHasOptionsMenu(true)
-        requireCompatActivity().setSupportActionBar(viewBinding.toolbar)
-    }
-
-    /**
      * Observer view event change on [FilterType].
      *
      * @param filterType Event on characters list.
@@ -78,13 +73,16 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         when (filterType) {
             is FilterType.All -> {
                 setToolbarTitle(null)
+                handleActionViewVisibility(filterType)
             }
             is FilterType.Favorite -> {
                 setToolbarTitle(R.string.pokemon_list_favorite_title)
+                handleActionViewVisibility(filterType)
                 hideKeyboard()
             }
             is FilterType.Caught -> {
                 setToolbarTitle(R.string.pokemon_list_caught_title)
+                handleActionViewVisibility(filterType)
                 hideKeyboard()
             }
         }
@@ -141,9 +139,8 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
         inflater.inflate(R.menu.menu_pokemon_list, menu)
 
         this.menu = menu
-        setToolbarTitle(null)
-        enableActionView(viewModel.dataFilter.value)
         configureSearchView(menu)
+        handleActionViewVisibility(viewModel.dataFilter.value)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -210,15 +207,23 @@ class PokemonListFragment : BaseFragment<PokemonListFragmentBinding, PokemonList
 
     private fun setToolbarTitle(@StringRes title: Int?) {
         title?.run {
-            viewBinding.toolbar.setTitle(this)
+            parentToolbar.setTitle(this)
         } ?: run {
-            viewBinding.toolbar.title = ""
+            parentToolbar.title = ""
         }
     }
 
-    private fun enableActionView(filterType: FilterType?) {
-        filterType?.run {
-            actionViewVisibility(viewBinding.toolbar, filterType)
+    private fun handleActionViewVisibility(filterType: FilterType?) {
+        val searchItem = parentToolbar.menu.findItem(R.id.action_search)
+        searchItem?.let { search ->
+            when (filterType) {
+                is FilterType.All -> search.isVisible = true
+                is FilterType.Favorite, FilterType.Caught -> {
+                    search.isVisible = false
+                    search.collapseActionView()
+                }
+                else -> {}
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.hivian.home.di
 
+import com.hivian.home.base.HomeViewModel
 import com.hivian.home.domain.PokemonDetailUseCase
 import com.hivian.home.domain.PokemonListUseCase
 import com.hivian.home.pokemon_detail.PokemonDetailViewModel
@@ -13,6 +14,7 @@ val featureHomeModule = module {
     single { HomeSharedPrefs(androidContext()) }
     factory { PokemonListUseCase(get()) }
     factory { PokemonDetailUseCase(get()) }
+    viewModel { HomeViewModel() }
     viewModel { PokemonListViewModel(get(), get()) }
     viewModel { (name : String) ->PokemonDetailViewModel(name, get(), get()) }
 }
