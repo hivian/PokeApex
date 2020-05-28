@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.hivian.common.Constants" />
         <variable
             name="viewModel"
             type="com.hivian.home.pokemon_list.PokemonListViewModel" />
@@ -39,7 +40,7 @@
                 android:textStyle="italic"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/spacer_1"
-                android:text="@{@string/pokemon_list_caught_ratio(viewModel.caughtRatio, 20)}"
+                android:text="@{@string/pokemon_list_caught_ratio(viewModel.caughtRatio, Constants.POKEMON_LIST_SIZE)}"
                 tools:text="(10/950)" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
