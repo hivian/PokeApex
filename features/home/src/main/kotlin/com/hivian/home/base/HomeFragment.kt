@@ -26,6 +26,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>(
     private fun setupToolbar() {
         setHasOptionsMenu(true)
         requireCompatActivity().setSupportActionBar(viewBinding.toolbar)
+        requireCompatActivity().supportActionBar?.setDisplayShowTitleEnabled(false);
     }
 
     private fun setupNavController() {
