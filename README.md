@@ -14,7 +14,10 @@
     <img src="https://img.shields.io/badge/API-23%2B-blue" alt="API">
   </a>
   <a href="https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE.md">
-    <img src="https://img.shields.io/badge/License-MIT-lightgrey" alt="License">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License">
+  </a>
+  <a href="https://brave.com/tips/">
+    <img src="https://img.shields.io/badge/Donate-BAT-orange" alt="Donate">
   </a>
 </p>
 
