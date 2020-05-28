@@ -1,6 +1,7 @@
 package com.hivian.pokedex
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.hivian.pokedex.di.appComponent
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
@@ -12,6 +13,7 @@ class App: Application() {
         super.onCreate()
         configureDi()
         configureTimber()
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     // CONFIGURATION
