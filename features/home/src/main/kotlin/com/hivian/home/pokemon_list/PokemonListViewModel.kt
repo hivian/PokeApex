@@ -105,7 +105,7 @@ class PokemonListViewModel(private val pokemonListUseCase: PokemonListUseCase,
         event.value = PokemonListViewEvent.OpenPokemonDetailView(name)
     }
 
-    fun loadPokemonsRemote(forceRefresh: Boolean = false, offset : Int = 0, limit : Int = com.hivian.common.Constants.POKEMON_LIST_SIZE) {
+    fun loadPokemonsRemote(forceRefresh: Boolean = false, offset : Int = 0, limit : Int = Constants.POKEMON_LIST_SIZE) {
         _state.value = PokemonListViewState.Loading
         viewModelScope.launch(dispatchers.main) {
             when (val result =
