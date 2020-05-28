@@ -1,3 +1,5 @@
+import extensions.getLocalProperty
+
 plugins {
     id(Plugins.androidApplication)
     kotlin(Plugins.kotlinAndroid)
@@ -24,12 +26,12 @@ android {
     }
 
     signingConfigs {
-//        create(BuildType.RELEASE) {
-//            keyAlias = getLocalProperty("signing.key.alias")
-//            keyPassword = getLocalProperty("signing.key.password")
-//            storeFile = file(getLocalProperty("signing.store.file"))
-//            storePassword = getLocalProperty("signing.store.password")
-//        }
+        create(BuildType.RELEASE) {
+            keyAlias = getLocalProperty("signing.key.alias")
+            keyPassword = getLocalProperty("signing.key.password")
+            storeFile = file(getLocalProperty("signing.store.file"))
+            storePassword = getLocalProperty("signing.store.password")
+        }
     }
 
     buildTypes {
@@ -41,7 +43,7 @@ android {
         }
         getByName(BuildType.RELEASE) {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            //signingConfig = signingConfigs.getByName(name)
+            signingConfig = signingConfigs.getByName(name)
 
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
