@@ -29,7 +29,7 @@ object FakeData {
             abilities = arrayListOf(NetworkPokemonAbilityObject(
                 ability = NetworkPokemonAbility(name = "Fireball"),
                 isHidden = false,
-                slot = 0)),
+                slot = 1)),
             forms = arrayListOf(NetworkPokemonForm(name = "Circle")),
             moves = arrayListOf(NetworkPokemonMoveObject(NetworkPokemonMove(name = "Run"))),
             sprites = NetworkPokemonSprites("backDefault.jpg", null, "", null, "frontDefault.jpg", null, "", null),
@@ -40,7 +40,7 @@ object FakeData {
             )),
             types = arrayListOf(
                 NetworkPokemonTypeObject(
-                    slot = 0,
+                    slot = 1,
                     isHidden = false,
                     type = NetworkPokemonType(name = "Water")
             ))
@@ -61,7 +61,7 @@ object FakeData {
             height = 100, weight = 200,
             generation = 1,
             abilities = arrayListOf(DbPokemonAbility(
-                slot = 0,
+                slot = 1,
                 hidden = false,
                 name ="Fireball"
             )),
@@ -75,7 +75,7 @@ object FakeData {
             )),
             types = arrayListOf(
                 DbPokemonType(
-                    slot = 0,
+                    slot = 1,
                     name = "Water"
                 ))
         )
