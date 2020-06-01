@@ -54,6 +54,10 @@ class PokemonListFragment : BaseFragment<FragmentPokemonListBinding, PokemonList
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         viewModel.loadPokemonsRemote()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         parentToolbar = requireCompatActivity().findViewById(R.id.toolbar)
     }
 

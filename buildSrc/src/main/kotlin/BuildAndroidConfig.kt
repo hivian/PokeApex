@@ -10,8 +10,8 @@ object BuildAndroidConfig {
     const val MIN_SDK_VERSION = 23
     const val TARGET_SDK_VERSION = 29
 
-    const val VERSION_CODE = 105
-    const val VERSION_NAME = "1.0.5"
+    const val VERSION_CODE = 106
+    const val VERSION_NAME = "1.0.6"
 
     const val SUPPORT_LIBRARY_VECTOR_DRAWABLES = true
 
