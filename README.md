@@ -21,6 +21,9 @@
   </a>
 </p>
 
+*WARNING: Fetching high resolution pokemon images from https://pokeres.bastionbot.org/images/pokemon/{id}.png is not possible any more.
+At this time I don't have API alternatives to solve this issue.*
+
 A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource.
 
 <p align="left">
