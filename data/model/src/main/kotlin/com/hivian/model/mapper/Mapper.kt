@@ -90,7 +90,7 @@ class MapperPokemonRemoteToDbImpl : Mapper<NetworkPokemonObject, DbPokemon>() {
             forms = input.forms.map { it.name },
             moves = input.moves.map { it.move.name },
             // High resolution image source.
-            imageUrl = "https://pokeres.bastionbot.org/images/pokemon/${input.id}.png",
+            imageUrl = "https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${input.id.padStart(3, '0'))}.png"
             stats = input.stats.map { DbPokemonStat(
                 name = it.stat.name,
                 baseStat = it.baseStat,
