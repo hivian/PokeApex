@@ -30,7 +30,8 @@ class PokemonItemMapperTest {
             assertEquals("Name_0", name)
             assertEquals("Circle", forms.first())
             assertEquals("Fireball", abilities.first().name)
-            assertEquals("https://pokeres.bastionbot.org/images/pokemon/${id}.png", imageUrl)
+
+            assertEquals("https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${input.id.toString().padStart(3, '0'))}.png", imageUrl)
             assertEquals(0, stats.first().baseStat)
         }
     }
