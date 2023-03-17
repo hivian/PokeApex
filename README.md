@@ -16,9 +16,6 @@
   <a href="https://github.com/hivian/Android-Kotlin-Pokedex/edit/master/LICENSE.md">
     <img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License">
   </a>
-  <a href="https://brave.com/tips/">
-    <img src="https://img.shields.io/badge/Donate-BAT-orange" alt="Donate">
-  </a>
 </p>
 
 A Pokedex Android app built with Kotlin, using [PokeAPI](https://pokeapi.co/) datasource.
